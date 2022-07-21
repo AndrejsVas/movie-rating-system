@@ -2,6 +2,7 @@ package com.avas.movieratingsystem.web.controller;
 
 import com.avas.movieratingsystem.business.service.UserService;
 import com.avas.movieratingsystem.business.repository.model.User;
+import com.avas.movieratingsystem.model.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,8 +19,8 @@ public class UserController {
     UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers(){
-        List<User> userList= userService.getAllUsers();
+    public ResponseEntity<List<UserDTO>> getAllUsers(){
+        List<UserDTO> userList= userService.getAllUsers();
         if(userList.isEmpty()){
             return ResponseEntity.notFound().build();
         }
