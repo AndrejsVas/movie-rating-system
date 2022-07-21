@@ -2,7 +2,7 @@ package com.avas.movieratingsystem.business.service.impl;
 
 import com.avas.movieratingsystem.business.repository.UserRepository;
 import com.avas.movieratingsystem.business.service.UserService;
-import com.avas.movieratingsystem.model.User;
+import com.avas.movieratingsystem.business.repository.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

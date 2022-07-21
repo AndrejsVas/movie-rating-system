@@ -1,7 +1,7 @@
 package com.avas.movieratingsystem.web.controller;
 
 import com.avas.movieratingsystem.business.service.UserService;
-import com.avas.movieratingsystem.model.User;
+import com.avas.movieratingsystem.business.repository.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

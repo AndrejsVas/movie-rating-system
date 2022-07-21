@@ -1,6 +1,6 @@
 package com.avas.movieratingsystem.business.repository;
 
-import com.avas.movieratingsystem.model.User;
+import com.avas.movieratingsystem.business.repository.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
