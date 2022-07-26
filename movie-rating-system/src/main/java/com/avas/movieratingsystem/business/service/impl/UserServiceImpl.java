@@ -35,8 +35,9 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     };
 
-    public UserDTO createUser(){
-        return null;
+    public UserDTO createUser(UserDTO userDTO){
+        User savedUser = userRepository.save(userMapper.mapUserDtoToUser(userDTO));
+        return userMapper.mapUserToUserDto(savedUser);
     }
     public UserDTO updateUserById(UserDTO modifyExistingUser, Long id){
         //TODO: Implement
