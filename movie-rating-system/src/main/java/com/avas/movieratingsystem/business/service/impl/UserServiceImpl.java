@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,4 +26,19 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    public Optional<UserDTO> findUserById(Long id){
+        //TODO: Implement
+        return null;
+    }
+    public void deleteUserById(){
+        //TODO: Implement
+    };
+
+    public UserDTO createUser(){
+        return null;
+    }
+    public UserDTO updateUserById(UserDTO modifyExistingUser, Long id){
+        //TODO: Implement
+        return null;
+    };
 }

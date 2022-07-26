@@ -4,8 +4,14 @@ import com.avas.movieratingsystem.business.repository.model.User;
 import com.avas.movieratingsystem.model.UserDTO;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
     List<UserDTO> getAllUsers();
+    Optional<UserDTO> findUserById(Long id);
+    void deleteUserById();
+    UserDTO createUser();
+    UserDTO updateUserById(UserDTO modifyExistingUser, Long id);
+
 }
