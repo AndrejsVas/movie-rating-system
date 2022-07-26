@@ -31,8 +31,8 @@ public class UserServiceImpl implements UserService {
                 .map(foundUser -> userMapper.mapUserToUserDto(foundUser));
         return foundUserDto;
     }
-    public void deleteUserById(){
-        //TODO: Implement
+    public void deleteUserById(Long id){
+        userRepository.deleteById(id);
     };
 
     public UserDTO createUser(){
