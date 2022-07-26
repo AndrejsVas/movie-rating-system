@@ -27,8 +27,9 @@ public class UserServiceImpl implements UserService {
     }
 
     public Optional<UserDTO> findUserById(Long id){
-        //TODO: Implement
-        return null;
+        Optional<UserDTO> foundUserDto = userRepository.findById(id)
+                .map(foundUser -> userMapper.mapUserToUserDto(foundUser));
+        return foundUserDto;
     }
     public void deleteUserById(){
         //TODO: Implement
