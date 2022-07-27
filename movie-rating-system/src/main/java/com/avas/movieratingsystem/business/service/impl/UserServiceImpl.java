@@ -40,7 +40,15 @@ public class UserServiceImpl implements UserService {
         return userMapper.mapUserToUserDto(savedUser);
     }
     public UserDTO updateUserById(UserDTO modifyExistingUser, Long id){
-        //TODO: Implement
+        Optional<UserDTO> foundUser = userRepository.findById(id).map(user -> userMapper.mapUserToUserDto(user));
+        if(foundUser.isPresent()){
+            if(foundUser.get().getId() == id){
+                userRepository.save(userMapper.mapUserDtoToUser(foundUser.get()));
+                //TODO LOG
+            }
+            return foundUser.get();
+        }
+        //Make custom exceptions
         return null;
     };
 }
