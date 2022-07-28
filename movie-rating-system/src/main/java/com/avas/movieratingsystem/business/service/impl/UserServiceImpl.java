@@ -50,16 +50,19 @@ public class UserServiceImpl implements UserService {
         return userMapper.mapUserToUserDto(savedUser);
     }
     public UserDTO updateUserById(UserDTO modifyExistingUser, Long id){
-        Optional<UserDTO> foundUser = userRepository.findById(id).map(user -> userMapper.mapUserToUserDto(user));
-        if(foundUser.isPresent()){
-            if(foundUser.get().getId() == id){
-                userRepository.save(userMapper.mapUserDtoToUser(foundUser.get()));
-                log.info("User is updated : {}", modifyExistingUser);
-            }
-            return foundUser.get();
-        }
-        //Make custom exceptions
-        log.info("User is not updated user id :{}", id);
-        return modifyExistingUser;
+
+        Optional<User> modifiedFoundUser = userRepository.findById(id)
+                .map(foundUser -> {
+                    foundUser.setEmail(modifyExistingUser.getEmail());
+                    foundUser.setUsername(modifyExistingUser.getUsername());
+                    return foundUser;
+                });
+        userRepository.save(modifiedFoundUser.get());
+        log.info("User is not updated user id :{}, user is now :{}", id,modifiedFoundUser);
+        return userMapper.mapUserToUserDto(modifiedFoundUser.get());
     };
+
+    public boolean checkIfUserExistsById(Long id){
+        return userRepository.existsById(id);
+    }
 }

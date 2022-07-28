@@ -28,42 +28,55 @@ public class UserController {
     UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> getAllUsers(){
-        List<UserDTO> userList= userService.getAllUsers();
-        if(userList.isEmpty()){
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> userList = userService.getAllUsers();
+        if (userList.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(userList);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id){
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         Optional<UserDTO> foundUserDto = userService.findUserById(id);
-        if(!foundUserDto.isPresent()){
+        if (!foundUserDto.isPresent()) {
             log.warn("User not found");
             return ResponseEntity.notFound().build();
         }
         log.info("User found : {}", foundUserDto.get());
-        return new ResponseEntity<>(foundUserDto.get(),HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(foundUserDto.get(), HttpStatus.ACCEPTED);
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
             log.warn("Binding result error");
             return ResponseEntity.badRequest().build();
         }
         userService.createUser(userDTO);
-        log.debug("New user is created : {}",userDTO);
-        return new ResponseEntity<>(userDTO, HttpStatus.CREATED );
+        log.debug("New user is created : {}", userDTO);
+        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
 
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(){
-        return null;
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id,
+                                              @RequestBody UserDTO modifiedUserDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            log.warn("Binding result error");
+            return ResponseEntity.badRequest().build();
+        }
+        if (!userService.checkIfUserExistsById(id)) {
+            log.info("User with this id does not exist");
+            return ResponseEntity.notFound().build();
+        }
+        UserDTO returnedUserDto = userService.updateUserById(modifiedUserDto, id);
+        log.debug("User with id: {} is now :{}", id, returnedUserDto);
+        return new ResponseEntity<>(returnedUserDto,HttpStatus.ACCEPTED);
     }
+
     @DeleteMapping
-    public ResponseEntity<UserDTO> deleteUser(){
+    public ResponseEntity<UserDTO> deleteUser() {
         return null;
 
     }
