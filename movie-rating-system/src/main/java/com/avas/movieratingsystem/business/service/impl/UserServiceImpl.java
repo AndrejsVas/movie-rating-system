@@ -54,7 +54,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> modifiedFoundUser = userRepository.findById(id)
                 .map(foundUser -> {
                     foundUser.setEmail(modifyExistingUser.getEmail());
-                    foundUser.setUsername(modifyExistingUser.getUsername());
+                    //foundUser.setUsername(modifyExistingUser.getUsername());
                     return foundUser;
                 });
         userRepository.save(modifiedFoundUser.get());
