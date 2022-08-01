@@ -10,8 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class Movie {
     private Long id;
     private String title;
     private String description;
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "movieIds")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movieId")
     private List<Review> reviewIds;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_type")
