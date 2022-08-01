@@ -75,9 +75,17 @@ public class UserController {
         return new ResponseEntity<>(returnedUserDto,HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping
-    public ResponseEntity<UserDTO> deleteUser() {
-        return null;
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UserDTO> deleteUserById(Long id) {
+        log.info("Delete User  by passing ID, where ID is:{}", id);
+        Optional<UserDTO> userDtoFound = userService.findUserById(id);
+        if (!(userDtoFound.isPresent())) {
+            log.warn("User for delete with id {} is not found.", id);
+            return ResponseEntity.notFound().build();
+        }
+        userService.deleteUserById(id);
+        log.debug("User with id {} is deleted", id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 }

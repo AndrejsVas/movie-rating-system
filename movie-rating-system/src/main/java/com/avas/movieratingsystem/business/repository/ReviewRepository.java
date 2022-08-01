@@ -1,4 +1,7 @@
 package com.avas.movieratingsystem.business.repository;
 
-public interface ReviewRepository {
+import com.avas.movieratingsystem.business.repository.model.Review;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ReviewRepository extends JpaRepository<Review, Long> {
 }

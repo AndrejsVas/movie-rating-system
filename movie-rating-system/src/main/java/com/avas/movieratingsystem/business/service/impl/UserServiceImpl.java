@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
     }
     public void deleteUserById(Long id){
         userRepository.deleteById(id);
+        log.info("User with id: {} is deleted", id);
     };
 
     public UserDTO createUser(UserDTO userDTO){
@@ -54,7 +55,9 @@ public class UserServiceImpl implements UserService {
         Optional<User> modifiedFoundUser = userRepository.findById(id)
                 .map(foundUser -> {
                     foundUser.setEmail(modifyExistingUser.getEmail());
-                    //foundUser.setUsername(modifyExistingUser.getUsername());
+                    foundUser.setName(modifyExistingUser.getName());
+                    foundUser.setUserType(modifyExistingUser.getUserType());
+                    foundUser.setSurname(modifyExistingUser.getSurname());
                     return foundUser;
                 });
         userRepository.save(modifiedFoundUser.get());
