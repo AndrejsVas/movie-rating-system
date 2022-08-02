@@ -1,7 +1,9 @@
 package com.avas.movieratingsystem.web.controller;
 
 import com.avas.movieratingsystem.business.service.UserService;
+import com.avas.movieratingsystem.model.ReviewDTO;
 import com.avas.movieratingsystem.model.UserDTO;
+import com.avas.movieratingsystem.model.UserReviewDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -86,6 +88,12 @@ public class UserController {
         userService.deleteUserById(id);
         log.debug("User with id {} is deleted", id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
+
+    @GetMapping("/{id}/review")
+    public ResponseEntity<List<UserReviewDTO>> getAllReviewsMadeByUser(@PathVariable Long id){
+        return new ResponseEntity<>(userService.getAllReviewsMadeByUserById(id), HttpStatus.OK);
 
     }
 }

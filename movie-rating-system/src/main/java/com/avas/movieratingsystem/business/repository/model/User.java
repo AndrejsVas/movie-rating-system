@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="user")
+@Table(name="users")
 public class User {
 
     @Id
@@ -26,6 +26,7 @@ public class User {
     private String name;
     private String surname;
     private String email;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_type_id")

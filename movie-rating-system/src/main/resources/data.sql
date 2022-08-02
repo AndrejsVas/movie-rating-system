@@ -6,12 +6,13 @@ INSERT INTO defaultdb.user_type (id,type) VALUES
 (5,"gigaUser");
 
 
-INSERT INTO defaultdb.user (name,surname,email,user_type_id) VALUES
+INSERT INTO defaultdb.users (name,surname,email,user_type_id) VALUES
 ('Alexis','Merceris',"testEmail@cool.com",1),
 ('Gordon','Freedomman',"hf3@never.com",2),
 ('Big','Lebowski',"money@ishere.com",3),
 ('Adam','Sander',"click@magic.com",4),
-('Britney','Pears',"notoxicity@again.oops",5);
+('Britain','Pears',"notoxicity@again.oops",5),
+('Pressiks','Tojason',"find@shawn.com",5);
 
 INSERT INTO defaultdb.movie_type (type) VALUES
 ("horror"),("fantasy"),("sci-fi"),("action"),("comedy");
