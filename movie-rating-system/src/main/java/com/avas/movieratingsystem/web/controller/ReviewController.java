@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Log4j2
 @Controller
-@RequestMapping("api/v1/user")
+@RequestMapping("api/v1/review")
 public class ReviewController {
 
 

@@ -5,10 +5,13 @@ import com.avas.movieratingsystem.business.mappers.UserMapping;
 import com.avas.movieratingsystem.business.repository.MovieRepository;
 import com.avas.movieratingsystem.business.repository.ReviewRepository;
 import com.avas.movieratingsystem.business.repository.UserRepository;
+import com.avas.movieratingsystem.business.repository.model.Movie;
 import com.avas.movieratingsystem.business.repository.model.Review;
 import com.avas.movieratingsystem.business.repository.model.User;
+import com.avas.movieratingsystem.business.repository.model.UserType;
 import com.avas.movieratingsystem.business.service.UserService;
 import com.avas.movieratingsystem.model.MovieDTO;
+import com.avas.movieratingsystem.model.MoviesByUserDTO;
 import com.avas.movieratingsystem.model.UserDTO;
 import com.avas.movieratingsystem.model.UserReviewDTO;
 import lombok.extern.log4j.Log4j2;
@@ -43,11 +46,11 @@ public class UserServiceImpl implements UserService {
     public Optional<UserDTO> findUserById(Long id) {
         Optional<UserDTO> foundUserDto = userRepository.findById(id)
                 .map(foundUser -> userMapper.mapUserToUserDto(foundUser));
-        if (foundUserDto.isPresent())
-            log.info("Found user :{}", foundUserDto);
-        else {
+        if (!foundUserDto.isPresent()) {
             log.warn("User with id:{} Not found", id);
+            throw new UserNotFoundException("User with id:" + id + " does not exist");
         }
+        log.info("Found user :{}", foundUserDto);
         return foundUserDto;
     }
 
@@ -64,30 +67,24 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserDTO updateUserById(UserDTO modifyExistingUser, Long id) {
-
-        Optional<User> modifiedFoundUser = userRepository.findById(id)
-                .map(foundUser -> {
-                    foundUser.setEmail(modifyExistingUser.getEmail());
-                    foundUser.setName(modifyExistingUser.getName());
-                    foundUser.setUserType(modifyExistingUser.getUserType());
-                    foundUser.setSurname(modifyExistingUser.getSurname());
-                    return foundUser;
-                });
-        userRepository.save(modifiedFoundUser.get());
+        User modifiedFoundUser = userRepository.save(userMapper.mapUserDtoToUser(modifyExistingUser));
         log.info("User is not updated user id :{}, user is now :{}", id, modifiedFoundUser);
-        return userMapper.mapUserToUserDto(modifiedFoundUser.get());
+        return userMapper.mapUserToUserDto(modifiedFoundUser);
     }
 
-    public List<MovieDTO> getAllMoviesReviewedByUserById(Long id) {
-        return null;
+    public Optional<List<MoviesByUserDTO>> getAllMoviesReviewedByUserById(Long id) {
+        User user = userMapper.mapUserDtoToUser(findUserById(id).get());
+        List<Movie> listOfMovies = reviewRepository.findReviewByUserId(new User(id))
+                .stream().map(Review::getMovieId).collect(Collectors.toList());
+        log.info("List of Movies reviewed by user size is :{}",listOfMovies.size());
+        return Optional.of(userMapper.mapMovieListForUserToMovieListDto((listOfMovies)));
+
     }
 
     public Optional<List<UserReviewDTO>> getAllReviewsMadeByUserById(Long id) {
-        if (!checkIfUserExistsById(id)) {
-            log.warn("User with id: {} does not exist", id);
-            throw new UserNotFoundException("User with id: {} does not exist");
-        }
+        User user = userMapper.mapUserDtoToUser(findUserById(id).get());
         List<Review> listReview = reviewRepository.findReviewByUserId(new User(id));
+        log.info("List of reviews by user size is :{}",listReview.size());
         return Optional.of(userMapper.mapReviewListToUserReviewDto((listReview)));
     }
 

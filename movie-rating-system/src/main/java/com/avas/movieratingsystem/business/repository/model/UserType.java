@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -28,6 +29,10 @@ public class UserType {
     @Column(name = "type")
     private String type;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userType")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userType", cascade = CascadeType.ALL)
     private List<User> users;
+
+    public UserType(String type) {
+        this.type = type;
+    }
 }
