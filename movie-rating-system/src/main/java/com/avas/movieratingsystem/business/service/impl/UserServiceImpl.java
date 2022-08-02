@@ -1,5 +1,6 @@
 package com.avas.movieratingsystem.business.service.impl;
 
+import com.avas.movieratingsystem.business.exceptions.UserNotFoundException;
 import com.avas.movieratingsystem.business.mappers.UserMapping;
 import com.avas.movieratingsystem.business.repository.MovieRepository;
 import com.avas.movieratingsystem.business.repository.ReviewRepository;
@@ -80,7 +81,7 @@ public class UserServiceImpl implements UserService {
     public Optional<List<UserReviewDTO>> getAllReviewsMadeByUserById(Long id){
         if(!checkIfUserExistsById(id)){
             log.warn("User with id: {} does not exist", id);
-            return null;
+            throw new UserNotFoundException("User with id: {} does not exist");
         }
         List<Review> listReview = reviewRepository.findReviewByUserId(new User(id));
         return Optional.of(userMapper.mapReviewListToUserReviewDto((listReview)));
