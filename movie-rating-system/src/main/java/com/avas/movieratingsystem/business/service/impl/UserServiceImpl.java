@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
     ReviewRepository reviewRepository;
 
 
-
     @Autowired
     UserMapping userMapper;
 
@@ -46,8 +45,9 @@ public class UserServiceImpl implements UserService {
                 .map(foundUser -> userMapper.mapUserToUserDto(foundUser));
         if(foundUserDto.isPresent())
             log.info("Found user :{}", foundUserDto);
-        else
+        else {
             log.warn("User with id:{} Not found", id);
+        }
         return foundUserDto;
     }
     public void deleteUserById(Long id){
@@ -61,7 +61,8 @@ public class UserServiceImpl implements UserService {
         log.info("User is created : {}", userDTO);
         return userMapper.mapUserToUserDto(savedUser);
     }
-    public UserDTO updateUserById(UserDTO modifyExistingUser, Long id){
+
+    public UserDTO updateUserById(UserDTO modifyExistingUser, Long id) {
 
         Optional<User> modifiedFoundUser = userRepository.findById(id)
                 .map(foundUser -> {
@@ -72,10 +73,11 @@ public class UserServiceImpl implements UserService {
                     return foundUser;
                 });
         userRepository.save(modifiedFoundUser.get());
-        log.info("User is not updated user id :{}, user is now :{}", id,modifiedFoundUser);
+        log.info("User is not updated user id :{}, user is now :{}", id, modifiedFoundUser);
         return userMapper.mapUserToUserDto(modifiedFoundUser.get());
-    };
-    public List<MovieDTO> getAllMoviesReviewedByUserById(Long id){
+    }
+
+    public List<MovieDTO> getAllMoviesReviewedByUserById(Long id) {
         return null;
     }
     public Optional<List<UserReviewDTO>> getAllReviewsMadeByUserById(Long id){
