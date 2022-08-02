@@ -17,6 +17,6 @@ public interface UserService {
     public boolean checkIfUserExistsById(Long id);
 
     List<MovieDTO> getAllMoviesReviewedByUserById(Long id);
-    List<UserReviewDTO> getAllReviewsMadeByUserById(Long id);
+    Optional<List<UserReviewDTO>> getAllReviewsMadeByUserById(Long id);
 
 }

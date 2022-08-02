@@ -93,7 +93,13 @@ public class UserController {
 
     @GetMapping("/{id}/review")
     public ResponseEntity<List<UserReviewDTO>> getAllReviewsMadeByUser(@PathVariable Long id){
-        return new ResponseEntity<>(userService.getAllReviewsMadeByUserById(id), HttpStatus.OK);
+        Optional<List<UserReviewDTO>> userReviews = userService.getAllReviewsMadeByUserById(id);
+        if(userReviews.isPresent()){
+            log.info("Returning all user review for user with id:{}", id);
+            return new ResponseEntity<>(userReviews.get(), HttpStatus.OK);
+        }
+        log.warn("User with id:{} is not found", id);
+        return ResponseEntity.notFound().build();
 
     }
 }

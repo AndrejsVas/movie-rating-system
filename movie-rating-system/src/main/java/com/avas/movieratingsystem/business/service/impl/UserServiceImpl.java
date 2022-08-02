@@ -77,13 +77,13 @@ public class UserServiceImpl implements UserService {
     public List<MovieDTO> getAllMoviesReviewedByUserById(Long id){
         return null;
     }
-    public List<UserReviewDTO> getAllReviewsMadeByUserById(Long id){
-        Optional<User> foundUser = userRepository.findById(id);
-        if(!foundUser.isPresent()){
+    public Optional<List<UserReviewDTO>> getAllReviewsMadeByUserById(Long id){
+        if(!checkIfUserExistsById(id)){
             log.warn("User with id: {} does not exist", id);
+            return null;
         }
-        Optional<List<Review>> listReview = reviewRepository.findReviewByUserId(foundUser.get());
-        return userMapper.mapReviewListToUserReviewDto((listReview.get()));
+        List<Review> listReview = reviewRepository.findReviewByUserId(new User(id));
+        return Optional.of(userMapper.mapReviewListToUserReviewDto((listReview)));
     }
     public boolean checkIfUserExistsById(Long id){
         return userRepository.existsById(id);
