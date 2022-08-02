@@ -35,27 +35,28 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserMapping userMapper;
 
-    public List<UserDTO> getAllUsers(){
+    public List<UserDTO> getAllUsers() {
         return userRepository.findAll().stream().map(userMapper::mapUserToUserDto).collect(Collectors.toList());
 
     }
 
-    public Optional<UserDTO> findUserById(Long id){
+    public Optional<UserDTO> findUserById(Long id) {
         Optional<UserDTO> foundUserDto = userRepository.findById(id)
                 .map(foundUser -> userMapper.mapUserToUserDto(foundUser));
-        if(foundUserDto.isPresent())
+        if (foundUserDto.isPresent())
             log.info("Found user :{}", foundUserDto);
         else {
             log.warn("User with id:{} Not found", id);
         }
         return foundUserDto;
     }
-    public void deleteUserById(Long id){
+
+    public void deleteUserById(Long id) {
         userRepository.deleteById(id);
         log.info("User with id: {} is deleted", id);
-    };
+    }
 
-    public UserDTO createUser(UserDTO userDTO){
+    public UserDTO createUser(UserDTO userDTO) {
         //TODO Add More Logic
         User savedUser = userRepository.save(userMapper.mapUserDtoToUser(userDTO));
         log.info("User is created : {}", userDTO);
@@ -80,15 +81,17 @@ public class UserServiceImpl implements UserService {
     public List<MovieDTO> getAllMoviesReviewedByUserById(Long id) {
         return null;
     }
-    public Optional<List<UserReviewDTO>> getAllReviewsMadeByUserById(Long id){
-        if(!checkIfUserExistsById(id)){
+
+    public Optional<List<UserReviewDTO>> getAllReviewsMadeByUserById(Long id) {
+        if (!checkIfUserExistsById(id)) {
             log.warn("User with id: {} does not exist", id);
             throw new UserNotFoundException("User with id: {} does not exist");
         }
         List<Review> listReview = reviewRepository.findReviewByUserId(new User(id));
         return Optional.of(userMapper.mapReviewListToUserReviewDto((listReview)));
     }
-    public boolean checkIfUserExistsById(Long id){
+
+    public boolean checkIfUserExistsById(Long id) {
         return userRepository.existsById(id);
     }
 }
