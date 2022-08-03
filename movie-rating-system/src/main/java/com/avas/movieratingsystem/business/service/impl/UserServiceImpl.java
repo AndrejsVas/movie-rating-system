@@ -1,5 +1,6 @@
 package com.avas.movieratingsystem.business.service.impl;
 
+import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
 import com.avas.movieratingsystem.business.exceptions.UserNotFoundException;
 import com.avas.movieratingsystem.business.mappers.MovieMapping;
 import com.avas.movieratingsystem.business.mappers.ReviewMapping;
@@ -64,15 +65,25 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserDTO createUser(UserDTO userDTO) {
-        //TODO Add More Logic
+        boolean userAlreadyExists = userRepository.existsByEmail(userDTO.getEmail());
+        if(userAlreadyExists){
+            log.warn("Can not create user, user with this email already exists");
+            throw new ResourceAlreadyExists("Can not create user, user with this email already exists");
+        }
         User savedUser = userRepository.save(userMapper.mapUserDtoToUser(userDTO));
         log.info("User is created : {}", userDTO);
         return userMapper.mapUserToUserDto(savedUser);
     }
 
-    public UserDTO updateUserById(UserDTO modifyExistingUser, Long id) {
+    public UserDTO updateUser(UserDTO modifyExistingUser,Long id) {
+        boolean userAlreadyExists = userRepository.existsByEmail(modifyExistingUser.getEmail());
+        if(userAlreadyExists){
+            log.warn("Can not update user. This email is already taken :{}", modifyExistingUser.getEmail());
+            throw new ResourceAlreadyExists("Can not update user. This email is already take");
+        }
+        modifyExistingUser.setId(id);
         User modifiedFoundUser = userRepository.save(userMapper.mapUserDtoToUser(modifyExistingUser));
-        log.info("User is not updated user id :{}, user is now :{}", id, modifiedFoundUser);
+        log.info("User is updated user id :{}, user is now :{}", modifiedFoundUser.getId(), modifiedFoundUser);
         return userMapper.mapUserToUserDto(modifiedFoundUser);
     }
 

@@ -13,7 +13,7 @@ public interface UserService {
     Optional<UserDTO> findUserById(Long id);
     void deleteUserById(Long id);
     UserDTO createUser(UserDTO newUser);
-    UserDTO updateUserById(UserDTO modifyExistingUser, Long id);
+    UserDTO updateUser(UserDTO modifyExistingUser, Long id);
     public boolean checkIfUserExistsById(Long id);
 
     Optional<List<MovieDTO>> getAllMoviesReviewedByUserById(Long id);

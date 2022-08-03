@@ -55,9 +55,9 @@ public class UserController {
             log.warn("Binding result error");
             return ResponseEntity.badRequest().build();
         }
-        userService.createUser(userDTO);
+        UserDTO savedUser = userService.createUser(userDTO);
         log.debug("New user is created : {}", userDTO);
-        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
+        return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
 
     }
 
@@ -72,7 +72,7 @@ public class UserController {
             log.info("User with this id does not exist");
             return ResponseEntity.notFound().build();
         }
-        UserDTO returnedUserDto = userService.updateUserById(modifiedUserDto, id);
+        UserDTO returnedUserDto = userService.updateUser(modifiedUserDto , id);
         log.debug("User with id: {} is now :{}", id, returnedUserDto);
         return new ResponseEntity<>(returnedUserDto,HttpStatus.ACCEPTED);
     }
