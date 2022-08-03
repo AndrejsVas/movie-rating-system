@@ -42,5 +42,7 @@ public class Review {
     @JoinColumn(name = "movie_id")
     private Movie movieId;
 
-
+    public Review(Long id) {
+        this.id = id;
+    }
 }

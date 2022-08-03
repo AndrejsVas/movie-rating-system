@@ -1,6 +1,6 @@
 package com.avas.movieratingsystem.business.service;
 
-import com.avas.movieratingsystem.model.MoviesByUserDTO;
+import com.avas.movieratingsystem.model.MovieDTO;
 import com.avas.movieratingsystem.model.ReviewDTO;
 import com.avas.movieratingsystem.model.UserDTO;
 
@@ -16,7 +16,7 @@ public interface UserService {
     UserDTO updateUserById(UserDTO modifyExistingUser, Long id);
     public boolean checkIfUserExistsById(Long id);
 
-    Optional<List<MoviesByUserDTO>> getAllMoviesReviewedByUserById(Long id);
+    Optional<List<MovieDTO>> getAllMoviesReviewedByUserById(Long id);
     Optional<List<ReviewDTO>> getAllReviewsMadeByUserById(Long id);
 
 }

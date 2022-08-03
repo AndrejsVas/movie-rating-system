@@ -33,5 +33,7 @@ public class Movie {
     @JoinColumn(name = "movie_type")
     private MovieType movieType;
 
-
+    public Movie(Long id) {
+        this.id = id;
+    }
 }

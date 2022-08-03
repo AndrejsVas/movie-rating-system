@@ -1,6 +1,7 @@
 package com.avas.movieratingsystem.business.service.impl;
 
 import com.avas.movieratingsystem.business.exceptions.UserNotFoundException;
+import com.avas.movieratingsystem.business.mappers.MovieMapping;
 import com.avas.movieratingsystem.business.mappers.ReviewMapping;
 import com.avas.movieratingsystem.business.mappers.UserMapping;
 import com.avas.movieratingsystem.business.repository.MovieRepository;
@@ -10,7 +11,7 @@ import com.avas.movieratingsystem.business.repository.model.Movie;
 import com.avas.movieratingsystem.business.repository.model.Review;
 import com.avas.movieratingsystem.business.repository.model.User;
 import com.avas.movieratingsystem.business.service.UserService;
-import com.avas.movieratingsystem.model.MoviesByUserDTO;
+import com.avas.movieratingsystem.model.MovieDTO;
 import com.avas.movieratingsystem.model.ReviewDTO;
 import com.avas.movieratingsystem.model.UserDTO;
 import lombok.extern.log4j.Log4j2;
@@ -38,6 +39,8 @@ public class UserServiceImpl implements UserService {
     UserMapping userMapper;
     @Autowired
     ReviewMapping reviewMapping;
+    @Autowired
+    MovieMapping movieMapping;
 
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll().stream().map(userMapper::mapUserToUserDto).collect(Collectors.toList());
@@ -73,12 +76,12 @@ public class UserServiceImpl implements UserService {
         return userMapper.mapUserToUserDto(modifiedFoundUser);
     }
 
-    public Optional<List<MoviesByUserDTO>> getAllMoviesReviewedByUserById(Long id) {
+    public Optional<List<MovieDTO>> getAllMoviesReviewedByUserById(Long id) {
         User user = userMapper.mapUserDtoToUser(findUserById(id).get());
         List<Movie> listOfMovies = reviewRepository.findReviewByUserId(new User(id))
                 .stream().map(Review::getMovieId).collect(Collectors.toList());
         log.info("List of Movies reviewed by user size is :{}",listOfMovies.size());
-        return Optional.of(userMapper.mapMovieListForUserToMovieListDto((listOfMovies)));
+        return Optional.of(movieMapping.mapMovieListToMovieListDto((listOfMovies)));
 
     }
 

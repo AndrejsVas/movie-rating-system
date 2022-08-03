@@ -1,7 +1,7 @@
 package com.avas.movieratingsystem.web.controller;
 
 import com.avas.movieratingsystem.business.service.UserService;
-import com.avas.movieratingsystem.model.MoviesByUserDTO;
+import com.avas.movieratingsystem.model.MovieDTO;
 import com.avas.movieratingsystem.model.ReviewDTO;
 import com.avas.movieratingsystem.model.UserDTO;
 import lombok.extern.log4j.Log4j2;
@@ -103,8 +103,8 @@ public class UserController {
 
     }
     @GetMapping("/{id}/movies")
-    public ResponseEntity<List<MoviesByUserDTO>> getAllMoviesReviewedByUser(@PathVariable Long id){
-        Optional<List<MoviesByUserDTO>> movieReviews = userService.getAllMoviesReviewedByUserById(id);
+    public ResponseEntity<List<MovieDTO>> getAllMoviesReviewedByUser(@PathVariable Long id){
+        Optional<List<MovieDTO>> movieReviews = userService.getAllMoviesReviewedByUserById(id);
         if(movieReviews.isPresent()){
             log.info("Returning all user review for user with id:{}", id);
             return new ResponseEntity<>(movieReviews.get(), HttpStatus.OK);

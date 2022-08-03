@@ -1,10 +1,9 @@
 package com.avas.movieratingsystem.business.mappers;
 
+import com.avas.movieratingsystem.business.repository.model.Movie;
 import com.avas.movieratingsystem.business.repository.model.Review;
 import com.avas.movieratingsystem.business.repository.model.User;
-import com.avas.movieratingsystem.business.repository.model.UserType;
 import com.avas.movieratingsystem.model.ReviewDTO;
-import com.avas.movieratingsystem.model.UserDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -15,11 +14,13 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ReviewMapping {
     @Mappings({
-            @Mapping(source = "userId", target = "userId", qualifiedByName = "userIdToUserIdLong")
+            @Mapping(source = "userId", target = "userId", qualifiedByName = "userIdToUserIdLong"),
+            @Mapping(source = "movieId", target = "movieId", qualifiedByName = "movieIdToMovieIdLong")
     })
     ReviewDTO mapReviewToReviewDto(Review reviewEntity);
     @Mappings({
-            @Mapping(source = "userId", target = "userId", qualifiedByName = "userIdLongToUserId")
+            @Mapping(source = "userId", target = "userId", qualifiedByName = "userIdLongToUserId"),
+            @Mapping(source = "movieId", target = "movieId", qualifiedByName = "movieIdLongToMovieId")
     })
     Review mapReviewDtoToReview(ReviewDTO reviewDto);
 
@@ -32,5 +33,14 @@ public interface ReviewMapping {
     @Named("userIdLongToUserId")
     default User userIdLongToUserId(Long userId){
         return new User(userId);
+    }
+
+    @Named("movieIdToMovieIdLong")
+    default Long movieIdToMovieIdLong(Movie movieId){
+        return movieId.getId();
+    }
+    @Named("movieIdLongToMovieId")
+    default Movie movieIdLongToMovieId(Long movieId){
+        return new Movie(movieId);
     }
 }

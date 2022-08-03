@@ -21,4 +21,7 @@ public class MovieType {
     private Long id;
     private String type;
 
+    public MovieType(String type) {
+        this.type = type;
+    }
 }
