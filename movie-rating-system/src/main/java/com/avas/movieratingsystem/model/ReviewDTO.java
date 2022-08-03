@@ -19,7 +19,7 @@ public class ReviewDTO {
     private String textReview;
     private int score;
     private LocalDate reviewDate;
-    private User userId;
+    private Long userId;
     private Movie movieId;
 
 }

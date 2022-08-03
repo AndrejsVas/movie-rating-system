@@ -2,8 +2,8 @@ package com.avas.movieratingsystem.web.controller;
 
 import com.avas.movieratingsystem.business.service.UserService;
 import com.avas.movieratingsystem.model.MoviesByUserDTO;
+import com.avas.movieratingsystem.model.ReviewDTO;
 import com.avas.movieratingsystem.model.UserDTO;
-import com.avas.movieratingsystem.model.UserReviewDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -92,8 +92,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}/reviews")
-    public ResponseEntity<List<UserReviewDTO>> getAllReviewsMadeByUser(@PathVariable Long id){
-        Optional<List<UserReviewDTO>> userReviews = userService.getAllReviewsMadeByUserById(id);
+    public ResponseEntity<List<ReviewDTO>> getAllReviewsMadeByUser(@PathVariable Long id){
+        Optional<List<ReviewDTO>> userReviews = userService.getAllReviewsMadeByUserById(id);
         if(userReviews.isPresent()){
             log.info("Returning all user review for user with id:{}", id);
             return new ResponseEntity<>(userReviews.get(), HttpStatus.OK);

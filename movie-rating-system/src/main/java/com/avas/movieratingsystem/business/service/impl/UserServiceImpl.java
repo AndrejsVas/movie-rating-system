@@ -1,6 +1,7 @@
 package com.avas.movieratingsystem.business.service.impl;
 
 import com.avas.movieratingsystem.business.exceptions.UserNotFoundException;
+import com.avas.movieratingsystem.business.mappers.ReviewMapping;
 import com.avas.movieratingsystem.business.mappers.UserMapping;
 import com.avas.movieratingsystem.business.repository.MovieRepository;
 import com.avas.movieratingsystem.business.repository.ReviewRepository;
@@ -8,12 +9,10 @@ import com.avas.movieratingsystem.business.repository.UserRepository;
 import com.avas.movieratingsystem.business.repository.model.Movie;
 import com.avas.movieratingsystem.business.repository.model.Review;
 import com.avas.movieratingsystem.business.repository.model.User;
-import com.avas.movieratingsystem.business.repository.model.UserType;
 import com.avas.movieratingsystem.business.service.UserService;
-import com.avas.movieratingsystem.model.MovieDTO;
 import com.avas.movieratingsystem.model.MoviesByUserDTO;
+import com.avas.movieratingsystem.model.ReviewDTO;
 import com.avas.movieratingsystem.model.UserDTO;
-import com.avas.movieratingsystem.model.UserReviewDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +36,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserMapping userMapper;
+    @Autowired
+    ReviewMapping reviewMapping;
 
     public List<UserDTO> getAllUsers() {
         return userRepository.findAll().stream().map(userMapper::mapUserToUserDto).collect(Collectors.toList());
@@ -81,11 +82,11 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public Optional<List<UserReviewDTO>> getAllReviewsMadeByUserById(Long id) {
+    public Optional<List<ReviewDTO>> getAllReviewsMadeByUserById(Long id) {
         User user = userMapper.mapUserDtoToUser(findUserById(id).get());
         List<Review> listReview = reviewRepository.findReviewByUserId(new User(id));
         log.info("List of reviews by user size is :{}",listReview.size());
-        return Optional.of(userMapper.mapReviewListToUserReviewDto((listReview)));
+        return Optional.of(reviewMapping.mapReviewListToReviewListDto((listReview)));
     }
 
     public boolean checkIfUserExistsById(Long id) {

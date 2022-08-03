@@ -1,9 +1,8 @@
 package com.avas.movieratingsystem.business.service;
 
-import com.avas.movieratingsystem.model.MovieDTO;
 import com.avas.movieratingsystem.model.MoviesByUserDTO;
+import com.avas.movieratingsystem.model.ReviewDTO;
 import com.avas.movieratingsystem.model.UserDTO;
-import com.avas.movieratingsystem.model.UserReviewDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +17,6 @@ public interface UserService {
     public boolean checkIfUserExistsById(Long id);
 
     Optional<List<MoviesByUserDTO>> getAllMoviesReviewedByUserById(Long id);
-    Optional<List<UserReviewDTO>> getAllReviewsMadeByUserById(Long id);
+    Optional<List<ReviewDTO>> getAllReviewsMadeByUserById(Long id);
 
 }
