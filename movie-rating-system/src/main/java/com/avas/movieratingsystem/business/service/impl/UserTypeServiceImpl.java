@@ -1,14 +1,11 @@
 package com.avas.movieratingsystem.business.service.impl;
 
-import com.avas.movieratingsystem.business.exceptions.MovieNotFoundException;
 import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
 import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.mappers.UserTypeMapper;
 import com.avas.movieratingsystem.business.repository.UserTypeRepository;
-import com.avas.movieratingsystem.business.repository.model.Movie;
 import com.avas.movieratingsystem.business.repository.model.UserType;
 import com.avas.movieratingsystem.business.service.UserTypeService;
-import com.avas.movieratingsystem.model.MovieDTO;
 import com.avas.movieratingsystem.model.UserTypeDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
