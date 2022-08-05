@@ -11,8 +11,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface UserTypeMapper {
 
-    UserTypeDTO mapUserTypeToUserTypeDto(User userTypeEntity);
-    UserType mapUserTypeDtoToUserType(UserDTO userTypeDto);
+    UserTypeDTO mapUserTypeToUserTypeDto(UserType userTypeEntity);
+    UserType mapUserTypeDtoToUserType(UserTypeDTO userTypeDto);
 
     List<UserTypeDTO> mapUserTypeListToUserTypeListDto(List<UserType> userTypeEntities);
 }
