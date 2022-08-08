@@ -12,7 +12,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Data
@@ -30,10 +32,13 @@ public class User {
 
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name="user_type_id")
+    @JoinColumn(name = "user_type_id")
     private UserType userType;
 
-    public User(Long id){
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userId")
+    List<UserLike> userLikes;
+
+    public User(Long id) {
         this.id = id;
     }
 }
