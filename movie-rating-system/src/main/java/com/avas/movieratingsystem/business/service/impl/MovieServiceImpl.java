@@ -45,7 +45,7 @@ public class MovieServiceImpl implements MovieService {
     }
 
     public MovieDTO createMovie(MovieDTO newMovie) {
-        boolean userAlreadyExists = movieRepository.existsByTitle(newMovie.getMovieType());
+        boolean userAlreadyExists = movieRepository.existsByTitle(newMovie.getTitle());
         if(userAlreadyExists){
             log.warn("Can not create movie, movie with this title already exists");
             throw new ResourceAlreadyExists("Can not create movie, movie with this title already exists");
