@@ -67,4 +67,7 @@ public class MovieTypeServiceImpl implements MovieTypeService {
         return movieTypeMapping.mapMovieTypeToMovieTypeDto(modifiedMovieType);
     }
 
+    public boolean checkIfMovieTypeExistsById(Long id){
+        return movieTypeRepository.existsById(id);
+    }
 }

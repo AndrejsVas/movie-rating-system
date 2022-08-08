@@ -12,4 +12,5 @@ public interface MovieTypeService {
     void deleteMovieTypeById(Long id);
     MovieTypeDTO createMovieType(MovieTypeDTO newMovieType);
     MovieTypeDTO updateMovieTypeById(MovieTypeDTO modifyExistingMovieType, Long id);
+    boolean checkIfMovieTypeExistsById(Long id);
 }
