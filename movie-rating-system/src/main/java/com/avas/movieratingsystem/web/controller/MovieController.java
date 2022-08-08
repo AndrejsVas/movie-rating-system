@@ -36,7 +36,7 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MovieDTO> getUserById(@PathVariable Long id) {
+    public ResponseEntity<MovieDTO> getMovieById(@PathVariable Long id) {
         Optional<MovieDTO> foundMovie = movieService.findMovieById(id);
         if (!foundMovie.isPresent()) {
             log.warn("Movie not found");
@@ -47,7 +47,7 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseEntity<MovieDTO> createUser(@RequestBody MovieDTO movieDto, BindingResult bindingResult) {
+    public ResponseEntity<MovieDTO> createMovie(@RequestBody MovieDTO movieDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             log.warn("Binding result error");
             return ResponseEntity.badRequest().build();
@@ -75,7 +75,7 @@ public class MovieController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<MovieDTO> deleteUserById(Long id) {
+    public ResponseEntity<MovieDTO> deleteMovieById(Long id) {
         log.info("Delete Movie by passing ID, where ID is:{}", id);
         Optional<MovieDTO> movieDtoFound = movieService.findMovieById(id);
         if (!(movieDtoFound.isPresent())) {
