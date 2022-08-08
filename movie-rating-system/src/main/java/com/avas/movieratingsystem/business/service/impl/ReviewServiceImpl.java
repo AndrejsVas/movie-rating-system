@@ -49,7 +49,8 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     public ReviewDTO createReview(ReviewDTO newReview) {
-        boolean movieTypeAlreadyExists = reviewRepository.existsByMovieIdAndUserId(newReview.getMovieId(), newReview.getUserId());
+        Review review = reviewMapping.mapReviewDtoToReview(newReview);
+        boolean movieTypeAlreadyExists = reviewRepository.existsByMovieIdAndUserId(review.getMovieId(), review.getUserId());
         if (movieTypeAlreadyExists) {
             log.warn("Can not create review ,review  already exists");
             throw new ResourceAlreadyExists("Can not create review , review  already exists");
@@ -81,5 +82,9 @@ public class ReviewServiceImpl implements ReviewService {
             throw new ResourceNotFoundException("Can't update, user with this id is not found");
         }
     }
+
+    public boolean checkIfReviewExistsById(Long id){
+        return reviewRepository.existsById(id);
+    };
 
 }
