@@ -28,7 +28,7 @@ public class Movie {
     private Long id;
     private String title;
     private String description;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movieId")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movieId", cascade = CascadeType.ALL)
     private List<Review> reviewIds;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "movie_type")
