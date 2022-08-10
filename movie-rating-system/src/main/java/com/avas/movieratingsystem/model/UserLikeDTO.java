@@ -4,14 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserLikeDTO {
 
     private Long id;
-    private List<Long> userIds;
-    private List<Long> reviewIds;
+    private Long userId;
+    private Long reviewId;
 }
