@@ -31,4 +31,8 @@ public class UserLike {
     @JoinColumn(name="review_id")
     private Review reviewId;
 
+    public UserLike(User userId, Review reviewId) {
+        this.userId = userId;
+        this.reviewId = reviewId;
+    }
 }
