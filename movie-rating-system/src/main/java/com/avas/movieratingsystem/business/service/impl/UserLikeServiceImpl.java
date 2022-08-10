@@ -34,8 +34,13 @@ public class UserLikeServiceImpl implements UserLikeService {
     UserRepository userRepository;
 
     public List<UserLikeDTO> getAllUserLikes(Long userId) {
-        return userLikeRepository.findAll().stream().map(userLikeMapper::mapUserLikeToUserLikeDto).collect(Collectors.toList());
-
+        Optional<User> user = userRepository.findById(userId);
+        if(!user.isPresent()){
+            log.warn("User with id:{} does not exist", userId);
+            throw new ResourceNotFoundException("User does not exist");
+        }
+        return userLikeRepository.findAllByUserId(user.get()).stream()
+                .map(userLikeMapper::mapUserLikeToUserLikeDto).collect(Collectors.toList());
     }
 
     public void toggleReviewLike(Long reviewId, Long reviewerUserId) {

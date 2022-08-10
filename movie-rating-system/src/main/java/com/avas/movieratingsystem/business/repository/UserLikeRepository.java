@@ -11,4 +11,5 @@ import java.util.List;
 public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
     boolean existsByUserIdAndReviewId(User user, Review review);
     List<UserLike> findAllByReviewId(Review review);
+    List<UserLike> findAllByUserId(User user);
 }
