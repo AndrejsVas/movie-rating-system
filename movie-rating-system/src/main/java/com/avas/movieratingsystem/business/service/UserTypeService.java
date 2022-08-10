@@ -12,4 +12,5 @@ public interface UserTypeService {
     void deleteUserTypeById(Long id);
     UserTypeDTO createUserType(UserTypeDTO newUserType);
     UserTypeDTO updateUserTypeById(UserTypeDTO modifyExistingUserType, Long id);
+    boolean checkIfUserTypeExistsById(Long id);
 }

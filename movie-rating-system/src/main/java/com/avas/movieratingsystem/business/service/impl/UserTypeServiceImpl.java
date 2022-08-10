@@ -67,4 +67,7 @@ public class UserTypeServiceImpl implements UserTypeService {
         return userTypeMapper.mapUserTypeToUserTypeDto(modifiedUserType);
     }
 
+    public boolean checkIfUserTypeExistsById(Long id){
+        return userTypeRepository.existsById(id);
+    }
 }
