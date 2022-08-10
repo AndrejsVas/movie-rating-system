@@ -31,6 +31,15 @@ public class UserLikeController {
         }
         return new ResponseEntity<>(userLikes, HttpStatus.OK);
     }
+    @GetMapping("/review/{reviewId}")
+    public ResponseEntity<List<UserLikeDTO>> getAllLikesForReview(@PathVariable Long reviewId) {
+        List<UserLikeDTO> userLikes = userLikeService.getAllLikesForAReview(reviewId);
+        log.info("Review with id:{} has {} likes", reviewId,userLikes.size());
+        if (userLikes.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(userLikes, HttpStatus.OK);
+    }
 
 
 

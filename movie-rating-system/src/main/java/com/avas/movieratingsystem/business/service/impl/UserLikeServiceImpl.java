@@ -59,7 +59,12 @@ public class UserLikeServiceImpl implements UserLikeService {
     }
 
     public List<UserLikeDTO> getAllLikesForAReview(Long reviewId) {
-        return userLikeRepository.findAllByReviewId(new Review(reviewId)).stream()
+        Optional<Review> review = reviewRepository.findById(reviewId);
+        if(!review.isPresent()){
+            log.warn("Review with id:{} does not exist", reviewId);
+            throw new ResourceNotFoundException("Review does not exist");
+        }
+        return userLikeRepository.findAllByReviewId(review.get()).stream()
                 .map(userLikeMapper::mapUserLikeToUserLikeDto).collect(Collectors.toList());
     }
 
