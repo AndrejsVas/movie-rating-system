@@ -30,7 +30,7 @@ public interface UserLikeMapper {
     default User userIdLongToUserId(Long userId){
         return new User(userId);
     }
-    @Named("reviewIdToReviewLong")
+    @Named("reviewIdToReviewIdLong")
     default Long reviewIdToReviewLong(Review reviewId){
         return reviewId.getId();
     }

@@ -6,6 +6,9 @@ import com.avas.movieratingsystem.business.repository.model.User;
 import com.avas.movieratingsystem.business.repository.model.UserLike;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface UserLikeRepository extends JpaRepository<UserLike, Long> {
     boolean existsByUserIdAndReviewId(User user, Review review);
+    List<UserLike> findAllByReviewId(Review review);
 }
