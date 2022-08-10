@@ -1,6 +1,5 @@
 package com.avas.movieratingsystem.business.service.impl;
 
-    import com.avas.movieratingsystem.business.exceptions.ResourceConflict;
 import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.mappers.UserLikeMapper;
 import com.avas.movieratingsystem.business.repository.ReviewRepository;
@@ -9,12 +8,12 @@ import com.avas.movieratingsystem.business.repository.UserRepository;
 import com.avas.movieratingsystem.business.repository.model.Review;
 import com.avas.movieratingsystem.business.repository.model.User;
 import com.avas.movieratingsystem.business.repository.model.UserLike;
-    import com.avas.movieratingsystem.business.service.UserLikeService;
-    import com.avas.movieratingsystem.model.ReviewDTO;
+import com.avas.movieratingsystem.business.service.UserLikeService;
 import com.avas.movieratingsystem.model.UserLikeDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +52,7 @@ public class UserLikeServiceImpl implements UserLikeService {
         if(userLikeRepository.existsByUserIdAndReviewId(user.get(),review.get())){
             log.warn("user:{} disliked review:{}",user.get(),review.get());
             userLikeRepository.delete(new UserLike(user.get(),review.get()));
+            return;
         }
         log.warn("user:{} liked review:{}",user.get(),review.get());
         userLikeRepository.save(new UserLike(user.get(), review.get()));

@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -39,6 +40,12 @@ public class UserLikeController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(userLikes, HttpStatus.OK);
+    }
+
+    @PutMapping("/review/{reviewId}/reviewer/{userId}")
+    public ResponseEntity toggleReviewLike(@PathVariable Long reviewId, @PathVariable Long userId){
+        userLikeService.toggleReviewLike(reviewId,userId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
