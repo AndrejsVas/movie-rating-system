@@ -1,7 +1,7 @@
 package com.avas.movieratingsystem.business.service.impl;
 
 import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
-import com.avas.movieratingsystem.business.exceptions.UserNotFoundException;
+import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.mappers.MovieMapping;
 import com.avas.movieratingsystem.business.mappers.ReviewMapping;
 import com.avas.movieratingsystem.business.mappers.UserMapping;
@@ -53,7 +53,7 @@ public class UserServiceImpl implements UserService {
                 .map(foundUser -> userMapper.mapUserToUserDto(foundUser));
         if (!foundUserDto.isPresent()) {
             log.warn("User with id:{} Not found", id);
-            throw new UserNotFoundException("User with id:" + id + " does not exist");
+            throw new ResourceNotFoundException("User with id:" + id + " does not exist");
         }
         log.info("Found user :{}", foundUserDto);
         return foundUserDto;
