@@ -31,3 +31,12 @@ INSERT INTO defaultdb.review (review_date,score,text_review,movie_id,user_id) VA
 ('2010-03-21', 1 , "...",3, 2),
 ('2010-03-21', 10 , "DUUUUDE , Best piece of cinematography ",2, 3),
 ('2010-03-21', 10 , "B3st p13c3 0f kin3m@tOgr@phy EVERRRR",2, 5);
+
+INSERT INTO defaultdb.user_likes (review_id, user_id) VALUES
+(1,1),(1,2),(1,3),(1,4),(1,5),(1,6),
+(2,1),(2,3),(2,5),(2,6),
+(3,2),(3,4),(3,6),
+(4,1),
+(5,1),(5,6),
+(6,4),(6,3),
+(8,5);
