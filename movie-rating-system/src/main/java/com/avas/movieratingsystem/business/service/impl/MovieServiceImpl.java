@@ -24,7 +24,9 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     MovieMapping movieMapper;
     public List<MovieDTO> getAllMovies() {
-        return movieRepository.findAll().stream().map(movieMapper::mapMovieToMovieDto).collect(Collectors.toList());
+        List<Movie> returnedMovieList = movieRepository.findAll();
+        log.info("movie list size is :{}", returnedMovieList.size());
+        return movieMapper.mapMovieListToMovieListDto(returnedMovieList);
 
     }
 

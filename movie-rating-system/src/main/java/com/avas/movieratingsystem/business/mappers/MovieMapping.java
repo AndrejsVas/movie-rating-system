@@ -30,6 +30,7 @@ public interface MovieMapping {
     Movie mapMovieDtoToMovie(MovieDTO movieDto);
 
     List<MovieDTO> mapMovieListToMovieListDto(List<Movie> movieEntities);
+    List<Movie> mapMovieDtoListToMovieList(List<MovieDTO> movieEntities);
 
     @Named("reviewIdsToReviewIdsLong")
     default List<Long> reviewIdsToReviewIdsLong(List<Review> listOfReviewIds) {
