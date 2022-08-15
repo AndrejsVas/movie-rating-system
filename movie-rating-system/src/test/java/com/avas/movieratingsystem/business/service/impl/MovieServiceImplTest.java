@@ -73,7 +73,6 @@ public class MovieServiceImplTest {
         MovieDTO movieDTO = createMovieDTO();
         doReturn(Optional.of(movieDTO)).when(movieService).findMovieById(1L);
         movieService.deleteMovieById(1L);
-        System.out.println("test");
         verify(movieRepository, times(1)).deleteById(anyLong());
     }
 
@@ -83,6 +82,17 @@ public class MovieServiceImplTest {
         MovieDTO movieDTO = createMovieDTO();
         doReturn(Optional.empty()).when(movieService).findMovieById(1L);
         Assertions.assertThrows(ResourceNotFoundException.class,() -> movieService.deleteMovieById(1L));
+    }
+
+    @Test
+    @DisplayName("Testing findMovieById")
+    public void testSuccessfullyFindingMovieById(){
+        MovieDTO movieDTO = createMovieDTO();
+        Movie movie = movieMapping.mapMovieDtoToMovie(movieDTO);
+        when(mockMovieMapping.mapMovieToMovieDto(movie)).thenReturn(movieDTO);
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
+        movieService.findMovieById(anyLong());
+        verify(movieRepository, times(1)).findById(anyLong());
     }
 
 }
