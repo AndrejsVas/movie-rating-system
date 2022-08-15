@@ -1,12 +1,15 @@
 package com.avas.movieratingsystem.business.service.impl;
 
 import com.avas.movieratingsystem.business.exceptions.MovieNotFoundException;
+import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
 import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.mappers.MovieMapping;
 import com.avas.movieratingsystem.business.repository.MovieRepository;
 import com.avas.movieratingsystem.business.repository.model.Movie;
 import com.avas.movieratingsystem.model.MovieDTO;
+import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -45,6 +48,14 @@ public class MovieServiceImplTest {
     @InjectMocks
     private MovieServiceImpl movieService;
 
+    private MovieDTO movieDTO;
+    private Movie movie;
+
+    @BeforeEach
+    public void createTestData(){
+        this.movieDTO = createMovieDTO();
+        this.movie = movieMapping.mapMovieDtoToMovie(movieDTO);
+    }
     @Test
     @DisplayName("Testing retrieval of all Movies")
     public void testMoviesSuccessfully() {
@@ -89,8 +100,7 @@ public class MovieServiceImplTest {
     @Test
     @DisplayName("Testing finding movie by id")
     public void testSuccessfullyFindingMovieById(){
-        MovieDTO movieDTO = createMovieDTO();
-        Movie movie = movieMapping.mapMovieDtoToMovie(movieDTO);
+
         when(mockMovieMapping.mapMovieToMovieDto(movie)).thenReturn(movieDTO);
         when(movieRepository.findById(anyLong())).thenReturn(Optional.of(movie));
         movieService.findMovieById(anyLong());
@@ -104,5 +114,20 @@ public class MovieServiceImplTest {
         Assertions.assertThrows(MovieNotFoundException.class , () -> movieService.findMovieById(anyLong()));
     }
 
+    @Test
+    @DisplayName("Create a movie")
+    public void testSuccessfullyCreatingAMovie(){
+        when(movieRepository.existsByTitle(movieDTO.getTitle())).thenReturn(false);
+        when(mockMovieMapping.mapMovieDtoToMovie(movieDTO)).thenReturn(movie);
+        when(movieRepository.save(movie)).thenReturn(movie);
+        movieService.createMovie(movieDTO);
+        verify(movieRepository, times(1)).save(movie);
+    }
 
+    @Test
+    @DisplayName("Create a duplicate movie")
+    public void testFailingCreatingAMovie(){
+        when(movieRepository.existsByTitle(movieDTO.getTitle())).thenReturn(true);
+        Assertions.assertThrows(ResourceAlreadyExists.class, ()-> movieService.createMovie(movieDTO));
+    }
 }
