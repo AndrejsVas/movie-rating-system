@@ -30,4 +30,10 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                 new ExceptionResponse(new Date(), ex.getMessage(), rq.getDescription(false));
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(MovieNotFoundException.class)
+    public final ResponseEntity<Object> handleMovieNotFoundException(MovieNotFoundException ex, WebRequest rq){
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(new Date(), ex.getLocalizedMessage(), rq.getDescription(false));
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
 }

@@ -34,10 +34,7 @@ public class MovieServiceImpl implements MovieService {
     public Optional<MovieDTO> findMovieById(Long id) {
         Optional<MovieDTO> foundMovieDto = movieRepository.findById(id)
                 .map(foundUser -> movieMapper.mapMovieToMovieDto(foundUser));
-        if (!foundMovieDto.isPresent()) {
-            log.warn("Movie with id:{} Not found", id);
-            throw new MovieNotFoundException("Movie with id:" + id + " does not exist");
-        }
+        foundMovieDto.orElseThrow(() -> new MovieNotFoundException("Movie with id:{0} Not found" , id));
         log.info("Found movie :{}", foundMovieDto);
         return foundMovieDto;
     }
