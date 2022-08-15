@@ -65,10 +65,6 @@ public class MovieController {
             log.warn("Binding result error");
             return ResponseEntity.badRequest().build();
         }
-        if (!movieService.checkIfMovieExistsById(id)) {
-            log.info("Movie with this id does not exist");
-            return ResponseEntity.notFound().build();
-        }
         MovieDTO returnedMovieDTO = movieService.updateMovieById(modifiedMovieDTO , id);
         log.debug("Movie with id: {} is now :{}", id, returnedMovieDTO);
         return new ResponseEntity<>(returnedMovieDTO,HttpStatus.ACCEPTED);

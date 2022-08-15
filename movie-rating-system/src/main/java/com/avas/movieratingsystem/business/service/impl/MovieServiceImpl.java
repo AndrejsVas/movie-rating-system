@@ -47,8 +47,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     public MovieDTO createMovie(MovieDTO newMovie) {
-        boolean userAlreadyExists = movieRepository.existsByTitle(newMovie.getTitle());
-        if(userAlreadyExists){
+        boolean movieAlreadyExists = movieRepository.existsByTitle(newMovie.getTitle());
+        if(movieAlreadyExists){
             log.warn("Can not create movie, movie with this title already exists");
             throw new ResourceAlreadyExists("Can not create movie, movie with this title already exists");
         }
@@ -58,10 +58,13 @@ public class MovieServiceImpl implements MovieService {
     }
 
     public MovieDTO updateMovieById(MovieDTO modifyExistingMovie, Long id) {
-        boolean userAlreadyExists = movieRepository.existsByTitle(modifyExistingMovie.getMovieType());
-        if(userAlreadyExists){
+        boolean movieAlreadyExists = movieRepository.existsByTitle(modifyExistingMovie.getTitle());
+        if(movieAlreadyExists){
             log.warn("Can not update movie. This movie title is already taken :{}", modifyExistingMovie.getMovieType());
             throw new ResourceAlreadyExists("Can not update movie. This movie title is already taken");
+        }
+        if(!movieRepository.existsById(id)){
+            throw new ResourceNotFoundException("Movie with this id:{0} does not exist", id);
         }
         modifyExistingMovie.setId(id);
         Movie modifiedMovie = movieRepository.save(movieMapper.mapMovieDtoToMovie(modifyExistingMovie));

@@ -27,6 +27,7 @@ import static com.avas.movieratingsystem.test.data.MovieTestData.createMovieDTO;
 import static com.avas.movieratingsystem.test.data.MovieTestData.createMovieDtoList;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -127,7 +128,37 @@ public class MovieServiceImplTest {
     @Test
     @DisplayName("Create a duplicate movie")
     public void testFailingCreatingAMovie(){
-        when(movieRepository.existsByTitle(movieDTO.getTitle())).thenReturn(true);
+        when(movieRepository.existsByTitle(anyString())).thenReturn(true);
         Assertions.assertThrows(ResourceAlreadyExists.class, ()-> movieService.createMovie(movieDTO));
+    }
+
+    @Test
+    @DisplayName("Update a movie by Id")
+    public void testSuccessfullyUpdatingAMovieById(){
+
+        when(movieRepository.existsByTitle(anyString())).thenReturn(false);
+        when(movieRepository.existsById(anyLong())).thenReturn(true);
+        when(mockMovieMapping.mapMovieDtoToMovie(any(MovieDTO.class))).thenReturn(movie);
+        when(mockMovieMapping.mapMovieToMovieDto(any(Movie.class))).thenReturn(movieDTO);
+        when(movieRepository.save(movie)).thenReturn(movie);
+        MovieDTO returnedMovieDto = movieService.updateMovieById(movieDTO, 1L);
+        Assertions.assertEquals(movieDTO,returnedMovieDto);
+        verify(movieRepository, times(1)).save(movie);
+
+    }
+
+    @Test
+    @DisplayName("Update movie with taken title")
+    public void testFailUpdatingAmovieByIdTitleTaken(){
+        when(movieRepository.existsByTitle(anyString())).thenReturn(true);
+        Assertions.assertThrows(ResourceAlreadyExists.class, () -> movieService.updateMovieById(movieDTO, 1L));
+    }
+
+    @Test
+    @DisplayName(("Update a movie which does not exist"))
+    public void testFailUpdatingAMovieWhichDoesNotExist(){
+        when(movieRepository.existsByTitle(anyString())).thenReturn(false);
+        when(movieRepository.existsById(anyLong())).thenReturn(false);
+        Assertions.assertThrows(ResourceNotFoundException.class, ()-> movieService.updateMovieById(movieDTO, 1L));
     }
 }
