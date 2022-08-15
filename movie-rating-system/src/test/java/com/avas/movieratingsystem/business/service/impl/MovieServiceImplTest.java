@@ -1,5 +1,6 @@
 package com.avas.movieratingsystem.business.service.impl;
 
+import com.avas.movieratingsystem.business.exceptions.MovieNotFoundException;
 import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.mappers.MovieMapping;
 import com.avas.movieratingsystem.business.repository.MovieRepository;
@@ -21,6 +22,7 @@ import java.util.Optional;
 
 import static com.avas.movieratingsystem.test.data.MovieTestData.createMovieDTO;
 import static com.avas.movieratingsystem.test.data.MovieTestData.createMovieDtoList;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
@@ -85,7 +87,7 @@ public class MovieServiceImplTest {
     }
 
     @Test
-    @DisplayName("Testing findMovieById")
+    @DisplayName("Testing finding movie by id")
     public void testSuccessfullyFindingMovieById(){
         MovieDTO movieDTO = createMovieDTO();
         Movie movie = movieMapping.mapMovieDtoToMovie(movieDTO);
@@ -94,5 +96,13 @@ public class MovieServiceImplTest {
         movieService.findMovieById(anyLong());
         verify(movieRepository, times(1)).findById(anyLong());
     }
+
+    @Test
+    @DisplayName("Find non existing movie by id")
+    public void testFailingFindMovieById(){
+        when(movieRepository.findById(anyLong())).thenReturn(Optional.empty());
+        Assertions.assertThrows(MovieNotFoundException.class , () -> movieService.findMovieById(anyLong()));
+    }
+
 
 }
