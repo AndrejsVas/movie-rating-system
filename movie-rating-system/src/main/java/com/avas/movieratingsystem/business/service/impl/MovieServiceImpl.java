@@ -2,6 +2,7 @@ package com.avas.movieratingsystem.business.service.impl;
 
 import com.avas.movieratingsystem.business.exceptions.MovieNotFoundException;
 import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
+import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.mappers.MovieMapping;
 import com.avas.movieratingsystem.business.repository.MovieRepository;
 import com.avas.movieratingsystem.business.repository.model.Movie;
@@ -42,6 +43,8 @@ public class MovieServiceImpl implements MovieService {
     }
 
     public void deleteMovieById(Long id) {
+        findMovieById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Movie for delete with id {} is not found."));
         movieRepository.deleteById(id);
         log.info("Movie with id: {} is deleted", id);
     }

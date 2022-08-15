@@ -77,11 +77,6 @@ public class MovieController {
     @DeleteMapping("/{id}")
     public ResponseEntity<MovieDTO> deleteMovieById(@PathVariable Long id) {
         log.info("Delete Movie by passing ID, where ID is:{}", id);
-        Optional<MovieDTO> movieDtoFound = movieService.findMovieById(id);
-        if (!(movieDtoFound.isPresent())) {
-            log.warn("Movie for delete with id {} is not found.", id);
-            return ResponseEntity.notFound().build();
-        }
         movieService.deleteMovieById(id);
         log.debug("Movie with id {} is deleted", id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
