@@ -161,4 +161,19 @@ public class MovieServiceImplTest {
         when(movieRepository.existsById(anyLong())).thenReturn(false);
         Assertions.assertThrows(ResourceNotFoundException.class, ()-> movieService.updateMovieById(movieDTO, 1L));
     }
+
+    @Test
+    @DisplayName("Delete a movie")
+    public void testSuccessfullyDeleteAMovie(){
+        doReturn(Optional.of(movieDTO)).when(movieService).findMovieById(anyLong());
+        movieService.deleteMovieById(1L);
+        verify(movieRepository , times(1)).deleteById(1L);
+    }
+
+    @Test
+    @DisplayName("Delete a non existing movie")
+    public void testFailingDeleteAMovie(){
+        doReturn(Optional.empty()).when(movieService).findMovieById(anyLong());
+        Assertions.assertThrows(ResourceNotFoundException.class , ()-> movieService.deleteMovieById(1L));
+    }
 }

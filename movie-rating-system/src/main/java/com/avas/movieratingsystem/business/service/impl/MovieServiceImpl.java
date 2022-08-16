@@ -44,6 +44,7 @@ public class MovieServiceImpl implements MovieService {
                 .orElseThrow(() -> new ResourceNotFoundException("Movie for delete with id {} is not found."));
         movieRepository.deleteById(id);
         log.info("Movie with id: {} is deleted", id);
+
     }
 
     public MovieDTO createMovie(MovieDTO newMovie) {
