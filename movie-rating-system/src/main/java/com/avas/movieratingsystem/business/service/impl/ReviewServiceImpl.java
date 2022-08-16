@@ -2,6 +2,7 @@ package com.avas.movieratingsystem.business.service.impl;
 
 import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
 import com.avas.movieratingsystem.business.exceptions.ResourceConflict;
+import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.mappers.ReviewMapping;
 import com.avas.movieratingsystem.business.repository.ReviewRepository;
 import com.avas.movieratingsystem.business.repository.model.Review;
@@ -27,7 +28,7 @@ public class ReviewServiceImpl implements ReviewService {
     public List<ReviewDTO> getAllReviews() {
         List<Review> returnedReviewList = reviewRepository.findAll();
         if (returnedReviewList.isEmpty())
-            throw new ResourceAlreadyExists("No reviews found");
+            throw new ResourceNotFoundException("No reviews found");
         log.info("movie list size is :{}", returnedReviewList.size());
         return reviewMapping.mapReviewListToReviewListDto(returnedReviewList);
 
@@ -36,14 +37,14 @@ public class ReviewServiceImpl implements ReviewService {
     public Optional<ReviewDTO> findReviewById(Long id) {
         Optional<ReviewDTO> reviewDTO = reviewRepository.findById(id)
                 .map(review -> reviewMapping.mapReviewToReviewDto(review));
-        reviewDTO.orElseThrow(() -> new ResourceAlreadyExists("review with id:{0} does not exist", id));
+        reviewDTO.orElseThrow(() -> new ResourceNotFoundException("review with id:{0} does not exist", id));
         log.info("Found review :{}", reviewDTO);
         return reviewDTO;
     }
 
     public void deleteReviewById(Long id) {
         findReviewById(id)
-                .orElseThrow(() -> new ResourceAlreadyExists("Review for delete with id {0} is not found.", id));
+                .orElseThrow(() -> new ResourceNotFoundException("Review for delete with id {0} is not found.", id));
         reviewRepository.deleteById(id);
         log.info("review with id: {} is deleted", id);
     }
@@ -74,11 +75,5 @@ public class ReviewServiceImpl implements ReviewService {
             ,reviewDTO.get().getUserId(),reviewDTO.get().getMovieId());
     }
 
-
-    public boolean checkIfReviewExistsById(Long id) {
-        return reviewRepository.existsById(id);
-    }
-
-    ;
 
 }

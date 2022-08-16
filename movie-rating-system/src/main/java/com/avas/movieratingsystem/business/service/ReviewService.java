@@ -12,5 +12,4 @@ public interface ReviewService {
     void deleteReviewById(Long id);
     ReviewDTO createReview(ReviewDTO newReview);
     ReviewDTO updateReviewById(ReviewDTO modifyExistingReview, Long id);
-    boolean checkIfReviewExistsById(Long id);
 }

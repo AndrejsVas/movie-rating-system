@@ -1,6 +1,8 @@
 package com.avas.movieratingsystem.business.service.impl;
 
 import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
+import com.avas.movieratingsystem.business.exceptions.ResourceConflict;
+import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.mappers.MovieMapping;
 import com.avas.movieratingsystem.business.mappers.ReviewMapping;
 import com.avas.movieratingsystem.business.mappers.UserMapping;
@@ -43,22 +45,26 @@ public class UserServiceImpl implements UserService {
     MovieMapping movieMapping;
 
     public List<UserDTO> getAllUsers() {
-        return userRepository.findAll().stream().map(userMapper::mapUserToUserDto).collect(Collectors.toList());
+        List<User> returnedUserList = userRepository.findAll();
+        if (returnedUserList.isEmpty())
+            throw new ResourceNotFoundException("No users found");
+        log.info("user list size is :{}", returnedUserList.size());
+        return userMapper.mapUserListToUserDto(returnedUserList);
+
 
     }
 
     public Optional<UserDTO> findUserById(Long id) {
         Optional<UserDTO> foundUserDto = userRepository.findById(id)
                 .map(foundUser -> userMapper.mapUserToUserDto(foundUser));
-        if (!foundUserDto.isPresent()) {
-            log.warn("User with id:{} Not found", id);
-            throw new ResourceAlreadyExists("User with id:" + id + " does not exist");
-        }
+        foundUserDto.orElseThrow(() -> new ResourceNotFoundException("user with id:{0} does not exist", id));
         log.info("Found user :{}", foundUserDto);
         return foundUserDto;
     }
 
     public void deleteUserById(Long id) {
+        findUserById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User for delete with id {0} is not found.", id));
         userRepository.deleteById(id);
         log.info("User with id: {} is deleted", id);
     }
@@ -66,7 +72,6 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(UserDTO userDTO) {
         boolean userAlreadyExists = userRepository.existsByEmail(userDTO.getEmail());
         if(userAlreadyExists){
-            log.warn("Can not create user, user with this email already exists");
             throw new ResourceAlreadyExists("Can not create user, user with this email already exists");
         }
         User savedUser = userRepository.save(userMapper.mapUserDtoToUser(userDTO));
@@ -75,10 +80,11 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserDTO updateUser(UserDTO modifyExistingUser,Long id) {
-        boolean userAlreadyExists = userRepository.existsByEmail(modifyExistingUser.getEmail());
-        if(userAlreadyExists){
-            log.warn("Can not update user. This email is already taken :{}", modifyExistingUser.getEmail());
-            throw new ResourceAlreadyExists("Can not update user. This email is already take");
+        if(!userRepository.existsById(id))
+            throw new ResourceNotFoundException("User with id:{0} is not found", id);
+        if(userRepository.existsByEmail(modifyExistingUser.getEmail())){
+            throw new ResourceConflict("Can not update user. This email:" +modifyExistingUser.getEmail()+
+                    " is already taken");
         }
         modifyExistingUser.setId(id);
         User modifiedFoundUser = userRepository.save(userMapper.mapUserDtoToUser(modifyExistingUser));
@@ -102,7 +108,4 @@ public class UserServiceImpl implements UserService {
         return Optional.of(reviewMapping.mapReviewListToReviewListDto((listReview)));
     }
 
-    public boolean checkIfUserExistsById(Long id) {
-        return userRepository.existsById(id);
-    }
 }

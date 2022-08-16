@@ -14,8 +14,6 @@ public interface UserService {
     void deleteUserById(Long id);
     UserDTO createUser(UserDTO newUser);
     UserDTO updateUser(UserDTO modifyExistingUser, Long id);
-    public boolean checkIfUserExistsById(Long id);
-
     Optional<List<MovieDTO>> getAllMoviesReviewedByUserById(Long id);
     Optional<List<ReviewDTO>> getAllReviewsMadeByUserById(Long id);
 

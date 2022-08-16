@@ -74,7 +74,4 @@ public class MovieServiceImpl implements MovieService {
         return movieMapper.mapMovieToMovieDto(modifiedMovie);
     }
 
-    public boolean checkIfMovieExistsById(Long id) {
-        return movieRepository.existsById(id);
-    }
 }

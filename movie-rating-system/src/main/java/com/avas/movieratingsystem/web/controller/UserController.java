@@ -31,20 +31,13 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
-        List<UserDTO> userList = userService.getAllUsers();
-        if (userList.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(userList);
+        List<UserDTO> userReviews = userService.getAllUsers();
+        return ResponseEntity.ok(userReviews);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         Optional<UserDTO> foundUserDto = userService.findUserById(id);
-        if (!foundUserDto.isPresent()) {
-            log.warn("User not found");
-            return ResponseEntity.notFound().build();
-        }
         log.info("User found : {}", foundUserDto.get());
         return new ResponseEntity<>(foundUserDto.get(), HttpStatus.ACCEPTED);
     }
@@ -67,10 +60,6 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             log.warn("Binding result error");
             return ResponseEntity.badRequest().build();
-        }
-        if (!userService.checkIfUserExistsById(id)) {
-            log.info("User with this id does not exist");
-            return ResponseEntity.notFound().build();
         }
         UserDTO returnedUserDto = userService.updateUser(modifiedUserDto , id);
         log.debug("User with id: {} is now :{}", id, returnedUserDto);

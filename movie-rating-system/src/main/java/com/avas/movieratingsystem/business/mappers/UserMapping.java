@@ -22,6 +22,7 @@ public interface UserMapping {
     })
     User mapUserDtoToUser(UserDTO userDto);
     List<UserDTO> mapUserListToUserDto(List<User> userEntities);
+    List<User> mapUserListDtoToUserList(List<UserDTO> userEntities);
 
     @Named("userTypeToString")
     default String userUserTypeToUserTypeDto(UserType userType){
