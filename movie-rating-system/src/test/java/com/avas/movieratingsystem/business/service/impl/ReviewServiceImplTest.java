@@ -156,7 +156,7 @@ public class ReviewServiceImplTest {
     }
 
     @Test
-    @DisplayName("Delete a movie")
+    @DisplayName("Delete a review")
     public void testSuccessfullyDeleteAMovie(){
         doReturn(Optional.of(reviewDTO)).when(reviewService).findReviewById(anyLong());
         reviewService.deleteReviewById(1L);
@@ -164,7 +164,7 @@ public class ReviewServiceImplTest {
     }
 
     @Test
-    @DisplayName("Delete a non existing movie")
+    @DisplayName("Delete a non existing review")
     public void testFailingDeleteAMovie(){
         doReturn(Optional.empty()).when(reviewService).findReviewById(anyLong());
         Assertions.assertThrows(ResourceAlreadyExists.class , ()-> reviewService.deleteReviewById(1L));
