@@ -1,7 +1,6 @@
 package com.avas.movieratingsystem.business.service.impl;
 
 import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
-import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.mappers.MovieTypeMapping;
 import com.avas.movieratingsystem.business.repository.MovieTypeRepository;
 import com.avas.movieratingsystem.business.repository.model.MovieType;
@@ -33,7 +32,7 @@ public class MovieTypeServiceImpl implements MovieTypeService {
                 .map(movieType -> movieTypeMapping.mapMovieTypeToMovieTypeDto(movieType));
         if (!movieTypeDTO.isPresent()) {
             log.warn("movie type with id:{} Not found", id);
-            throw new ResourceNotFoundException("movie type with id:" + id + " does not exist");
+            throw new ResourceAlreadyExists("movie type with id:" + id + " does not exist");
         }
         log.info("Found movie type :{}", movieTypeDTO);
         return movieTypeDTO;

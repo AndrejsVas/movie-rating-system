@@ -1,13 +1,12 @@
 package com.avas.movieratingsystem.business.service.impl;
 
-import com.avas.movieratingsystem.business.exceptions.MovieNotFoundException;
+
 import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
 import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.mappers.MovieMapping;
 import com.avas.movieratingsystem.business.repository.MovieRepository;
 import com.avas.movieratingsystem.business.repository.model.Movie;
 import com.avas.movieratingsystem.model.MovieDTO;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -95,7 +94,7 @@ public class MovieServiceImplTest {
     public void testDeleteByIdNull(){
         MovieDTO movieDTO = createMovieDTO();
         doReturn(Optional.empty()).when(movieService).findMovieById(1L);
-        Assertions.assertThrows(ResourceNotFoundException.class,() -> movieService.deleteMovieById(1L));
+        Assertions.assertThrows(ResourceAlreadyExists.class,() -> movieService.deleteMovieById(1L));
     }
 
     @Test
@@ -112,7 +111,7 @@ public class MovieServiceImplTest {
     @DisplayName("Find non existing movie by id")
     public void testFailingFindMovieById(){
         when(movieRepository.findById(anyLong())).thenReturn(Optional.empty());
-        Assertions.assertThrows(MovieNotFoundException.class , () -> movieService.findMovieById(anyLong()));
+        Assertions.assertThrows(ResourceNotFoundException.class , () -> movieService.findMovieById(anyLong()));
     }
 
     @Test
@@ -159,7 +158,7 @@ public class MovieServiceImplTest {
     public void testFailUpdatingAMovieWhichDoesNotExist(){
         when(movieRepository.existsByTitle(anyString())).thenReturn(false);
         when(movieRepository.existsById(anyLong())).thenReturn(false);
-        Assertions.assertThrows(ResourceNotFoundException.class, ()-> movieService.updateMovieById(movieDTO, 1L));
+        Assertions.assertThrows(ResourceAlreadyExists.class, ()-> movieService.updateMovieById(movieDTO, 1L));
     }
 
     @Test
@@ -174,6 +173,6 @@ public class MovieServiceImplTest {
     @DisplayName("Delete a non existing movie")
     public void testFailingDeleteAMovie(){
         doReturn(Optional.empty()).when(movieService).findMovieById(anyLong());
-        Assertions.assertThrows(ResourceNotFoundException.class , ()-> movieService.deleteMovieById(1L));
+        Assertions.assertThrows(ResourceAlreadyExists.class , ()-> movieService.deleteMovieById(1L));
     }
 }

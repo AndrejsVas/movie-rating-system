@@ -24,16 +24,23 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                 new ExceptionResponse(new Date(), ex.getMessage(), rq.getDescription(false));
         return new ResponseEntity<>(exceptionResponse,HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     @ExceptionHandler(ResourceNotFoundException.class)
-    public final ResponseEntity<Object> handleUserNotFoundException(ResourceNotFoundException ex, WebRequest rq){
-        ExceptionResponse exceptionResponse =
-                new ExceptionResponse(new Date(), ex.getMessage(), rq.getDescription(false));
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
-    }
-    @ExceptionHandler(MovieNotFoundException.class)
-    public final ResponseEntity<Object> handleMovieNotFoundException(MovieNotFoundException ex, WebRequest rq){
+    public final ResponseEntity<Object> handleResourceNotFoundException(ResourceAlreadyExists ex, WebRequest rq){
         ExceptionResponse exceptionResponse =
                 new ExceptionResponse(new Date(), ex.getLocalizedMessage(), rq.getDescription(false));
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(ResourceAlreadyExists.class)
+    public final ResponseEntity<Object> handleResourceAlreadyExistsException(ResourceAlreadyExists ex, WebRequest rq){
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(new Date(), ex.getLocalizedMessage(), rq.getDescription(false));
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.CONFLICT);
+    }
+    @ExceptionHandler(ResourceConflict.class)
+    public final ResponseEntity<Object> handleResourceConflictException(ResourceAlreadyExists ex, WebRequest rq){
+        ExceptionResponse exceptionResponse =
+                new ExceptionResponse(new Date(), ex.getLocalizedMessage(), rq.getDescription(false));
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.CONFLICT);
     }
 }

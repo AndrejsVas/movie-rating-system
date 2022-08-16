@@ -33,19 +33,12 @@ public class ReviewController {
     @GetMapping
     public ResponseEntity<List<ReviewDTO>> getAllReviews() {
         List<ReviewDTO> reviewList = reviewService.getAllReviews();
-        if (reviewList.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(reviewList);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ReviewDTO> getReviewById(@PathVariable Long id) {
         Optional<ReviewDTO> foundReview = reviewService.findReviewById(id);
-        if (!foundReview.isPresent()) {
-            log.warn("Review not found");
-            return ResponseEntity.notFound().build();
-        }
         log.info("Review found : {}", foundReview.get());
         return new ResponseEntity<>(foundReview.get(), HttpStatus.ACCEPTED);
     }
@@ -68,10 +61,6 @@ public class ReviewController {
         if (bindingResult.hasErrors()) {
             log.warn("Binding result error");
             return ResponseEntity.badRequest().build();
-        }
-        if (!reviewService.checkIfReviewExistsById(id)) {
-            log.info("Review with this id does not exist");
-            return ResponseEntity.notFound().build();
         }
         ReviewDTO returnedReviewDto = reviewService.updateReviewById(modifiedReviewDto , id);
         log.debug("Review with id: {} is now :{}", id, returnedReviewDto);

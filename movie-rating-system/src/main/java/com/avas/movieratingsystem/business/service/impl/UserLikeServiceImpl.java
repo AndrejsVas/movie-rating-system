@@ -1,6 +1,6 @@
 package com.avas.movieratingsystem.business.service.impl;
 
-import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
+import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
 import com.avas.movieratingsystem.business.mappers.ReviewMapping;
 import com.avas.movieratingsystem.business.mappers.UserLikeMapper;
 import com.avas.movieratingsystem.business.mappers.UserMapping;
@@ -17,7 +17,6 @@ import com.avas.movieratingsystem.model.UserLikeDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -44,7 +43,7 @@ public class UserLikeServiceImpl implements UserLikeService {
         Optional<User> user = userRepository.findById(userId);
         if(!user.isPresent()){
             log.warn("User with id:{} does not exist", userId);
-            throw new ResourceNotFoundException("User does not exist");
+            throw new ResourceAlreadyExists("User does not exist");
         }
         return userLikeRepository.findAllByUserId(user.get()).stream()
                 .map(userLikeMapper::mapUserLikeToUserLikeDto).collect(Collectors.toList());
@@ -57,7 +56,7 @@ public class UserLikeServiceImpl implements UserLikeService {
                 .map(foundUser -> userMapping.mapUserToUserDto(foundUser));
         if (!reviewDTO.isPresent() || !foundUserDTO.isPresent()) {
             log.warn("invalid reviewer id or review id");
-            throw new ResourceNotFoundException("invalid reviewer id or review id");
+            throw new ResourceAlreadyExists("invalid reviewer id or review id");
         }
         if(userLikeRepository.existsByUserIdAndReviewId(userMapping.mapUserDtoToUser(foundUserDTO.get())
                 ,reviewMapping.mapReviewDtoToReview(reviewDTO.get())))
@@ -77,7 +76,7 @@ public class UserLikeServiceImpl implements UserLikeService {
         Optional<Review> review = reviewRepository.findById(reviewId);
         if(!review.isPresent()){
             log.warn("Review with id:{} does not exist", reviewId);
-            throw new ResourceNotFoundException("Review does not exist");
+            throw new ResourceAlreadyExists("Review does not exist");
         }
         return userLikeRepository.findAllByReviewId(review.get()).stream()
                 .map(userLikeMapper::mapUserLikeToUserLikeDto).collect(Collectors.toList());

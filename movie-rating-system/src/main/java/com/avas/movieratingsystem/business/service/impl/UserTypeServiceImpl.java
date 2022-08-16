@@ -1,7 +1,6 @@
 package com.avas.movieratingsystem.business.service.impl;
 
 import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
-import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.mappers.UserTypeMapper;
 import com.avas.movieratingsystem.business.repository.UserTypeRepository;
 import com.avas.movieratingsystem.business.repository.model.UserType;
@@ -33,7 +32,7 @@ public class UserTypeServiceImpl implements UserTypeService {
                 .map(userType -> userTypeMapper.mapUserTypeToUserTypeDto(userType));
         if (!userTypeDTO.isPresent()) {
             log.warn("UserType with id:{} Not found", id);
-            throw new ResourceNotFoundException("UserType with id:" + id + " does not exist");
+            throw new ResourceAlreadyExists("UserType with id:" + id + " does not exist");
         }
         log.info("Found UserType :{}", userTypeDTO);
         return userTypeDTO;

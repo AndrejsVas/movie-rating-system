@@ -25,6 +25,7 @@ public interface ReviewMapping {
     Review mapReviewDtoToReview(ReviewDTO reviewDto);
 
     List<ReviewDTO> mapReviewListToReviewListDto(List<Review> reviewEntities);
+    List<Review> mapReviewListDtoToReviewList(List<ReviewDTO> reviewEntities);
 
     @Named("userIdToUserIdLong")
     default Long userIdToUserIdLong(User userId){
