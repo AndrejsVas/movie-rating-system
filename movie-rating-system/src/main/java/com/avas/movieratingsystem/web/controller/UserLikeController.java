@@ -26,31 +26,22 @@ public class UserLikeController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<UserLikeDTO>> getAllUserLikes(@PathVariable Long userId) {
         List<UserLikeDTO> userLikes = userLikeService.getAllUserLikes(userId);
-        log.info("User with id:{} has {} likes", userId,userLikes.size());
-        if (userLikes.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        log.info("User with id:{} has {} likes", userId, userLikes.size());
         return new ResponseEntity<>(userLikes, HttpStatus.OK);
     }
+
     @GetMapping("/review/{reviewId}")
     public ResponseEntity<List<UserLikeDTO>> getAllLikesForReview(@PathVariable Long reviewId) {
         List<UserLikeDTO> userLikes = userLikeService.getAllLikesForAReview(reviewId);
-        log.info("Review with id:{} has {} likes", reviewId,userLikes.size());
-        if (userLikes.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        log.info("Review with id:{} has {} likes", reviewId, userLikes.size());
         return new ResponseEntity<>(userLikes, HttpStatus.OK);
     }
 
     @PutMapping("/review/{reviewId}/reviewer/{userId}")
-    public ResponseEntity toggleReviewLike(@PathVariable Long reviewId, @PathVariable Long userId){
-        userLikeService.toggleReviewLike(reviewId,userId);
+    public ResponseEntity toggleReviewLike(@PathVariable Long reviewId, @PathVariable Long userId) {
+        userLikeService.toggleReviewLike(reviewId, userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
-
 
 
 }

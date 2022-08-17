@@ -23,7 +23,6 @@ import java.util.Optional;
 
 import static com.avas.movieratingsystem.test.data.ReviewTestData.createReviewDto;
 import static com.avas.movieratingsystem.test.data.ReviewTestData.createReviewDtoList;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
@@ -50,14 +49,15 @@ public class ReviewServiceImplTest {
     private Review review;
 
     @BeforeEach
-    public void createTestData(){
+    public void createTestData() {
         this.reviewDTO = createReviewDto();
         this.review = reviewMapping.mapReviewDtoToReview(reviewDTO);
     }
+
     @Test
     @DisplayName("Retrieval of all Reviews")
-    public void testMoviesSuccessfully() {
-        List<ReviewDTO> reviewDtoList =createReviewDtoList();
+    public void testReviewsSuccessfully() {
+        List<ReviewDTO> reviewDtoList = createReviewDtoList();
         List<Review> reviewList = reviewMapping.mapReviewListDtoToReviewList(reviewDtoList);
         when(reviewRepository.findAll()).thenReturn(reviewList);
         when(mockReviewMapping.mapReviewListToReviewListDto(reviewList)).thenReturn(reviewDtoList);
@@ -68,7 +68,7 @@ public class ReviewServiceImplTest {
 
     @Test
     @DisplayName("Retrieval of empty Review list")
-    public void testGetAllReviewsEmpty(){
+    public void testGetAllReviewsEmpty() {
         List<ReviewDTO> emptyDtoList = new ArrayList<>();
         List<Review> emptyReviewList = reviewMapping.mapReviewListDtoToReviewList(emptyDtoList);
         when(reviewRepository.findAll()).thenReturn(emptyReviewList);
@@ -79,7 +79,7 @@ public class ReviewServiceImplTest {
 
     @Test
     @DisplayName("Deleting review by id")
-    public void testDeletingReviewById(){
+    public void testDeletingReviewById() {
         doReturn(Optional.of(reviewDTO)).when(reviewService).findReviewById(1L);
         reviewService.deleteReviewById(1L);
         verify(reviewRepository, times(1)).deleteById(anyLong());
@@ -87,14 +87,14 @@ public class ReviewServiceImplTest {
 
     @Test
     @DisplayName("Delete non existing review")
-    public void testDeleteNotFound(){
+    public void testDeleteNotFound() {
         doReturn(Optional.empty()).when(reviewService).findReviewById(1L);
-        Assertions.assertThrows(ResourceAlreadyExists.class,() -> reviewService.deleteReviewById(1L));
+        Assertions.assertThrows(ResourceAlreadyExists.class, () -> reviewService.deleteReviewById(1L));
     }
 
     @Test
     @DisplayName("Testing finding Review by id")
-    public void testSuccessfullyFindingReviewById(){
+    public void testSuccessfullyFindingReviewById() {
         when(mockReviewMapping.mapReviewToReviewDto(review)).thenReturn(reviewDTO);
         when(reviewRepository.findById(anyLong())).thenReturn(Optional.of(review));
         reviewService.findReviewById(anyLong());
@@ -103,14 +103,14 @@ public class ReviewServiceImplTest {
 
     @Test
     @DisplayName("Find non existing review by id")
-    public void testFailingFindMovieById(){
+    public void testFailingFindMovieById() {
         when(reviewRepository.findById(anyLong())).thenReturn(Optional.empty());
-        Assertions.assertThrows(ResourceAlreadyExists.class , () -> reviewService.findReviewById(anyLong()));
+        Assertions.assertThrows(ResourceAlreadyExists.class, () -> reviewService.findReviewById(anyLong()));
     }
 
     @Test
     @DisplayName("Create a review")
-    public void testSuccessfullyCreatingAReview(){
+    public void testSuccessfullyCreatingAReview() {
         when(reviewRepository.existsByMovieIdAndUserId(review.getMovieId(), review.getUserId())).thenReturn(false);
         when(mockReviewMapping.mapReviewDtoToReview(reviewDTO)).thenReturn(review);
         when(reviewRepository.save(review)).thenReturn(review);
@@ -120,44 +120,44 @@ public class ReviewServiceImplTest {
 
     @Test
     @DisplayName("Create a duplicate review")
-    public void testFailingCreatingAReview(){
+    public void testFailingCreatingAReview() {
         when(mockReviewMapping.mapReviewDtoToReview(reviewDTO)).thenReturn(review);
         when(reviewRepository.existsByMovieIdAndUserId(review.getMovieId(), review.getUserId())).thenReturn(true);
-        Assertions.assertThrows(ResourceAlreadyExists.class, ()-> reviewService.createReview(reviewDTO));
+        Assertions.assertThrows(ResourceAlreadyExists.class, () -> reviewService.createReview(reviewDTO));
     }
 
     @Test
     @DisplayName("Update a review by Id")
-    public void testSuccessfullyUpdatingAReviewById(){
+    public void testSuccessfullyUpdatingAReviewById() {
         when(reviewRepository.existsById(anyLong())).thenReturn(true);
         when(reviewRepository.findById(anyLong())).thenReturn(Optional.of(review));
         when(mockReviewMapping.mapReviewToReviewDto(review)).thenReturn(reviewDTO);
         when(mockReviewMapping.mapReviewDtoToReview(reviewDTO)).thenReturn(review);
         when(reviewRepository.save(review)).thenReturn(review);
         ReviewDTO returnedReviewDto = reviewService.updateReviewById(reviewDTO, 1L);
-        Assertions.assertEquals(reviewDTO,returnedReviewDto);
+        Assertions.assertEquals(reviewDTO, returnedReviewDto);
         verify(reviewRepository, times(1)).save(review);
     }
 
     @Test
     @DisplayName("Update non existing review")
-    public void testFailingToUpdateNonExistingReview(){
+    public void testFailingToUpdateNonExistingReview() {
         when(reviewRepository.findById(anyLong())).thenReturn(Optional.empty());
         Assertions.assertThrows(ResourceAlreadyExists.class, () -> reviewService.updateReviewById(reviewDTO, 1L));
     }
 
     @Test
     @DisplayName(("Update a review with invalid movie id or user id"))
-    public void testFailUpdatingAMovieWhichDoesNotExist(){
+    public void testFailUpdatingAMovieWhichDoesNotExist() {
         when(reviewRepository.findById(anyLong())).thenReturn(Optional.of(review));
         when(mockReviewMapping.mapReviewToReviewDto(review)).thenReturn(reviewDTO);
         when(reviewRepository.save(review)).thenReturn(review);
-        Assertions.assertThrows(ResourceConflict.class, ()-> reviewService.updateReviewById(createReviewDto(), 1L));
+        Assertions.assertThrows(ResourceConflict.class, () -> reviewService.updateReviewById(createReviewDto(), 1L));
     }
 
     @Test
     @DisplayName("Delete a review")
-    public void testSuccessfullyDeleteAMovie(){
+    public void testSuccessfullyDeleteAMovie() {
         doReturn(Optional.of(reviewDTO)).when(reviewService).findReviewById(anyLong());
         reviewService.deleteReviewById(1L);
         verify(reviewRepository, times(1)).deleteById(1L);
@@ -165,8 +165,8 @@ public class ReviewServiceImplTest {
 
     @Test
     @DisplayName("Delete a non existing review")
-    public void testFailingDeleteAMovie(){
+    public void testFailingDeleteAMovie() {
         doReturn(Optional.empty()).when(reviewService).findReviewById(anyLong());
-        Assertions.assertThrows(ResourceAlreadyExists.class , ()-> reviewService.deleteReviewById(1L));
+        Assertions.assertThrows(ResourceAlreadyExists.class, () -> reviewService.deleteReviewById(1L));
     }
 }

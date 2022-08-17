@@ -1,14 +1,13 @@
 package com.avas.movieratingsystem.business.service.impl;
 
 import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
+import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.mappers.ReviewMapping;
 import com.avas.movieratingsystem.business.mappers.UserLikeMapper;
 import com.avas.movieratingsystem.business.mappers.UserMapping;
 import com.avas.movieratingsystem.business.repository.ReviewRepository;
 import com.avas.movieratingsystem.business.repository.UserLikeRepository;
 import com.avas.movieratingsystem.business.repository.UserRepository;
-import com.avas.movieratingsystem.business.repository.model.Review;
-import com.avas.movieratingsystem.business.repository.model.User;
 import com.avas.movieratingsystem.business.repository.model.UserLike;
 import com.avas.movieratingsystem.business.service.UserLikeService;
 import com.avas.movieratingsystem.model.ReviewDTO;
@@ -40,13 +39,16 @@ public class UserLikeServiceImpl implements UserLikeService {
     UserMapping userMapping;
 
     public List<UserLikeDTO> getAllUserLikes(Long userId) {
-        Optional<User> user = userRepository.findById(userId);
-        if(!user.isPresent()){
-            log.warn("User with id:{} does not exist", userId);
-            throw new ResourceAlreadyExists("User does not exist");
-        }
-        return userLikeRepository.findAllByUserId(user.get()).stream()
+        Optional<UserDTO> user = userRepository.findById(userId)
+                .map(returnedUser -> userMapping.mapUserToUserDto(returnedUser));
+        user.orElseThrow(() -> new ResourceNotFoundException("User with id:{0} does not exist", userId));
+        List<UserLikeDTO> userLikeDTOList = userLikeRepository
+                .findAllByUserId(userMapping.mapUserDtoToUser(user.get())).stream()
                 .map(userLikeMapper::mapUserLikeToUserLikeDto).collect(Collectors.toList());
+        if (userLikeDTOList.isEmpty())
+            throw new ResourceNotFoundException("User with user id:{0} has no likes", userId);
+        else
+            return userLikeDTOList;
     }
 
     public void toggleReviewLike(Long reviewId, Long reviewerUserId) {
@@ -54,32 +56,32 @@ public class UserLikeServiceImpl implements UserLikeService {
                 .map(review -> reviewMapping.mapReviewToReviewDto(review));
         Optional<UserDTO> foundUserDTO = userRepository.findById(reviewerUserId)
                 .map(foundUser -> userMapping.mapUserToUserDto(foundUser));
-        if (!reviewDTO.isPresent() || !foundUserDTO.isPresent()) {
-            log.warn("invalid reviewer id or review id");
+        if (!reviewDTO.isPresent() || !foundUserDTO.isPresent())
             throw new ResourceAlreadyExists("invalid reviewer id or review id");
-        }
-        if(userLikeRepository.existsByUserIdAndReviewId(userMapping.mapUserDtoToUser(foundUserDTO.get())
-                ,reviewMapping.mapReviewDtoToReview(reviewDTO.get())))
-        {
-            log.warn("user:{} disliked review:{}",foundUserDTO.get(),reviewDTO.get());
+        if (userLikeRepository.existsByUserIdAndReviewId(userMapping.mapUserDtoToUser(foundUserDTO.get())
+                , reviewMapping.mapReviewDtoToReview(reviewDTO.get()))) {
+            log.warn("user:{} disliked review:{}", foundUserDTO.get(), reviewDTO.get());
             userLikeRepository.delete(userLikeRepository.findByUserIdAndReviewId(userMapping.mapUserDtoToUser(foundUserDTO.get())
-                    ,reviewMapping.mapReviewDtoToReview(reviewDTO.get())).get());
+                    , reviewMapping.mapReviewDtoToReview(reviewDTO.get())).get());
             return;
         }
-        log.warn("user:{} liked review:{}",foundUserDTO.get(),reviewDTO.get());
+        log.warn("user:{} liked review:{}", foundUserDTO.get(), reviewDTO.get());
         UserLike userLike = userLikeRepository.save(new UserLike(userMapping.mapUserDtoToUser(foundUserDTO.get())
                 , reviewMapping.mapReviewDtoToReview(reviewDTO.get())));
-        log.warn("user like:{}",userLike);
+        log.warn("user like:{}", userLike);
     }
 
     public List<UserLikeDTO> getAllLikesForAReview(Long reviewId) {
-        Optional<Review> review = reviewRepository.findById(reviewId);
-        if(!review.isPresent()){
-            log.warn("Review with id:{} does not exist", reviewId);
-            throw new ResourceAlreadyExists("Review does not exist");
-        }
-        return userLikeRepository.findAllByReviewId(review.get()).stream()
+        Optional<ReviewDTO> review = reviewRepository.findById(reviewId)
+                .map(reviewMapping::mapReviewToReviewDto);
+        review.orElseThrow(() -> new ResourceNotFoundException("Review with id:{0} does not exist", reviewId));
+        List<UserLikeDTO> userLikeDTOList = userLikeRepository.findAllByReviewId(reviewMapping
+                        .mapReviewDtoToReview(review.get())).stream()
                 .map(userLikeMapper::mapUserLikeToUserLikeDto).collect(Collectors.toList());
+        if (userLikeDTOList.isEmpty())
+            throw new ResourceNotFoundException("Review with review id:{0} has no likes", reviewId);
+        else
+            return userLikeDTOList;
     }
 
 }
