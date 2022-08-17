@@ -30,19 +30,12 @@ public class MovieTypeController {
     @GetMapping
     public ResponseEntity<List<MovieTypeDTO>> getAllMovieTypes() {
         List<MovieTypeDTO> movieTypeList = movieTypeService.getAllMovieTypes();
-        if (movieTypeList.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(movieTypeList);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<MovieTypeDTO> getMovieType(@PathVariable Long id) {
         Optional<MovieTypeDTO> foundMovieType = movieTypeService.findMovieTypeById(id);
-        if (!foundMovieType.isPresent()) {
-            log.warn("Movie type not found");
-            return ResponseEntity.notFound().build();
-        }
         log.info("Movie type found : {}", foundMovieType.get());
         return new ResponseEntity<>(foundMovieType.get(), HttpStatus.ACCEPTED);
     }
@@ -61,28 +54,19 @@ public class MovieTypeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<MovieTypeDTO> updateMovieType(@PathVariable Long id,
-                                                @RequestBody MovieTypeDTO modifiedMovieTypeDTO, BindingResult bindingResult) {
+                                                        @RequestBody MovieTypeDTO modifiedMovieTypeDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             log.warn("Binding result error");
             return ResponseEntity.badRequest().build();
         }
-        if (!movieTypeService.checkIfMovieTypeExistsById(id)) {
-            log.info("Movie type with this id does not exist");
-            return ResponseEntity.notFound().build();
-        }
-        MovieTypeDTO returnedMovieTypeDTO = movieTypeService.updateMovieTypeById(modifiedMovieTypeDTO , id);
+        MovieTypeDTO returnedMovieTypeDTO = movieTypeService.updateMovieTypeById(modifiedMovieTypeDTO, id);
         log.debug("Movie type with id: {} is now :{}", id, returnedMovieTypeDTO);
-        return new ResponseEntity<>(returnedMovieTypeDTO,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(returnedMovieTypeDTO, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<MovieTypeDTO> deleteMovieTypeById(@PathVariable Long id) {
         log.info("Delete Movie Type by passing ID, where ID is:{}", id);
-        Optional<MovieTypeDTO> movieTypeDtoFound = movieTypeService.findMovieTypeById(id);
-        if (!(movieTypeDtoFound.isPresent())) {
-            log.warn("Movie type for delete with id {} is not found.", id);
-            return ResponseEntity.notFound().build();
-        }
         movieTypeService.deleteMovieTypeById(id);
         log.debug("Movie type with id {} is deleted", id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

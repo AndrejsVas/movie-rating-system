@@ -8,9 +8,12 @@ import java.util.Optional;
 public interface MovieTypeService {
 
     List<MovieTypeDTO> getAllMovieTypes();
+
     Optional<MovieTypeDTO> findMovieTypeById(Long id);
+
     void deleteMovieTypeById(Long id);
+
     MovieTypeDTO createMovieType(MovieTypeDTO newMovieType);
+
     MovieTypeDTO updateMovieTypeById(MovieTypeDTO modifyExistingMovieType, Long id);
-    boolean checkIfMovieTypeExistsById(Long id);
 }

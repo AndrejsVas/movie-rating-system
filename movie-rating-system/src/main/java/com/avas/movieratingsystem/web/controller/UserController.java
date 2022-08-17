@@ -61,19 +61,14 @@ public class UserController {
             log.warn("Binding result error");
             return ResponseEntity.badRequest().build();
         }
-        UserDTO returnedUserDto = userService.updateUser(modifiedUserDto , id);
+        UserDTO returnedUserDto = userService.updateUser(modifiedUserDto, id);
         log.debug("User with id: {} is now :{}", id, returnedUserDto);
-        return new ResponseEntity<>(returnedUserDto,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(returnedUserDto, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<UserDTO> deleteUserById(Long id) {
         log.info("Delete User  by passing ID, where ID is:{}", id);
-        Optional<UserDTO> userDtoFound = userService.findUserById(id);
-        if (!(userDtoFound.isPresent())) {
-            log.warn("User for delete with id {} is not found.", id);
-            return ResponseEntity.notFound().build();
-        }
         userService.deleteUserById(id);
         log.debug("User with id {} is deleted", id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -81,9 +76,9 @@ public class UserController {
     }
 
     @GetMapping("/{id}/reviews")
-    public ResponseEntity<List<ReviewDTO>> getAllReviewsMadeByUser(@PathVariable Long id){
+    public ResponseEntity<List<ReviewDTO>> getAllReviewsMadeByUser(@PathVariable Long id) {
         Optional<List<ReviewDTO>> userReviews = userService.getAllReviewsMadeByUserById(id);
-        if(userReviews.isPresent()){
+        if (userReviews.isPresent()) {
             log.info("Returning all user review for user with id:{}", id);
             return new ResponseEntity<>(userReviews.get(), HttpStatus.OK);
         }
@@ -91,10 +86,11 @@ public class UserController {
         return ResponseEntity.notFound().build();
 
     }
+
     @GetMapping("/{id}/movies")
-    public ResponseEntity<List<MovieDTO>> getAllMoviesReviewedByUser(@PathVariable Long id){
+    public ResponseEntity<List<MovieDTO>> getAllMoviesReviewedByUser(@PathVariable Long id) {
         Optional<List<MovieDTO>> movieReviews = userService.getAllMoviesReviewedByUserById(id);
-        if(movieReviews.isPresent()){
+        if (movieReviews.isPresent()) {
             log.info("Returning all user review for user with id:{}", id);
             return new ResponseEntity<>(movieReviews.get(), HttpStatus.OK);
         }
