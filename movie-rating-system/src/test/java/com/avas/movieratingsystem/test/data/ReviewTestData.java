@@ -1,5 +1,6 @@
 package com.avas.movieratingsystem.test.data;
 
+import com.avas.movieratingsystem.model.MovieDTO;
 import com.avas.movieratingsystem.model.ReviewDTO;
 
 import java.util.Arrays;
@@ -25,8 +26,19 @@ public class ReviewTestData {
         reviewDTO.setUserId(userId.nextLong());
         return reviewDTO;
     }
+    public static ReviewDTO createReviewDtoPredefined() {
+        ReviewDTO reviewDTO = new ReviewDTO();
+        reviewDTO.setId(1L);
+        reviewDTO.setTextReview("best movie since the godfather");
+        reviewDTO.setScore(7);
+        return reviewDTO;
+    }
 
     public static List<ReviewDTO> createReviewDtoList() {
         return Arrays.asList(createReviewDto(), createReviewDto(), createReviewDto(), createReviewDto(), createReviewDto());
+    }
+
+    public static List<ReviewDTO> createReviewDtoListPredefined() {
+        return Arrays.asList(createReviewDtoPredefined(), createReviewDtoPredefined(), createReviewDtoPredefined());
     }
 }

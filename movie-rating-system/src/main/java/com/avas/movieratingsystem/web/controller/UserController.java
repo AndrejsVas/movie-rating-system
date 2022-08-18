@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +31,9 @@ public class UserController {
     UserService userService;
 
     @GetMapping
+    @ResponseBody
     public ResponseEntity<List<UserDTO>> getAllUsers() {
+
         List<UserDTO> userReviews = userService.getAllUsers();
         return ResponseEntity.ok(userReviews);
     }
@@ -39,7 +42,7 @@ public class UserController {
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         Optional<UserDTO> foundUserDto = userService.findUserById(id);
         log.info("User found : {}", foundUserDto.get());
-        return new ResponseEntity<>(foundUserDto.get(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(foundUserDto.get(), HttpStatus.OK);
     }
 
     @PostMapping
@@ -67,7 +70,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<UserDTO> deleteUserById(Long id) {
+    public ResponseEntity<UserDTO> deleteUserById(@PathVariable Long id) {
         log.info("Delete User  by passing ID, where ID is:{}", id);
         userService.deleteUserById(id);
         log.debug("User with id {} is deleted", id);
@@ -75,27 +78,19 @@ public class UserController {
 
     }
 
-    @GetMapping("/{id}/reviews")
-    public ResponseEntity<List<ReviewDTO>> getAllReviewsMadeByUser(@PathVariable Long id) {
-        Optional<List<ReviewDTO>> userReviews = userService.getAllReviewsMadeByUserById(id);
-        if (userReviews.isPresent()) {
-            log.info("Returning all user review for user with id:{}", id);
-            return new ResponseEntity<>(userReviews.get(), HttpStatus.OK);
-        }
-        log.warn("User with id:{} is not found", id);
-        return ResponseEntity.notFound().build();
-
-    }
-
     @GetMapping("/{id}/movies")
     public ResponseEntity<List<MovieDTO>> getAllMoviesReviewedByUser(@PathVariable Long id) {
-        Optional<List<MovieDTO>> movieReviews = userService.getAllMoviesReviewedByUserById(id);
-        if (movieReviews.isPresent()) {
-            log.info("Returning all user review for user with id:{}", id);
-            return new ResponseEntity<>(movieReviews.get(), HttpStatus.OK);
-        }
-        log.warn("User with id:{} is not found", id);
-        return ResponseEntity.notFound().build();
+        List<MovieDTO> movieReviews = userService.getAllMoviesReviewedByUserById(id);
+        log.info("Returning all movies reviewed by user with id:{}", id);
+        return new ResponseEntity<>(movieReviews, HttpStatus.OK);
 
     }
+    @GetMapping("/{id}/reviews")
+    public ResponseEntity<List<ReviewDTO>> getAllReviewsMadeByUser(@PathVariable Long id) {
+        List<ReviewDTO> userReviews = userService.getAllReviewsMadeByUserById(id);
+        log.info("Returning all user review for user with id:{}", id);
+        return new ResponseEntity<>(userReviews, HttpStatus.OK);
+
+    }
+
 }

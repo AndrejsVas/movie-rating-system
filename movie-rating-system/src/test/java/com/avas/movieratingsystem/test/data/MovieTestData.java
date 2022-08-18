@@ -1,6 +1,7 @@
 package com.avas.movieratingsystem.test.data;
 
 import com.avas.movieratingsystem.model.MovieDTO;
+import com.avas.movieratingsystem.model.UserDTO;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +26,19 @@ public class MovieTestData {
         movieDTO.setMovieType(movieTypeRandomList[movieTypes.nextInt(movieTypeRandomList.length)]);
         return movieDTO;
     }
+
+    public static MovieDTO createMovieDtoPredefined() {
+        MovieDTO movieDTO = new MovieDTO();
+        movieDTO.setId(1L);
+        movieDTO.setDescription("best movie since the godfather");
+        movieDTO.setTitle("Testing Returns 3d");
+        return movieDTO;
+    }
     public static List<MovieDTO> createMovieDtoList(){
         return Arrays.asList(createMovieDTO(), createMovieDTO(), createMovieDTO(),createMovieDTO(),createMovieDTO());
     }
+    public static List<MovieDTO> createMovieDtoListPredefined() {
+        return Arrays.asList(createMovieDtoPredefined(), createMovieDtoPredefined(), createMovieDtoPredefined());
+    }
+
 }

@@ -92,20 +92,28 @@ public class UserServiceImpl implements UserService {
         return userMapper.mapUserToUserDto(modifiedFoundUser);
     }
 
-    public Optional<List<MovieDTO>> getAllMoviesReviewedByUserById(Long id) {
-        User user = userMapper.mapUserDtoToUser(findUserById(id).get());
-        List<Movie> listOfMovies = reviewRepository.findReviewByUserId(new User(id))
+    public List<MovieDTO> getAllMoviesReviewedByUserById(Long id) {
+        Optional<UserDTO> userDTO = userRepository.findById(id)
+                .map(foundUser-> userMapper.mapUserToUserDto(foundUser));
+        userDTO.orElseThrow(() -> new ResourceNotFoundException("User with user id:{0} is not found", id));
+        List<Movie> listOfMovies = reviewRepository.findReviewByUserId(userMapper.mapUserDtoToUser(userDTO.get()))
                 .stream().map(Review::getMovieId).collect(Collectors.toList());
+        if(listOfMovies.isEmpty())
+            throw new ResourceNotFoundException("No reviews found for user:{0}", id);
         log.info("List of Movies reviewed by user size is :{}",listOfMovies.size());
-        return Optional.of(movieMapping.mapMovieListToMovieListDto((listOfMovies)));
+        return movieMapping.mapMovieListToMovieListDto((listOfMovies));
 
     }
 
-    public Optional<List<ReviewDTO>> getAllReviewsMadeByUserById(Long id) {
-        User user = userMapper.mapUserDtoToUser(findUserById(id).get());
-        List<Review> listReview = reviewRepository.findReviewByUserId(new User(id));
+    public List<ReviewDTO> getAllReviewsMadeByUserById(Long id) {
+        Optional<UserDTO> userDTO = userRepository.findById(id)
+            .map(foundUser-> userMapper.mapUserToUserDto(foundUser));
+        userDTO.orElseThrow(() -> new ResourceNotFoundException("User with user id:{0} is not found", id));
+        List<Review> listReview = reviewRepository.findReviewByUserId(userMapper.mapUserDtoToUser(userDTO.get()));
+        if(listReview.isEmpty())
+            throw new ResourceNotFoundException("No reviews found for user:{0}", id);
         log.info("List of reviews by user size is :{}",listReview.size());
-        return Optional.of(reviewMapping.mapReviewListToReviewListDto((listReview)));
+        return reviewMapping.mapReviewListToReviewListDto((listReview));
     }
 
 }
