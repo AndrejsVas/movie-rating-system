@@ -1,6 +1,7 @@
 package com.avas.movieratingsystem.business.service.impl;
 
 import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
+import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.mappers.UserTypeMapper;
 import com.avas.movieratingsystem.business.repository.UserTypeRepository;
 import com.avas.movieratingsystem.business.repository.model.UserType;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Log4j2
 @Service
@@ -22,31 +22,33 @@ public class UserTypeServiceImpl implements UserTypeService {
 
     @Autowired
     UserTypeMapper userTypeMapper;
-    public List<UserTypeDTO> getAllUserTypes() {
-        return userTypeRepository.findAll().stream().map(userTypeMapper::mapUserTypeToUserTypeDto).collect(Collectors.toList());
 
+    public List<UserTypeDTO> getAllUserTypes() {
+        List<UserType> returnedUserTypeList = userTypeRepository.findAll();
+        if (returnedUserTypeList.isEmpty())
+            throw new ResourceNotFoundException("No user types found");
+        log.info("user type list size is :{}", returnedUserTypeList.size());
+        return userTypeMapper.mapUserTypeListToUserTypeListDto(returnedUserTypeList);
     }
 
     public Optional<UserTypeDTO> findUserTypeById(Long id) {
         Optional<UserTypeDTO> userTypeDTO = userTypeRepository.findById(id)
                 .map(userType -> userTypeMapper.mapUserTypeToUserTypeDto(userType));
-        if (!userTypeDTO.isPresent()) {
-            log.warn("UserType with id:{} Not found", id);
-            throw new ResourceAlreadyExists("UserType with id:" + id + " does not exist");
-        }
+        userTypeDTO.orElseThrow(() -> new ResourceNotFoundException("user type with id:{0} does not exist", id));
         log.info("Found UserType :{}", userTypeDTO);
         return userTypeDTO;
     }
 
     public void deleteUserTypeById(Long id) {
+        findUserTypeById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("UserType for delete with id {0} is not found.", id));
         userTypeRepository.deleteById(id);
         log.info("UserType with id: {} is deleted", id);
     }
 
     public UserTypeDTO createUserType(UserTypeDTO newUserType) {
         boolean userTypeAlreadyExists = userTypeRepository.existsByType(newUserType.getType());
-        if(userTypeAlreadyExists){
-            log.warn("Can not create UserType,  UserType already exists");
+        if (userTypeAlreadyExists) {
             throw new ResourceAlreadyExists("Can not create UserType, UserType already exists");
         }
         UserType savedUserType = userTypeRepository.save(userTypeMapper.mapUserTypeDtoToUserType(newUserType));
@@ -55,10 +57,10 @@ public class UserTypeServiceImpl implements UserTypeService {
     }
 
     public UserTypeDTO updateUserTypeById(UserTypeDTO modifyExistingUserType, Long id) {
-        boolean userTypeAlreadyExists = userTypeRepository.existsByType(modifyExistingUserType.getType());
-        if(userTypeAlreadyExists){
-            log.warn("Can not update UserType. This UserType is already taken :{}", modifyExistingUserType.getType());
-            throw new ResourceAlreadyExists("Can not update UserType. This UserType is already taken");
+        if (!userTypeRepository.existsById(id))
+            throw new ResourceNotFoundException("User type with id:{0} is not found", id);
+        if (userTypeRepository.existsByType(modifyExistingUserType.getType())) {
+            throw new ResourceAlreadyExists("Can not update user type. This user type is already taken");
         }
         modifyExistingUserType.setId(id);
         UserType modifiedUserType = userTypeRepository.save(userTypeMapper.mapUserTypeDtoToUserType(modifyExistingUserType));
@@ -66,7 +68,4 @@ public class UserTypeServiceImpl implements UserTypeService {
         return userTypeMapper.mapUserTypeToUserTypeDto(modifiedUserType);
     }
 
-    public boolean checkIfUserTypeExistsById(Long id){
-        return userTypeRepository.existsById(id);
-    }
 }

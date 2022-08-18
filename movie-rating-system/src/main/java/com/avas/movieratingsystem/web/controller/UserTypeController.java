@@ -30,19 +30,12 @@ public class UserTypeController {
     @GetMapping
     public ResponseEntity<List<UserTypeDTO>> getAllUserTypes() {
         List<UserTypeDTO> userTypeDTOS = userTypeService.getAllUserTypes();
-        if (userTypeDTOS.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(userTypeDTOS);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserTypeDTO> getUserTypeById(@PathVariable Long id) {
         Optional<UserTypeDTO> foundUserTypeDTO = userTypeService.findUserTypeById(id);
-        if (!foundUserTypeDTO.isPresent()) {
-            log.warn("User type type not found");
-            return ResponseEntity.notFound().build();
-        }
         log.info("User type found : {}", foundUserTypeDTO.get());
         return new ResponseEntity<>(foundUserTypeDTO.get(), HttpStatus.ACCEPTED);
     }
@@ -61,28 +54,19 @@ public class UserTypeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<UserTypeDTO> updateUserTypeById(@PathVariable Long id,
-                                                        @RequestBody UserTypeDTO modifiedUserTypeDTO, BindingResult bindingResult) {
+                                                          @RequestBody UserTypeDTO modifiedUserTypeDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             log.warn("Binding result error");
             return ResponseEntity.badRequest().build();
         }
-        if (!userTypeService.checkIfUserTypeExistsById(id)) {
-            log.info("User type with this id does not exist");
-            return ResponseEntity.notFound().build();
-        }
-        UserTypeDTO returnedUserTypeDTO = userTypeService.updateUserTypeById(modifiedUserTypeDTO , id);
+        UserTypeDTO returnedUserTypeDTO = userTypeService.updateUserTypeById(modifiedUserTypeDTO, id);
         log.debug("User type with id: {} is now :{}", id, returnedUserTypeDTO);
-        return new ResponseEntity<>(returnedUserTypeDTO,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(returnedUserTypeDTO, HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<UserTypeDTO> deleteMovieTypeById(@PathVariable Long id) {
         log.info("Delete User Type by passing ID, where ID is:{}", id);
-        Optional<UserTypeDTO> userTypeDTO = userTypeService.findUserTypeById(id);
-        if (!(userTypeDTO.isPresent())) {
-            log.warn("User type for delete with id {} is not found.", id);
-            return ResponseEntity.notFound().build();
-        }
         userTypeService.deleteUserTypeById(id);
         log.debug("User type with id {} is deleted", id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
