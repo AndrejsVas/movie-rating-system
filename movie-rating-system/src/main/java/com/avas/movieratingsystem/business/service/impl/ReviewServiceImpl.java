@@ -63,7 +63,7 @@ public class ReviewServiceImpl implements ReviewService {
     public ReviewDTO updateReviewById(ReviewDTO modifyExistingReview, Long id) {
         Optional<ReviewDTO> reviewDTO = reviewRepository.findById(id)
                 .map(foundReview -> reviewMapping.mapReviewToReviewDto(foundReview));
-        reviewDTO.orElseThrow(() -> new ResourceAlreadyExists("Review with id:{0} is not found", id));
+        reviewDTO.orElseThrow(() -> new ResourceNotFoundException("Review with id:{0} is not found", id));
         if ((reviewDTO.get().getUserId().equals(modifyExistingReview.getUserId()))
                 && (reviewDTO.get().getMovieId().equals(modifyExistingReview.getMovieId()))) {
             modifyExistingReview.setId(id);
@@ -72,7 +72,7 @@ public class ReviewServiceImpl implements ReviewService {
             return reviewMapping.mapReviewToReviewDto(reviewToReturn);
         } else
             throw new ResourceConflict("Can not update review. This movie_id:{0} and the user_id{1} don't match previous record"
-            ,reviewDTO.get().getUserId(),reviewDTO.get().getMovieId());
+                    , reviewDTO.get().getUserId(), reviewDTO.get().getMovieId());
     }
 
 

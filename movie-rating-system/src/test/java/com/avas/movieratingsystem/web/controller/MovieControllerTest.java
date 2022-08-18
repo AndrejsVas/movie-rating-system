@@ -49,7 +49,7 @@ public class MovieControllerTest {
 
     @BeforeEach
     public void beforeEach() {
-        movieDtoListPredefined = createMovieDtoListPredefined();
+        this.movieDtoListPredefined = createMovieDtoListPredefined();
         this.movieDTO = createMovieDtoPredefined();
     }
 
