@@ -29,21 +29,14 @@ public class MovieController {
     @GetMapping
     public ResponseEntity<List<MovieDTO>> getAllMovies() {
         List<MovieDTO> movieList = movieService.getAllMovies();
-        if (movieList.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(movieList);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<MovieDTO> getMovieById(@PathVariable Long id) {
         Optional<MovieDTO> foundMovie = movieService.findMovieById(id);
-        if (!foundMovie.isPresent()) {
-            log.warn("Movie not found");
-            return ResponseEntity.notFound().build();
-        }
         log.info("Movie found : {}", foundMovie.get());
-        return new ResponseEntity<>(foundMovie.get(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(foundMovie.get(), HttpStatus.OK);
     }
 
     @PostMapping
