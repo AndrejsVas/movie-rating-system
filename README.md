@@ -18,4 +18,4 @@ Spring Security
 
 
 ## Entity relationship diagram
-![alt text](https://user-images.githubusercontent.com/102141523/182854389-126cf39b-c441-4686-86d9-af326c7f10db.png)
+![alt text](https://user-images.githubusercontent.com/102141523/185632249-6bf8b6e8-9803-402f-8530-accd5242b0c7.png)
