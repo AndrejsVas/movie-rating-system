@@ -21,8 +21,18 @@ public class UserTypeTestData {
 
         return userTypeDTO;
     }
+    public static UserTypeDTO createUserTypeDtoPredefined() {
+        UserTypeDTO userTypeDTO = new UserTypeDTO();
+        userTypeDTO.setId(1L);
+        userTypeDTO.setType("admin");
+
+        return userTypeDTO;
+    }
 
     public static List<UserTypeDTO> createUserTypeDtoList() {
         return Arrays.asList(createUserTypeDto(), createUserTypeDto(), createUserTypeDto(), createUserTypeDto(), createUserTypeDto());
+    }
+    public static List<UserTypeDTO> createUserTypeDtoListPredefined() {
+        return Arrays.asList(createUserTypeDtoPredefined(), createUserTypeDtoPredefined(), createUserTypeDtoPredefined());
     }
 }

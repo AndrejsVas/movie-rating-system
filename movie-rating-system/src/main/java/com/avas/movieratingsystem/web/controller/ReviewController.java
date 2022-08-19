@@ -40,7 +40,7 @@ public class ReviewController {
     public ResponseEntity<ReviewDTO> getReviewById(@PathVariable Long id) {
         Optional<ReviewDTO> foundReview = reviewService.findReviewById(id);
         log.info("Review found : {}", foundReview.get());
-        return new ResponseEntity<>(foundReview.get(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(foundReview.get(), HttpStatus.OK);
     }
 
     @PostMapping
@@ -71,10 +71,6 @@ public class ReviewController {
     public ResponseEntity<ReviewDTO> deleteReviewById(@PathVariable Long id) {
         log.info("Delete Review by passing ID, where ID is:{}", id);
         Optional<ReviewDTO> reviewDtoFound = reviewService.findReviewById(id);
-        if (!(reviewDtoFound.isPresent())) {
-            log.warn("Review for delete with id {} is not found.", id);
-            return ResponseEntity.notFound().build();
-        }
         reviewService.deleteReviewById(id);
         log.debug("Review with id {} is deleted", id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

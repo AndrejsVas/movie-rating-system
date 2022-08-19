@@ -37,7 +37,7 @@ public class UserTypeController {
     public ResponseEntity<UserTypeDTO> getUserTypeById(@PathVariable Long id) {
         Optional<UserTypeDTO> foundUserTypeDTO = userTypeService.findUserTypeById(id);
         log.info("User type found : {}", foundUserTypeDTO.get());
-        return new ResponseEntity<>(foundUserTypeDTO.get(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(foundUserTypeDTO.get(), HttpStatus.OK);
     }
 
     @PostMapping

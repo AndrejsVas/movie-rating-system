@@ -25,14 +25,13 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieDTO> getAllMovies() {
         List<Movie> returnedMovieList = movieRepository.findAll();
         if(returnedMovieList.isEmpty())
-            throw new ResourceAlreadyExists("No reviews found");
+            throw new ResourceNotFoundException("No reviews found");
         log.info("movie list size is :{}", returnedMovieList.size());
         return movieMapper.mapMovieListToMovieListDto(returnedMovieList);
 
     }
 
     public Optional<MovieDTO> findMovieById(Long id) {
-        //TODO:Review this later
         Optional<MovieDTO> foundMovieDto = movieRepository.findById(id)
                 .map(foundUser -> movieMapper.mapMovieToMovieDto(foundUser));
         foundMovieDto.orElseThrow(() -> new ResourceNotFoundException("Movie with id:{0} Not found" , id));

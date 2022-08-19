@@ -2,6 +2,7 @@ package com.avas.movieratingsystem.business.service.impl;
 
 import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
 import com.avas.movieratingsystem.business.exceptions.ResourceConflict;
+import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.mappers.ReviewMapping;
 import com.avas.movieratingsystem.business.repository.ReviewRepository;
 import com.avas.movieratingsystem.business.repository.model.Review;
@@ -73,7 +74,7 @@ public class ReviewServiceImplTest {
         List<Review> emptyReviewList = reviewMapping.mapReviewListDtoToReviewList(emptyDtoList);
         when(reviewRepository.findAll()).thenReturn(emptyReviewList);
         when(mockReviewMapping.mapReviewListToReviewListDto(emptyReviewList)).thenReturn(emptyDtoList);
-        Assertions.assertThrows(ResourceAlreadyExists.class, () -> reviewService.getAllReviews());
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> reviewService.getAllReviews());
         verify(reviewRepository, times(1)).findAll();
     }
 
@@ -89,7 +90,7 @@ public class ReviewServiceImplTest {
     @DisplayName("Delete non existing review")
     public void testDeleteNotFound() {
         doReturn(Optional.empty()).when(reviewService).findReviewById(1L);
-        Assertions.assertThrows(ResourceAlreadyExists.class, () -> reviewService.deleteReviewById(1L));
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> reviewService.deleteReviewById(1L));
     }
 
     @Test
@@ -105,7 +106,7 @@ public class ReviewServiceImplTest {
     @DisplayName("Find non existing review by id")
     public void testFailingFindMovieById() {
         when(reviewRepository.findById(anyLong())).thenReturn(Optional.empty());
-        Assertions.assertThrows(ResourceAlreadyExists.class, () -> reviewService.findReviewById(anyLong()));
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> reviewService.findReviewById(anyLong()));
     }
 
     @Test
@@ -143,7 +144,7 @@ public class ReviewServiceImplTest {
     @DisplayName("Update non existing review")
     public void testFailingToUpdateNonExistingReview() {
         when(reviewRepository.findById(anyLong())).thenReturn(Optional.empty());
-        Assertions.assertThrows(ResourceAlreadyExists.class, () -> reviewService.updateReviewById(reviewDTO, 1L));
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> reviewService.updateReviewById(reviewDTO, 1L));
     }
 
     @Test
@@ -167,6 +168,6 @@ public class ReviewServiceImplTest {
     @DisplayName("Delete a non existing review")
     public void testFailingDeleteAMovie() {
         doReturn(Optional.empty()).when(reviewService).findReviewById(anyLong());
-        Assertions.assertThrows(ResourceAlreadyExists.class, () -> reviewService.deleteReviewById(1L));
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> reviewService.deleteReviewById(1L));
     }
 }

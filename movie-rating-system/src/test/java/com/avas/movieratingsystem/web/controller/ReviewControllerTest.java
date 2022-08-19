@@ -22,6 +22,7 @@ import java.util.Optional;
 
 import static com.avas.movieratingsystem.test.data.ReviewTestData.createReviewDto;
 import static com.avas.movieratingsystem.test.data.ReviewTestData.createReviewDtoListPredefined;
+import static com.avas.movieratingsystem.test.data.ReviewTestData.createReviewDtoPredefined;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -50,7 +51,7 @@ public class ReviewControllerTest {
     @BeforeEach
     public void beforeEach() {
         this.reviewDTOListPredefined = createReviewDtoListPredefined();
-        this.reviewDTO = createReviewDto();
+        this.reviewDTO = createReviewDtoPredefined();
     }
 
     @Test
@@ -103,7 +104,7 @@ public class ReviewControllerTest {
                         .get(URL + "/1"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].score").value(7))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.score").value(7))
                 .andExpect(status().isOk());
         verify(reviewService, times(1)).findReviewById(1L);
     }
@@ -120,7 +121,7 @@ public class ReviewControllerTest {
                         .post(URL)
                         .content(new ObjectMapper().writeValueAsString(reviewDTO))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].score").value(7))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.score").value(7))
                 .andExpect(status().isCreated());
 
         verify(reviewService, times(1)).createReview(reviewDTO);
@@ -154,7 +155,7 @@ public class ReviewControllerTest {
                         .put(URL + "/1")
                         .content(new ObjectMapper().writeValueAsString(reviewDTO))
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].score").value(7))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.score").value(7))
                 .andExpect(status().isAccepted());
         verify(reviewService, times(1)).updateReviewById(reviewDTO, 1L);
     }

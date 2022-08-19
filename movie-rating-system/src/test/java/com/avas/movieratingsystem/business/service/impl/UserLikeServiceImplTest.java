@@ -189,6 +189,7 @@ public class UserLikeServiceImplTest {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         when(userLikeRepository.existsByUserIdAndReviewId(user, review)).thenReturn(false);
         when(userLikeRepository.save(any(UserLike.class))).thenReturn(userLike);
+        when(mockUserLikeMapper.mapUserLikeToUserLikeDto(any(UserLike.class))).thenReturn(userLikeDTO);
         userLikeService.toggleReviewLike(1L, 1L);
         verify(userLikeRepository, times(1)).save(any(UserLike.class));
 

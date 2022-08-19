@@ -37,7 +37,7 @@ public class MovieTypeController {
     public ResponseEntity<MovieTypeDTO> getMovieType(@PathVariable Long id) {
         Optional<MovieTypeDTO> foundMovieType = movieTypeService.findMovieTypeById(id);
         log.info("Movie type found : {}", foundMovieType.get());
-        return new ResponseEntity<>(foundMovieType.get(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(foundMovieType.get(), HttpStatus.OK);
     }
 
     @PostMapping

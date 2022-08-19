@@ -75,8 +75,7 @@ public class MovieServiceImplTest {
         List<Movie> emptyMovieList = movieMapping.mapMovieDtoListToMovieList(emptyDtoList);
         when(movieRepository.findAll()).thenReturn(emptyMovieList);
         when(mockMovieMapping.mapMovieListToMovieListDto(emptyMovieList)).thenReturn(emptyDtoList);
-        List<MovieDTO> movieDTOListReturned = movieService.getAllMovies();
-        Assertions.assertEquals(movieDTOListReturned.size(),0);
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> movieService.getAllMovies());
         verify(movieRepository, times(1)).findAll();
     }
 
