@@ -68,19 +68,6 @@ public class ReviewControllerTest {
         verify(reviewService, times(1)).getAllReviews();
     }
 
-    @Test
-    @DisplayName("Test endpoint to successfully finding a Review by id")
-    public void findReviewById() throws Exception {
-        when(reviewService.findReviewById(anyLong())).thenReturn(Optional.of(reviewDTO));
-
-        mockMvc.perform(MockMvcRequestBuilders
-                        .get(URL + "/1"))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].score").value(7))
-                .andExpect(status().isOk());
-        verify(reviewService, times(1)).findReviewById(1L);
-    }
 
     @Test
     @DisplayName("Test endpoint to find empty Reviews list")
@@ -104,6 +91,20 @@ public class ReviewControllerTest {
                         .get(URL + "/1"))
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResourceNotFoundException))
                 .andExpect(status().isNotFound());
+        verify(reviewService, times(1)).findReviewById(1L);
+    }
+
+    @Test
+    @DisplayName("Test endpoint to successfully finding a Review by id")
+    public void findReviewById() throws Exception {
+        when(reviewService.findReviewById(anyLong())).thenReturn(Optional.of(reviewDTO));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get(URL + "/1"))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].score").value(7))
+                .andExpect(status().isOk());
         verify(reviewService, times(1)).findReviewById(1L);
     }
 
@@ -138,6 +139,7 @@ public class ReviewControllerTest {
                         .post(URL)
                         .content(new ObjectMapper().writeValueAsString(reviewDTO))
                         .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof ResourceAlreadyExists))
                 .andExpect(status().isConflict());
 
         verify(reviewService, times(1)).createReview(reviewDTO);

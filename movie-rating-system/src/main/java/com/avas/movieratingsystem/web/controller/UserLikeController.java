@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Optional;
 
 @Log4j2
 @Controller
@@ -38,9 +39,11 @@ public class UserLikeController {
     }
 
     @PutMapping("/review/{reviewId}/reviewer/{userId}")
-    public ResponseEntity toggleReviewLike(@PathVariable Long reviewId, @PathVariable Long userId) {
-        userLikeService.toggleReviewLike(reviewId, userId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<UserLikeDTO> toggleReviewLike(@PathVariable Long reviewId, @PathVariable Long userId) {
+        Optional<UserLikeDTO> userLikeDTO = userLikeService.toggleReviewLike(reviewId, userId);
+        if (!userLikeDTO.isPresent())
+            return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(userLikeDTO.get(), HttpStatus.OK);
     }
 
 

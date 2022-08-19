@@ -51,7 +51,7 @@ public class UserLikeServiceImpl implements UserLikeService {
             return userLikeDTOList;
     }
 
-    public void toggleReviewLike(Long reviewId, Long reviewerUserId) {
+    public Optional<UserLikeDTO> toggleReviewLike(Long reviewId, Long reviewerUserId) {
         Optional<ReviewDTO> reviewDTO = reviewRepository.findById(reviewId)
                 .map(review -> reviewMapping.mapReviewToReviewDto(review));
         Optional<UserDTO> foundUserDTO = userRepository.findById(reviewerUserId)
@@ -63,12 +63,13 @@ public class UserLikeServiceImpl implements UserLikeService {
             log.warn("user:{} disliked review:{}", foundUserDTO.get(), reviewDTO.get());
             userLikeRepository.delete(userLikeRepository.findByUserIdAndReviewId(userMapping.mapUserDtoToUser(foundUserDTO.get())
                     , reviewMapping.mapReviewDtoToReview(reviewDTO.get())).get());
-            return;
+            return Optional.empty();
         }
         log.warn("user:{} liked review:{}", foundUserDTO.get(), reviewDTO.get());
         UserLike userLike = userLikeRepository.save(new UserLike(userMapping.mapUserDtoToUser(foundUserDTO.get())
                 , reviewMapping.mapReviewDtoToReview(reviewDTO.get())));
         log.warn("user like:{}", userLike);
+        return Optional.of(userLikeMapper.mapUserLikeToUserLikeDto(userLike));
     }
 
     public List<UserLikeDTO> getAllLikesForAReview(Long reviewId) {
