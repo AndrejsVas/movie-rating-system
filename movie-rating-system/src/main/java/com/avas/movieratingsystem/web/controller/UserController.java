@@ -1,9 +1,11 @@
 package com.avas.movieratingsystem.web.controller;
 
+import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.service.UserService;
 import com.avas.movieratingsystem.model.MovieDTO;
 import com.avas.movieratingsystem.model.ReviewDTO;
 import com.avas.movieratingsystem.model.UserDTO;
+import com.avas.movieratingsystem.web.controller.feign.ReviewMicroserviceProxy;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +32,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    private ReviewMicroserviceProxy reviewMicroserviceProxy;
 
     @GetMapping
     @ResponseBody
@@ -85,12 +91,20 @@ public class UserController {
         return new ResponseEntity<>(movieReviews, HttpStatus.OK);
 
     }
+//    @GetMapping("/{id}/reviews")
+//    public ResponseEntity<List<ReviewDTO>> getAllReviewsMadeByUser(@PathVariable Long id) {
+//        List<ReviewDTO> userReviews = userService.getAllReviewsMadeByUserById(id);
+//        log.info("Returning all user review for user with id:{}", id);
+//        return new ResponseEntity<>(userReviews, HttpStatus.OK);
+//
+//    }
+    //Test Feign
     @GetMapping("/{id}/reviews")
     public ResponseEntity<List<ReviewDTO>> getAllReviewsMadeByUser(@PathVariable Long id) {
-        List<ReviewDTO> userReviews = userService.getAllReviewsMadeByUserById(id);
-        log.info("Returning all user review for user with id:{}", id);
-        return new ResponseEntity<>(userReviews, HttpStatus.OK);
-
+        Optional<UserDTO> userDTO = userService.findUserById(id);
+        userDTO.orElseThrow(() -> new ResourceNotFoundException("User with id:{0} is not found", id));
+        List<ReviewDTO> reviewDTOList = reviewMicroserviceProxy.getReviewsForUser(id);
+        return new ResponseEntity<>(reviewDTOList, HttpStatus.OK);
     }
 
 }

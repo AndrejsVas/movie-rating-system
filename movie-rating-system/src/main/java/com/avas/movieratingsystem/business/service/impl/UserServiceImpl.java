@@ -105,15 +105,6 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    public List<ReviewDTO> getAllReviewsMadeByUserById(Long id) {
-        Optional<UserDTO> userDTO = userRepository.findById(id)
-            .map(foundUser-> userMapper.mapUserToUserDto(foundUser));
-        userDTO.orElseThrow(() -> new ResourceNotFoundException("User with user id:{0} is not found", id));
-        List<Review> listReview = reviewRepository.findReviewByUserId(userMapper.mapUserDtoToUser(userDTO.get()));
-        if(listReview.isEmpty())
-            throw new ResourceNotFoundException("No reviews found for user:{0}", id);
-        log.info("List of reviews by user size is :{}",listReview.size());
-        return reviewMapping.mapReviewListToReviewListDto((listReview));
-    }
+
 
 }
