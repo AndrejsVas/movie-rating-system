@@ -1,12 +1,13 @@
-package com.avas.movieratingsystem.business.service.impl;
+package com.avas.review.microservice.business.service.impl;
 
-import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
-import com.avas.movieratingsystem.business.exceptions.ResourceConflict;
-import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
-import com.avas.movieratingsystem.business.mappers.ReviewMapping;
-import com.avas.movieratingsystem.business.repository.ReviewRepository;
-import com.avas.movieratingsystem.business.repository.model.Review;
-import com.avas.movieratingsystem.model.ReviewDTO;
+import com.avas.review.microservice.business.exceptions.ResourceAlreadyExists;
+import com.avas.review.microservice.business.exceptions.ResourceConflict;
+import com.avas.review.microservice.business.exceptions.ResourceNotFoundException;
+import com.avas.review.microservice.business.mappers.ReviewMapping;
+import com.avas.review.microservice.business.repository.ReviewRepository;
+import com.avas.review.microservice.business.repository.model.Review;
+import com.avas.review.microservice.model.ReviewDTO;
+import com.avas.review.microservice.test.data.ReviewTestData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,8 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.avas.movieratingsystem.test.data.ReviewTestData.createReviewDto;
-import static com.avas.movieratingsystem.test.data.ReviewTestData.createReviewDtoList;
+
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
@@ -51,14 +51,14 @@ public class ReviewServiceImplTest {
 
     @BeforeEach
     public void createTestData() {
-        this.reviewDTO = createReviewDto();
+        this.reviewDTO = ReviewTestData.createReviewDto();
         this.review = reviewMapping.mapReviewDtoToReview(reviewDTO);
     }
 
     @Test
     @DisplayName("Retrieval of all Reviews")
     public void testReviewsSuccessfully() {
-        List<ReviewDTO> reviewDtoList = createReviewDtoList();
+        List<ReviewDTO> reviewDtoList = ReviewTestData.createReviewDtoList();
         List<Review> reviewList = reviewMapping.mapReviewListDtoToReviewList(reviewDtoList);
         when(reviewRepository.findAll()).thenReturn(reviewList);
         when(mockReviewMapping.mapReviewListToReviewListDto(reviewList)).thenReturn(reviewDtoList);
@@ -153,7 +153,7 @@ public class ReviewServiceImplTest {
         when(reviewRepository.findById(anyLong())).thenReturn(Optional.of(review));
         when(mockReviewMapping.mapReviewToReviewDto(review)).thenReturn(reviewDTO);
         when(reviewRepository.save(review)).thenReturn(review);
-        Assertions.assertThrows(ResourceConflict.class, () -> reviewService.updateReviewById(createReviewDto(), 1L));
+        Assertions.assertThrows(ResourceConflict.class, () -> reviewService.updateReviewById(ReviewTestData.createReviewDto(), 1L));
     }
 
     @Test

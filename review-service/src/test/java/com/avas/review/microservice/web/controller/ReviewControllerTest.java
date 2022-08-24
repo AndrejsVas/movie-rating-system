@@ -1,10 +1,12 @@
-package com.avas.movieratingsystem.web.controller;
+package com.avas.review.microservice.web.controller;
 
-import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
-import com.avas.movieratingsystem.business.exceptions.ResourceConflict;
-import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
-import com.avas.movieratingsystem.business.service.ReviewService;
-import com.avas.movieratingsystem.model.ReviewDTO;
+import com.avas.review.microservice.test.data.ReviewTestData;
+import com.avas.review.microservice.business.exceptions.ResourceAlreadyExists;
+import com.avas.review.microservice.business.exceptions.ResourceConflict;
+import com.avas.review.microservice.business.exceptions.ResourceNotFoundException;
+import com.avas.review.microservice.business.service.ReviewService;
+import com.avas.review.microservice.controller.ReviewController;
+import com.avas.review.microservice.model.ReviewDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,9 +22,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 import java.util.Optional;
 
-import static com.avas.movieratingsystem.test.data.ReviewTestData.createReviewDto;
-import static com.avas.movieratingsystem.test.data.ReviewTestData.createReviewDtoListPredefined;
-import static com.avas.movieratingsystem.test.data.ReviewTestData.createReviewDtoPredefined;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -50,8 +49,8 @@ public class ReviewControllerTest {
 
     @BeforeEach
     public void beforeEach() {
-        this.reviewDTOListPredefined = createReviewDtoListPredefined();
-        this.reviewDTO = createReviewDtoPredefined();
+        this.reviewDTOListPredefined = ReviewTestData.createReviewDtoListPredefined();
+        this.reviewDTO = ReviewTestData.createReviewDtoPredefined();
     }
 
     @Test

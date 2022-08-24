@@ -1,7 +1,6 @@
-package com.avas.movieratingsystem.test.data;
+package com.avas.review.microservice.test.data;
 
-import com.avas.movieratingsystem.model.MovieDTO;
-import com.avas.movieratingsystem.model.ReviewDTO;
+import com.avas.review.microservice.model.ReviewDTO;
 
 import java.util.Arrays;
 import java.util.List;

@@ -91,14 +91,7 @@ public class UserController {
         return new ResponseEntity<>(movieReviews, HttpStatus.OK);
 
     }
-//    @GetMapping("/{id}/reviews")
-//    public ResponseEntity<List<ReviewDTO>> getAllReviewsMadeByUser(@PathVariable Long id) {
-//        List<ReviewDTO> userReviews = userService.getAllReviewsMadeByUserById(id);
-//        log.info("Returning all user review for user with id:{}", id);
-//        return new ResponseEntity<>(userReviews, HttpStatus.OK);
-//
-//    }
-    //Test Feign
+
     @GetMapping("/{id}/reviews")
     public ResponseEntity<List<ReviewDTO>> getAllReviewsMadeByUser(@PathVariable Long id) {
         Optional<UserDTO> userDTO = userService.findUserById(id);
