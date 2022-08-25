@@ -40,10 +40,9 @@ public class UserLikeController {
 
     @PutMapping("/review/{reviewId}/reviewer/{userId}")
     public ResponseEntity<UserLikeDTO> toggleReviewLike(@PathVariable Long reviewId, @PathVariable Long userId) {
-        Optional<UserLikeDTO> userLikeDTO = userLikeService.toggleReviewLike(reviewId, userId);
-        if (!userLikeDTO.isPresent())
-            return new ResponseEntity<>(HttpStatus.OK);
-        return new ResponseEntity<>(userLikeDTO.get(), HttpStatus.OK);
+        return userLikeService.toggleReviewLike(reviewId, userId)
+                .map(likeDTO -> new ResponseEntity<>(likeDTO, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.OK));
     }
 
 
