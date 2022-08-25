@@ -57,7 +57,7 @@ public class UserLikeServiceImpl implements UserLikeService {
         Optional<UserDTO> foundUserDTO = userRepository.findById(reviewerUserId)
                 .map(foundUser -> userMapping.mapUserToUserDto(foundUser));
         if (!reviewDTO.isPresent() || !foundUserDTO.isPresent())
-            throw new ResourceAlreadyExists("invalid reviewer id or review id");
+            throw new ResourceNotFoundException("invalid reviewer id or review id");
         if (userLikeRepository.existsByUserIdAndReviewId(userMapping.mapUserDtoToUser(foundUserDTO.get())
                 , reviewMapping.mapReviewDtoToReview(reviewDTO.get()))) {
             log.warn("user:{} disliked review:{}", foundUserDTO.get(), reviewDTO.get());
