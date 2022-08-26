@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.avas</groupId>
-	<artifactId>movie-rating-system</artifactId>
+	<artifactId>user-microservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>movie-rating-system</name>
+	<name>user-microservice</name>
 	<description>Personal project to consolidate received knowledge of Spring</description>
 	<properties>
 		<java.version>1.8</java.version>

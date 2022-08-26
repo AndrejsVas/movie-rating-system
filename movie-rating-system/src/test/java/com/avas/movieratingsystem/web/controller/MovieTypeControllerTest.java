@@ -4,7 +4,6 @@ import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
 import com.avas.movieratingsystem.business.exceptions.ResourceConflict;
 import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
 import com.avas.movieratingsystem.business.service.MovieTypeService;
-import com.avas.movieratingsystem.model.MovieDTO;
 import com.avas.movieratingsystem.model.MovieTypeDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,8 +20,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.List;
 import java.util.Optional;
 
-import static com.avas.movieratingsystem.test.data.MovieTestData.createMovieDtoListPredefined;
-import static com.avas.movieratingsystem.test.data.MovieTestData.createMovieDtoPredefined;
 import static com.avas.movieratingsystem.test.data.MovieTypeTestData.createMovieTypeDtoListPredefined;
 import static com.avas.movieratingsystem.test.data.MovieTypeTestData.createMovieTypeDtoPredefined;
 import static org.hamcrest.Matchers.hasSize;

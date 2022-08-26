@@ -2,13 +2,10 @@ package com.avas.movieratingsystem.business.service.impl;
 
 
         import com.avas.movieratingsystem.business.exceptions.ResourceAlreadyExists;
-        import com.avas.movieratingsystem.business.exceptions.ResourceConflict;
         import com.avas.movieratingsystem.business.exceptions.ResourceNotFoundException;
         import com.avas.movieratingsystem.business.mappers.UserMapping;
         import com.avas.movieratingsystem.business.repository.UserRepository;
-        import com.avas.movieratingsystem.business.repository.model.Movie;
         import com.avas.movieratingsystem.business.repository.model.User;
-        import com.avas.movieratingsystem.model.MovieDTO;
         import com.avas.movieratingsystem.model.UserDTO;
         import org.junit.jupiter.api.Assertions;
         import org.junit.jupiter.api.BeforeEach;

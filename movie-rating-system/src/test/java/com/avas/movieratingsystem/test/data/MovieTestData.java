@@ -1,7 +1,6 @@
 package com.avas.movieratingsystem.test.data;
 
 import com.avas.movieratingsystem.model.MovieDTO;
-import com.avas.movieratingsystem.model.UserDTO;
 
 import java.util.Arrays;
 import java.util.List;
