@@ -16,6 +16,6 @@ public class UserTypeDTO {
 
     private Long id;
     private String type;
-    private List<User> users;
+    private List<Long> userIds;
 
 }
