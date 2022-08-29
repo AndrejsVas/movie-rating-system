@@ -31,7 +31,7 @@ public class Movie {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "movieId",  cascade = CascadeType.REMOVE)
     private List<Review> reviewIds;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "movie_type")
     private MovieType movieType;
 
