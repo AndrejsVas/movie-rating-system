@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -43,7 +44,7 @@ public class Review {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "movie_id")
     private Movie movieId;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reviewId")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "reviewId", cascade = CascadeType.REMOVE)
     private List<UserLike> userLikes;
 
     public Review(Long id) {

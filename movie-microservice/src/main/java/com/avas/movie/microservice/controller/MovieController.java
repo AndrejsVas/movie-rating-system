@@ -72,4 +72,19 @@ public class MovieController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
+
+    //TODO GET top 10 liked movies
+    @GetMapping("/top10")
+    public ResponseEntity<List<MovieDTO>> getTopTenMovies(){
+        return null;
+    }
+    @GetMapping("/random")
+    public ResponseEntity<MovieDTO> getRandomMovie(){
+        return null;
+    }
+
+    @GetMapping("/movie_type/{genre}")
+    public ResponseEntity<List<MovieDTO>> getMovieOfAGenre(){
+        return null;
+    }
 }

@@ -29,7 +29,7 @@ public class UserType {
     @Column(name = "type")
     private String type;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userType", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userType", cascade = CascadeType.REMOVE)
     private List<User> users;
 
     public UserType(String type) {
