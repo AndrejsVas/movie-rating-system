@@ -1,13 +1,13 @@
 package com.avas.usertype.microservice.business.service.impl;
 
-import com.avas.usertype.microservice.business.exceptions.ResourceAlreadyExists;
-import com.avas.usertype.microservice.business.exceptions.ResourceNotFoundException;
-import com.avas.usertype.microservice.business.mappers.UserTypeMapper;
 import com.avas.usertype.microservice.business.repository.UserTypeRepository;
-import com.avas.usertype.microservice.business.repository.model.UserType;
 import com.avas.usertype.microservice.business.service.UserTypeService;
-import com.avas.usertype.microservice.model.UserTypeDTO;
 import lombok.extern.log4j.Log4j2;
+import main.com.avas.library.business.exceptions.ResourceAlreadyExists;
+import main.com.avas.library.business.exceptions.ResourceNotFoundException;
+import main.com.avas.library.business.mappers.UserTypeMapper;
+import main.com.avas.library.business.repository.model.UserType;
+import main.com.avas.library.model.UserTypeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

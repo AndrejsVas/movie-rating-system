@@ -1,6 +1,6 @@
 package com.avas.usertype.microservice.business.repository;
 
-import com.avas.usertype.microservice.business.repository.model.UserType;
+import main.com.avas.library.business.repository.model.UserType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserTypeRepository extends JpaRepository<UserType, Long> {

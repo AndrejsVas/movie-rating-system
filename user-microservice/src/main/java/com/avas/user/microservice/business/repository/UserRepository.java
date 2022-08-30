@@ -1,6 +1,6 @@
 package com.avas.user.microservice.business.repository;
 
-import com.avas.user.microservice.business.repository.model.User;
+import main.com.avas.library.business.repository.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

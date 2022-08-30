@@ -2,9 +2,8 @@ package com.avas.review.microservice.controller;
 
 
 import com.avas.review.microservice.business.service.ReviewService;
-import com.avas.review.microservice.model.ReviewDTO;
-import com.avas.review.microservice.model.UserDTO;
 import lombok.extern.log4j.Log4j2;
+import main.com.avas.library.model.ReviewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,17 +31,25 @@ public class ReviewController {
     @Autowired
     ReviewService reviewService;
 
+    //TODO:Get all reviews for a movie
+    //TODO: Query parameters for sorting
+    @GetMapping
+    public ResponseEntity<List<ReviewDTO>> getAllReviewsForAMovie(){
+        return null;
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<ReviewDTO>> getAllReviewsForUser(@PathVariable Long userId) {
+        List<ReviewDTO> reviewList = reviewService.getAllReviewsMadeByUserById(userId);
+        return ResponseEntity.ok(reviewList);
+    }
+
     @GetMapping
     public ResponseEntity<List<ReviewDTO>> getAllReviews() {
         List<ReviewDTO> reviewList = reviewService.getAllReviews();
         return ResponseEntity.ok(reviewList);
     }
     //TODO: Should this receive Long or a UserDTO?
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ReviewDTO>> getAllReviewsForUser(@PathVariable Long userId) {
-        List<ReviewDTO> reviewList = reviewService.getAllReviewsMadeByUserById(userId);
-        return ResponseEntity.ok(reviewList);
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ReviewDTO> getReviewById(@PathVariable Long id) {

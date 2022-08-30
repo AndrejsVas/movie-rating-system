@@ -2,8 +2,8 @@ package com.avas.user.like.microservice.controller;
 
 
 import com.avas.user.like.microservice.business.service.UserLikeService;
-import com.avas.user.like.microservice.model.UserLikeDTO;
 import lombok.extern.log4j.Log4j2;
+import main.com.avas.library.model.UserLikeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +23,12 @@ public class UserLikeController {
     @Autowired
     UserLikeService userLikeService;
 
+    @PutMapping("/review/{reviewId}/reviewer/{userId}")
+    public ResponseEntity<UserLikeDTO> toggleReviewLike(@PathVariable Long reviewId, @PathVariable Long userId) {
+        return userLikeService.toggleReviewLike(reviewId, userId)
+                .map(likeDTO -> new ResponseEntity<>(likeDTO, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.OK));
+    }
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<UserLikeDTO>> getAllUserLikes(@PathVariable Long userId) {
         List<UserLikeDTO> userLikes = userLikeService.getAllUserLikes(userId);
@@ -37,12 +43,6 @@ public class UserLikeController {
         return new ResponseEntity<>(userLikes, HttpStatus.OK);
     }
 
-    @PutMapping("/review/{reviewId}/reviewer/{userId}")
-    public ResponseEntity<UserLikeDTO> toggleReviewLike(@PathVariable Long reviewId, @PathVariable Long userId) {
-        return userLikeService.toggleReviewLike(reviewId, userId)
-                .map(likeDTO -> new ResponseEntity<>(likeDTO, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.OK));
-    }
 
 
 }

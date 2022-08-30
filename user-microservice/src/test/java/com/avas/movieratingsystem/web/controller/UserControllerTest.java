@@ -1,12 +1,12 @@
 package com.avas.movieratingsystem.web.controller;
 
-import com.avas.user.microservice.business.exceptions.ResourceAlreadyExists;
-import com.avas.user.microservice.business.exceptions.ResourceConflict;
-import com.avas.user.microservice.business.exceptions.ResourceNotFoundException;
 import com.avas.user.microservice.business.service.UserService;
-import com.avas.user.microservice.model.UserDTO;
 import com.avas.user.microservice.web.controller.UserController;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import main.com.avas.library.business.exceptions.ResourceAlreadyExists;
+import main.com.avas.library.business.exceptions.ResourceConflict;
+import main.com.avas.library.business.exceptions.ResourceNotFoundException;
+import main.com.avas.library.model.UserDTO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,13 +1,13 @@
 package com.avas.usertype.microservice.business.service.impl;
 
 
-import com.avas.usertype.microservice.business.exceptions.ResourceAlreadyExists;
-import com.avas.usertype.microservice.business.exceptions.ResourceNotFoundException;
-import com.avas.usertype.microservice.business.mappers.UserTypeMapper;
 import com.avas.usertype.microservice.business.repository.UserTypeRepository;
-import com.avas.usertype.microservice.business.repository.model.UserType;
-import com.avas.usertype.microservice.model.UserTypeDTO;
 import com.avas.usertype.microservice.test.data.UserTypeTestData;
+import main.com.avas.library.business.exceptions.ResourceAlreadyExists;
+import main.com.avas.library.business.exceptions.ResourceNotFoundException;
+import main.com.avas.library.business.mappers.UserTypeMapper;
+import main.com.avas.library.business.repository.model.UserType;
+import main.com.avas.library.model.UserTypeDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

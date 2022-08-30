@@ -1,8 +1,8 @@
 package com.avas.movie.microservice.controller;
 
 import com.avas.movie.microservice.business.service.MovieService;
-import com.avas.movie.microservice.model.MovieDTO;
 import lombok.extern.log4j.Log4j2;
+import main.com.avas.library.model.MovieDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +27,26 @@ public class MovieController {
     @Autowired
     MovieService movieService;
 
+
+    //TODO GET top 10 liked movies
+    @GetMapping("/top10")
+    public ResponseEntity<List<MovieDTO>> getTopTenMovies(){
+        return null;
+    }
+    @GetMapping("/random")
+    public ResponseEntity<MovieDTO> getRandomMovie(){
+        return null;
+    }
+
+    @GetMapping("/movie_type/{genre}")
+    public ResponseEntity<List<MovieDTO>> getMovieOfAGenre(){
+        return null;
+    }
     @GetMapping
     public ResponseEntity<List<MovieDTO>> getAllMovies() {
         List<MovieDTO> movieList = movieService.getAllMovies();
         return ResponseEntity.ok(movieList);
     }
-
     @GetMapping("/{id}")
     public ResponseEntity<MovieDTO> getMovieById(@PathVariable Long id) {
         Optional<MovieDTO> foundMovie = movieService.findMovieById(id);
@@ -73,18 +87,4 @@ public class MovieController {
 
     }
 
-    //TODO GET top 10 liked movies
-    @GetMapping("/top10")
-    public ResponseEntity<List<MovieDTO>> getTopTenMovies(){
-        return null;
-    }
-    @GetMapping("/random")
-    public ResponseEntity<MovieDTO> getRandomMovie(){
-        return null;
-    }
-
-    @GetMapping("/movie_type/{genre}")
-    public ResponseEntity<List<MovieDTO>> getMovieOfAGenre(){
-        return null;
-    }
 }

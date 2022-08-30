@@ -1,13 +1,13 @@
 package com.avas.review.microservice.business.service.impl;
 
-import com.avas.review.microservice.business.exceptions.ResourceAlreadyExists;
-import com.avas.review.microservice.business.exceptions.ResourceConflict;
-import com.avas.review.microservice.business.exceptions.ResourceNotFoundException;
-import com.avas.review.microservice.business.mappers.ReviewMapping;
 import com.avas.review.microservice.business.repository.ReviewRepository;
-import com.avas.review.microservice.business.repository.model.Review;
-import com.avas.review.microservice.model.ReviewDTO;
 import com.avas.review.microservice.test.data.ReviewTestData;
+import main.com.avas.library.business.exceptions.ResourceAlreadyExists;
+import main.com.avas.library.business.exceptions.ResourceConflict;
+import main.com.avas.library.business.exceptions.ResourceNotFoundException;
+import main.com.avas.library.business.mappers.ReviewMapping;
+import main.com.avas.library.business.repository.model.Review;
+import main.com.avas.library.model.ReviewDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +22,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;

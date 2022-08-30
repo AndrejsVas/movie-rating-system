@@ -1,9 +1,9 @@
 package com.avas.user.like.microservice.web.controller;
 
-import com.avas.user.like.microservice.business.exceptions.ResourceNotFoundException;
 import com.avas.user.like.microservice.business.service.UserLikeService;
 import com.avas.user.like.microservice.controller.UserLikeController;
-import com.avas.user.like.microservice.model.UserLikeDTO;
+import main.com.avas.library.business.exceptions.ResourceNotFoundException;
+import main.com.avas.library.model.UserLikeDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

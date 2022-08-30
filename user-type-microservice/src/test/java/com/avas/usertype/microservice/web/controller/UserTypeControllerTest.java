@@ -1,13 +1,13 @@
 package com.avas.usertype.microservice.web.controller;
 
-import com.avas.usertype.microservice.business.exceptions.ResourceAlreadyExists;
-import com.avas.usertype.microservice.business.exceptions.ResourceConflict;
-import com.avas.usertype.microservice.business.exceptions.ResourceNotFoundException;
 import com.avas.usertype.microservice.business.service.UserTypeService;
 import com.avas.usertype.microservice.controller.UserTypeController;
-import com.avas.usertype.microservice.model.UserTypeDTO;
 import com.avas.usertype.microservice.test.data.UserTypeTestData;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import main.com.avas.library.business.exceptions.ResourceAlreadyExists;
+import main.com.avas.library.business.exceptions.ResourceConflict;
+import main.com.avas.library.business.exceptions.ResourceNotFoundException;
+import main.com.avas.library.model.UserTypeDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

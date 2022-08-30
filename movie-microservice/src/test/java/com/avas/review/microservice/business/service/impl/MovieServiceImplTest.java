@@ -1,13 +1,13 @@
 package com.avas.review.microservice.business.service.impl;
 
 
-import com.avas.movie.microservice.business.mappers.MovieMapping;
 import com.avas.movie.microservice.business.repository.MovieRepository;
-import com.avas.movie.microservice.business.repository.model.Movie;
 import com.avas.movie.microservice.business.service.impl.MovieServiceImpl;
-import com.avas.movie.microservice.model.MovieDTO;
-import com.avas.review.microservice.business.exceptions.ResourceAlreadyExists;
-import com.avas.review.microservice.business.exceptions.ResourceNotFoundException;
+import main.com.avas.library.business.exceptions.ResourceAlreadyExists;
+import main.com.avas.library.business.exceptions.ResourceNotFoundException;
+import main.com.avas.library.business.mappers.MovieMapping;
+import main.com.avas.library.business.repository.model.Movie;
+import main.com.avas.library.model.MovieDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

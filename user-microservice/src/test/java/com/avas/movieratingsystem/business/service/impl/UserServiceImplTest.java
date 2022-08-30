@@ -1,37 +1,37 @@
 package com.avas.movieratingsystem.business.service.impl;
 
 
-        import com.avas.user.microservice.business.exceptions.ResourceAlreadyExists;
-        import com.avas.user.microservice.business.exceptions.ResourceNotFoundException;
-        import com.avas.user.microservice.business.mappers.UserMapping;
-        import com.avas.user.microservice.business.repository.UserRepository;
-        import com.avas.user.microservice.business.repository.model.User;
-        import com.avas.user.microservice.business.service.impl.UserServiceImpl;
-        import com.avas.user.microservice.model.UserDTO;
-        import org.junit.jupiter.api.Assertions;
-        import org.junit.jupiter.api.BeforeEach;
-        import org.junit.jupiter.api.DisplayName;
-        import org.junit.jupiter.api.Test;
-        import org.mockito.InjectMocks;
-        import org.mockito.Mock;
-        import org.mockito.Spy;
-        import org.springframework.beans.factory.annotation.Autowired;
-        import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-        import org.springframework.boot.test.context.SpringBootTest;
+import com.avas.user.microservice.business.repository.UserRepository;
+import com.avas.user.microservice.business.service.impl.UserServiceImpl;
+import main.com.avas.library.business.exceptions.ResourceAlreadyExists;
+import main.com.avas.library.business.exceptions.ResourceNotFoundException;
+import main.com.avas.library.business.mappers.UserMapping;
+import main.com.avas.library.business.repository.model.User;
+import main.com.avas.library.model.UserDTO;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Spy;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 
-        import java.util.ArrayList;
-        import java.util.List;
-        import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-        import static com.avas.movieratingsystem.test.data.UserTestData.createUserDto;
-        import static com.avas.movieratingsystem.test.data.UserTestData.createUserDtoList;
-        import static org.mockito.ArgumentMatchers.any;
-        import static org.mockito.ArgumentMatchers.anyLong;
-        import static org.mockito.ArgumentMatchers.anyString;
-        import static org.mockito.Mockito.doReturn;
-        import static org.mockito.Mockito.times;
-        import static org.mockito.Mockito.verify;
-        import static org.mockito.Mockito.when;
+import static com.avas.movieratingsystem.test.data.UserTestData.createUserDto;
+import static com.avas.movieratingsystem.test.data.UserTestData.createUserDtoList;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureMockMvc

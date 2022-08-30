@@ -1,19 +1,19 @@
 package com.avas.user.like.microservice.business.service.impl;
 
-import com.avas.user.like.microservice.business.exceptions.ResourceNotFoundException;
-import com.avas.user.like.microservice.business.mappers.ReviewMapping;
-import com.avas.user.like.microservice.business.mappers.UserLikeMapper;
-import com.avas.user.like.microservice.business.mappers.UserMapping;
+import com.avas.user.like.microservice.business.repository.ReviewRepository;
 import com.avas.user.like.microservice.business.repository.UserLikeRepository;
 import com.avas.user.like.microservice.business.repository.UserRepository;
-import com.avas.user.like.microservice.business.repository.model.UserLike;
 import com.avas.user.like.microservice.business.service.UserLikeService;
-import com.avas.user.like.microservice.model.ReviewDTO;
-import com.avas.user.like.microservice.model.UserLikeDTO;
-import com.avas.user.like.microservice.business.exceptions.ResourceAlreadyExists;
-import com.avas.user.like.microservice.business.repository.ReviewRepository;
-import com.avas.user.like.microservice.model.UserDTO;
 import lombok.extern.log4j.Log4j2;
+import main.com.avas.library.business.exceptions.ResourceAlreadyExists;
+import main.com.avas.library.business.exceptions.ResourceNotFoundException;
+import main.com.avas.library.business.mappers.ReviewMapping;
+import main.com.avas.library.business.mappers.UserLikeMapper;
+import main.com.avas.library.business.mappers.UserMapping;
+import main.com.avas.library.business.repository.model.UserLike;
+import main.com.avas.library.model.ReviewDTO;
+import main.com.avas.library.model.UserDTO;
+import main.com.avas.library.model.UserLikeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

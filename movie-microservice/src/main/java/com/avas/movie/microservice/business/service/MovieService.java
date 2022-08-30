@@ -1,6 +1,7 @@
 package com.avas.movie.microservice.business.service;
 
-import com.avas.movie.microservice.model.MovieDTO;
+
+import main.com.avas.library.model.MovieDTO;
 
 import java.util.List;
 import java.util.Optional;

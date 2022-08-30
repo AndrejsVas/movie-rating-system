@@ -1,6 +1,6 @@
 package com.avas.movieratingsystem.test.data;
 
-import com.avas.user.microservice.model.UserDTO;
+import main.com.avas.library.model.UserDTO;
 
 import java.util.Arrays;
 import java.util.List;

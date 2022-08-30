@@ -1,8 +1,8 @@
 package com.avas.movietype.microservice.controller;
 
 import com.avas.movietype.microservice.business.service.MovieTypeService;
-import com.avas.movietype.microservice.model.MovieTypeDTO;
 import lombok.extern.log4j.Log4j2;
+import main.com.avas.library.model.MovieTypeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,17 +1,16 @@
 package com.avas.review.microservice.business.service.impl;
 
-import com.avas.review.microservice.business.exceptions.ResourceAlreadyExists;
-import com.avas.review.microservice.business.exceptions.ResourceConflict;
-import com.avas.review.microservice.business.exceptions.ResourceNotFoundException;
-import com.avas.review.microservice.business.mappers.ReviewMapping;
-import com.avas.review.microservice.business.mappers.UserMapping;
 import com.avas.review.microservice.business.repository.ReviewRepository;
-import com.avas.review.microservice.business.repository.model.Review;
-import com.avas.review.microservice.business.repository.model.User;
 import com.avas.review.microservice.business.service.ReviewService;
-import com.avas.review.microservice.model.ReviewDTO;
-import com.avas.review.microservice.model.UserDTO;
 import lombok.extern.log4j.Log4j2;
+import main.com.avas.library.business.exceptions.ResourceAlreadyExists;
+import main.com.avas.library.business.exceptions.ResourceConflict;
+import main.com.avas.library.business.exceptions.ResourceNotFoundException;
+import main.com.avas.library.business.mappers.ReviewMapping;
+import main.com.avas.library.business.mappers.UserMapping;
+import main.com.avas.library.business.repository.model.Review;
+import main.com.avas.library.business.repository.model.User;
+import main.com.avas.library.model.ReviewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +26,7 @@ public class ReviewServiceImpl implements ReviewService {
 // TODO: Think how to better UserDTO's, Should they be the same DTO in both microservices, like UserDTO, or a
 //TODO: Localized version of UserDTO?
     @Autowired
-    ReviewMapping reviewMapping;
+ReviewMapping reviewMapping;
     //TODO: Should this be in a library? Maybe there is a way to do this without the userMapping import?
     @Autowired
     UserMapping userMapping;

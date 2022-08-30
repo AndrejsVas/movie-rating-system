@@ -1,11 +1,11 @@
 package com.avas.user.microservice.web.controller;
 
-import com.avas.user.microservice.business.exceptions.ResourceNotFoundException;
 import com.avas.user.microservice.business.service.UserService;
-import com.avas.user.microservice.model.ReviewDTO;
-import com.avas.user.microservice.model.UserDTO;
 import com.avas.user.microservice.web.controller.feign.ReviewMicroserviceProxy;
 import lombok.extern.log4j.Log4j2;
+import main.com.avas.library.business.exceptions.ResourceNotFoundException;
+import main.com.avas.library.model.ReviewDTO;
+import main.com.avas.library.model.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
