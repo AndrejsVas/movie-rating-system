@@ -1,9 +1,9 @@
-package main.java.com.avas.library.business.mappers;
+package com.avas.library.business.mappers;
 
-import main.java.com.avas.library.business.repository.model.Movie;
-import main.java.com.avas.library.business.repository.model.Review;
-import main.java.com.avas.library.business.repository.model.User;
-import main.java.com.avas.library.model.ReviewDTO;
+import com.avas.library.business.repository.model.Movie;
+import com.avas.library.business.repository.model.Review;
+import com.avas.library.business.repository.model.User;
+import com.avas.library.model.ReviewDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;

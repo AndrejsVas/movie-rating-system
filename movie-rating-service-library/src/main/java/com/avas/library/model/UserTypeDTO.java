@@ -1,4 +1,4 @@
-package main.java.com.avas.library.model;
+package com.avas.library.model;
 
 
 import lombok.AllArgsConstructor;

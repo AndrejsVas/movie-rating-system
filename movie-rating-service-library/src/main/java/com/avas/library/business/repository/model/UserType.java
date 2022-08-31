@@ -1,4 +1,4 @@
-package main.java.com.avas.library.business.repository.model;
+package com.avas.library.business.repository.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

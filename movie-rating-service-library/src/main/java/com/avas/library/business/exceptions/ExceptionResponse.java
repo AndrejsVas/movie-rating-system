@@ -1,4 +1,4 @@
-package main.java.com.avas.library.business.exceptions;
+package com.avas.library.business.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
