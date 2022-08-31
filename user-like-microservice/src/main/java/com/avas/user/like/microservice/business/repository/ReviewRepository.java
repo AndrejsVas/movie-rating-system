@@ -1,8 +1,8 @@
 package com.avas.user.like.microservice.business.repository;
 
-import main.com.avas.library.business.repository.model.Movie;
-import main.com.avas.library.business.repository.model.Review;
-import main.com.avas.library.business.repository.model.User;
+import main.java.com.avas.library.business.repository.model.Movie;
+import main.java.com.avas.library.business.repository.model.Review;
+import main.java.com.avas.library.business.repository.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

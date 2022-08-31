@@ -2,7 +2,7 @@ package com.avas.usertype.microservice.controller;
 
 import com.avas.usertype.microservice.business.service.UserTypeService;
 import lombok.extern.log4j.Log4j2;
-import main.com.avas.library.model.UserTypeDTO;
+import main.java.com.avas.library.model.UserTypeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

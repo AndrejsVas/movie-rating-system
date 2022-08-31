@@ -1,6 +1,6 @@
 package com.avas.user.microservice.web.controller.feign;
 
-import main.com.avas.library.model.ReviewDTO;
+import main.java.com.avas.library.model.ReviewDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

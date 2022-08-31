@@ -1,6 +1,6 @@
 package com.avas.movietype.microservice.test.data;
 
-import main.com.avas.library.model.MovieTypeDTO;
+import main.java.com.avas.library.model.MovieTypeDTO;
 
 import java.util.Arrays;
 import java.util.List;

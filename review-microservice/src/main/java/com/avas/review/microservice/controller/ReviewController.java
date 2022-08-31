@@ -3,7 +3,7 @@ package com.avas.review.microservice.controller;
 
 import com.avas.review.microservice.business.service.ReviewService;
 import lombok.extern.log4j.Log4j2;
-import main.com.avas.library.model.ReviewDTO;
+import main.java.com.avas.library.model.ReviewDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

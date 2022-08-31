@@ -3,11 +3,11 @@ package com.avas.movieratingsystem.business.service.impl;
 
 import com.avas.user.microservice.business.repository.UserRepository;
 import com.avas.user.microservice.business.service.impl.UserServiceImpl;
-import main.com.avas.library.business.exceptions.ResourceAlreadyExists;
-import main.com.avas.library.business.exceptions.ResourceNotFoundException;
-import main.com.avas.library.business.mappers.UserMapping;
-import main.com.avas.library.business.repository.model.User;
-import main.com.avas.library.model.UserDTO;
+import main.java.com.avas.library.business.exceptions.ResourceAlreadyExists;
+import main.java.com.avas.library.business.exceptions.ResourceNotFoundException;
+import main.java.com.avas.library.business.mappers.UserMapping;
+import main.java.com.avas.library.business.repository.model.User;
+import main.java.com.avas.library.model.UserDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
