@@ -30,6 +30,8 @@ public class Movie {
     private String description;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "movieId",  cascade = CascadeType.REMOVE)
     private List<Review> reviewIds;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "movieId",  cascade = CascadeType.REMOVE)
+    private List<MovieLike> movieLikes;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "movie_type")
