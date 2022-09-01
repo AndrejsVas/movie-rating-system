@@ -1,20 +1,20 @@
 package com.avas.user.like.microservice.business.service.impl;
 
 
-import com.avas.user.like.microservice.business.exceptions.ResourceAlreadyExists;
-import com.avas.user.like.microservice.business.exceptions.ResourceNotFoundException;
-import com.avas.user.like.microservice.business.mappers.ReviewMapping;
-import com.avas.user.like.microservice.business.mappers.UserLikeMapper;
-import com.avas.user.like.microservice.business.mappers.UserMapping;
+import com.avas.library.business.exceptions.ResourceAlreadyExists;
+import com.avas.library.business.exceptions.ResourceNotFoundException;
+import com.avas.library.business.mappers.ReviewMapping;
+import com.avas.library.business.mappers.UserLikeMapper;
+import com.avas.library.business.mappers.UserMapping;
+import com.avas.library.business.repository.model.Review;
+import com.avas.library.business.repository.model.User;
+import com.avas.library.business.repository.model.UserLike;
+import com.avas.library.model.ReviewDTO;
+import com.avas.library.model.UserDTO;
+import com.avas.library.model.UserLikeDTO;
 import com.avas.user.like.microservice.business.repository.ReviewRepository;
 import com.avas.user.like.microservice.business.repository.UserLikeRepository;
 import com.avas.user.like.microservice.business.repository.UserRepository;
-import com.avas.user.like.microservice.business.repository.model.Review;
-import com.avas.user.like.microservice.business.repository.model.User;
-import com.avas.user.like.microservice.business.repository.model.UserLike;
-import com.avas.user.like.microservice.model.ReviewDTO;
-import com.avas.user.like.microservice.model.UserDTO;
-import com.avas.user.like.microservice.model.UserLikeDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -3,7 +3,7 @@ package com.avas.user.like.microservice.controller;
 
 import com.avas.user.like.microservice.business.service.UserLikeService;
 import lombok.extern.log4j.Log4j2;
-import main.java.com.avas.library.model.UserLikeDTO;
+import com.avas.library.model.UserLikeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

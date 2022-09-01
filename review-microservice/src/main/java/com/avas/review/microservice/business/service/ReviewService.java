@@ -1,6 +1,6 @@
 package com.avas.review.microservice.business.service;
 
-import main.java.com.avas.library.model.ReviewDTO;
+import com.avas.library.model.ReviewDTO;
 
 import java.util.List;
 import java.util.Optional;

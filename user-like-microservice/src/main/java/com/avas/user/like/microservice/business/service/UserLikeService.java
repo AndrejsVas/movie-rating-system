@@ -1,6 +1,6 @@
 package com.avas.user.like.microservice.business.service;
 
-import main.java.com.avas.library.model.UserLikeDTO;
+import com.avas.library.model.UserLikeDTO;
 
 import java.util.List;
 import java.util.Optional;

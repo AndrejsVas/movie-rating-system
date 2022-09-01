@@ -1,10 +1,10 @@
 
 package com.avas.user.like.microservice.test.data;
 
-import main.java.com.avas.library.business.repository.model.Review;
-import main.java.com.avas.library.business.repository.model.User;
-import main.java.com.avas.library.business.repository.model.UserLike;
-import main.java.com.avas.library.model.UserLikeDTO;
+import com.avas.library.business.repository.model.Review;
+import com.avas.library.business.repository.model.User;
+import com.avas.library.business.repository.model.UserLike;
+import com.avas.library.model.UserLikeDTO;
 
 import java.util.Arrays;
 import java.util.List;

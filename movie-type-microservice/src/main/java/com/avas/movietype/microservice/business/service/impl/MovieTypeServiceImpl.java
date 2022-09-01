@@ -3,11 +3,11 @@ package com.avas.movietype.microservice.business.service.impl;
 import com.avas.movietype.microservice.business.repository.MovieTypeRepository;
 import com.avas.movietype.microservice.business.service.MovieTypeService;
 import lombok.extern.log4j.Log4j2;
-import main.java.com.avas.library.business.exceptions.ResourceAlreadyExists;
-import main.java.com.avas.library.business.exceptions.ResourceNotFoundException;
-import main.java.com.avas.library.business.mappers.MovieTypeMapping;
-import main.java.com.avas.library.business.repository.model.MovieType;
-import main.java.com.avas.library.model.MovieTypeDTO;
+import com.avas.library.business.exceptions.ResourceAlreadyExists;
+import com.avas.library.business.exceptions.ResourceNotFoundException;
+import com.avas.library.business.mappers.MovieTypeMapping;
+import com.avas.library.business.repository.model.MovieType;
+import com.avas.library.model.MovieTypeDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

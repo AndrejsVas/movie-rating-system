@@ -1,6 +1,6 @@
 package com.avas.user.like.microservice.test.data;
 
-import main.java.com.avas.library.model.UserDTO;
+import com.avas.library.model.UserDTO;
 
 import java.util.Arrays;
 import java.util.List;
