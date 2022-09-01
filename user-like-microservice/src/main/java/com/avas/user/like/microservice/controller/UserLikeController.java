@@ -1,9 +1,13 @@
 package com.avas.user.like.microservice.controller;
 
 
-import com.avas.user.like.microservice.business.service.UserLikeService;
-import lombok.extern.log4j.Log4j2;
+import com.avas.library.business.exceptions.ResourceNotFoundException;
+import com.avas.library.model.MovieDTO;
+import com.avas.library.model.MovieLikeDTO;
 import com.avas.library.model.UserLikeDTO;
+import com.avas.user.like.microservice.business.service.UserLikeService;
+import com.avas.user.like.microservice.controller.feign.MovieMicroserviceProxy;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +26,18 @@ public class UserLikeController {
 
     @Autowired
     UserLikeService userLikeService;
+
+//    @Autowired
+//    UserMicroserviceProxy userMicroserviceProxy;
+    @Autowired
+    private MovieMicroserviceProxy movieMicroserviceProxy;
+    @GetMapping("/movie/{movieId}")
+    //public ResponseEntity<List<MovieLike>> getLikesForMovie(@PathVariable Long movieId){
+    public ResponseEntity<List<MovieLikeDTO>> getLikesForMovie(@PathVariable Long movieId){
+        MovieDTO movieDTO = movieMicroserviceProxy.getMovie(movieId)
+                .orElseThrow(() -> new ResourceNotFoundException("Movie with id {0} is not found", movieId));
+        return new ResponseEntity<>(userLikeService.getAllLikesForMovie(movieDTO), HttpStatus.OK);
+    }
 
     @PutMapping("/review/{reviewId}/reviewer/{userId}")
     public ResponseEntity<UserLikeDTO> toggleReviewLike(@PathVariable Long reviewId, @PathVariable Long userId) {

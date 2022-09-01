@@ -1,5 +1,12 @@
 package com.avas.user.like.microservice.business.service.impl;
 
+import com.avas.library.business.mappers.MovieLikeMapper;
+import com.avas.library.business.mappers.MovieMapping;
+import com.avas.library.business.repository.model.Movie;
+import com.avas.library.business.repository.model.MovieLike;
+import com.avas.library.model.MovieDTO;
+import com.avas.library.model.MovieLikeDTO;
+import com.avas.user.like.microservice.business.repository.MovieLikeRepository;
 import com.avas.user.like.microservice.business.repository.ReviewRepository;
 import com.avas.user.like.microservice.business.repository.UserLikeRepository;
 import com.avas.user.like.microservice.business.repository.UserRepository;
@@ -34,9 +41,24 @@ public class UserLikeServiceImpl implements UserLikeService {
     @Autowired
     UserRepository userRepository;
     @Autowired
+    MovieLikeRepository movieLikeRepository;
+    @Autowired
     ReviewMapping reviewMapping;
     @Autowired
+    MovieLikeMapper movieLikeMapper;
+    @Autowired
+    MovieMapping movieMapping;
+    @Autowired
     UserMapping userMapping;
+
+    @Override
+    public List<MovieLikeDTO> getAllLikesForMovie(MovieDTO movie) {
+        List<MovieLike> movieLikeList = movieLikeRepository
+                .findMovieLikeByMovieId(movieMapping.mapMovieDtoToMovie(movie));
+        if(movieLikeList.isEmpty())
+            throw new ResourceNotFoundException("This movie has no likes");
+        return movieLikeMapper.mapUserLikeListToUserLikeDtoList(movieLikeList);
+    }
 
     public List<UserLikeDTO> getAllUserLikes(Long userId) {
         Optional<UserDTO> user = userRepository.findById(userId)
