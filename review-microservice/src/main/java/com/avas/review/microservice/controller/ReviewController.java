@@ -33,10 +33,10 @@ public class ReviewController {
 
     //TODO:Get all reviews for a movie
     //TODO: Query parameters for sorting
-    @GetMapping
-    public ResponseEntity<List<ReviewDTO>> getAllReviewsForAMovie(){
-        return null;
-    }
+//    @GetMapping
+//    public ResponseEntity<List<ReviewDTO>> getAllReviewsForAMovie(){
+//        return null;
+//    }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<ReviewDTO>> getAllReviewsForUser(@PathVariable Long userId) {

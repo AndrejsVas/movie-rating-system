@@ -18,17 +18,17 @@ public interface MovieLikeMapper {
             @Mapping(source = "userId", target = "userId", qualifiedByName = "userIdToUserIdLong"),
             @Mapping(source = "movieId", target = "movieId", qualifiedByName = "movieToMovieIdLong")
     })
-    MovieLikeDTO mapUserLikeToUserLikeDto(MovieLike userLike);
+    MovieLikeDTO mapMovieLikeToMovieLikeDto(MovieLike userLike);
 
     @Mappings({
             @Mapping(source = "userId", target = "userId", qualifiedByName = "userIdLongToUserId"),
             @Mapping(source = "movieId", target = "movieId", qualifiedByName = "movieIdLongToMovie")
     })
-    MovieLike mapUserLikeDtoToUserLike(MovieLikeDTO userLike);
+    MovieLike mapMovieLikeDtoToMovieLike(MovieLikeDTO userLike);
 
-    List<MovieLikeDTO> mapUserLikeListToUserLikeDtoList(List<MovieLike> userLike);
+    List<MovieLikeDTO> mapMovieLikeListToMovieLikeDtoList(List<MovieLike> userLike);
 
-    List<MovieLike> mapUserLikeDtoListToUserLikeList(List<MovieLikeDTO> userLike);
+    List<MovieLike> mapMovieLikeDtoListToMovieLikeList(List<MovieLikeDTO> userLike);
 
     @Named("userIdToUserIdLong")
     default Long userIdToUserIdLong(User userId) {

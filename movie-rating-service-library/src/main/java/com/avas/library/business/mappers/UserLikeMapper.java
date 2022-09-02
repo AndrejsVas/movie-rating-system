@@ -1,9 +1,9 @@
 package com.avas.library.business.mappers;
 
 import com.avas.library.business.repository.model.Review;
+import com.avas.library.business.repository.model.ReviewLike;
 import com.avas.library.business.repository.model.User;
-import com.avas.library.business.repository.model.UserLike;
-import com.avas.library.model.UserLikeDTO;
+import com.avas.library.model.ReviewLikeDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -17,17 +17,17 @@ public interface UserLikeMapper {
             @Mapping(source = "userId", target = "userId", qualifiedByName = "userIdToUserIdLong"),
             @Mapping(source = "reviewId", target = "reviewId", qualifiedByName = "reviewIdToReviewIdLong")
     })
-    UserLikeDTO mapUserLikeToUserLikeDto(UserLike userLike);
+    ReviewLikeDTO mapUserLikeToUserLikeDto(ReviewLike reviewLike);
 
     @Mappings({
             @Mapping(source = "userId", target = "userId", qualifiedByName = "userIdLongToUserId"),
             @Mapping(source = "reviewId", target = "reviewId", qualifiedByName = "reviewIdLongToReviewId")
     })
-    UserLike mapUserLikeDtoToUserLike(UserLikeDTO userLike);
+    ReviewLike mapUserLikeDtoToUserLike(ReviewLikeDTO userLike);
 
-    List<UserLikeDTO> mapUserLikeListToUserLikeDtoList(List<UserLike> userLike);
+    List<ReviewLikeDTO> mapUserLikeListToUserLikeDtoList(List<ReviewLike> reviewLike);
 
-    List<UserLike> mapUserLikeDtoListToUserLikeList(List<UserLikeDTO> userLike);
+    List<ReviewLike> mapUserLikeDtoListToUserLikeList(List<ReviewLikeDTO> userLike);
 
     @Named("userIdToUserIdLong")
     default Long userIdToUserIdLong(User userId) {

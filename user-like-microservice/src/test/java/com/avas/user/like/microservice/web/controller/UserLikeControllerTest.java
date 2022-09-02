@@ -1,9 +1,9 @@
 package com.avas.user.like.microservice.web.controller;
 
+import com.avas.library.model.ReviewLikeDTO;
 import com.avas.user.like.microservice.business.service.UserLikeService;
 import com.avas.user.like.microservice.controller.UserLikeController;
 import com.avas.library.business.exceptions.ResourceNotFoundException;
-import com.avas.library.model.UserLikeDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -42,19 +42,19 @@ public class UserLikeControllerTest {
     private UserLikeService userLikeService;
 
 
-    private List<UserLikeDTO> userLikeDTOListPredefined;
-    private UserLikeDTO userLikeDTO;
+    private List<ReviewLikeDTO> reviewLikeDTOListPredefined;
+    private ReviewLikeDTO reviewLikeDTO;
 
     @BeforeEach
     public void beforeEach() {
-        this.userLikeDTOListPredefined = createUserLikeDtoListPredefined();
-        this.userLikeDTO = createUserLikeDTOPredefined();
+        this.reviewLikeDTOListPredefined = createUserLikeDtoListPredefined();
+        this.reviewLikeDTO = createUserLikeDTOPredefined();
     }
 
     @Test
     @DisplayName("Test endpoint to find all Likes for a user succesfully")
     public void findAllLikesUser() throws Exception {
-        when(userLikeService.getAllUserLikes(anyLong())).thenReturn(userLikeDTOListPredefined);
+        when(userLikeService.getAllUserLikes(anyLong())).thenReturn(reviewLikeDTOListPredefined);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get(URL + "/user/1")
@@ -84,7 +84,7 @@ public class UserLikeControllerTest {
     @Test
     @DisplayName("Test endpoint to find all likes for a review ")
     public void findAllLikesReview() throws Exception {
-        when(userLikeService.getAllLikesForAReview(anyLong())).thenReturn(userLikeDTOListPredefined);
+        when(userLikeService.getAllLikesForAReview(anyLong())).thenReturn(reviewLikeDTOListPredefined);
 
         mockMvc.perform(MockMvcRequestBuilders
                         .get(URL + "/review/1")
@@ -113,7 +113,7 @@ public class UserLikeControllerTest {
     @Test
     @DisplayName("Toggle like from dislike to like or just like a review")
     public void toggleLikeFromDislikeToLike() throws Exception {
-        when(userLikeService.toggleReviewLike(anyLong(), anyLong())).thenReturn(Optional.of(userLikeDTO));
+        when(userLikeService.toggleReviewLike(anyLong(), anyLong())).thenReturn(Optional.of(reviewLikeDTO));
         mockMvc.perform(MockMvcRequestBuilders
                         .put(URL + "/review/1/reviewer/1")
                         .contentType(MediaType.APPLICATION_JSON))

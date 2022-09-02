@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="user_likes")
-public class UserLike {
+public class ReviewLike {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class UserLike {
     @JoinColumn(name="review_id")
     private Review reviewId;
 
-    public UserLike(User userId, Review reviewId) {
+    public ReviewLike(User userId, Review reviewId) {
         this.userId = userId;
         this.reviewId = reviewId;
     }

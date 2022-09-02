@@ -7,11 +7,11 @@ import com.avas.library.business.mappers.ReviewMapping;
 import com.avas.library.business.mappers.UserLikeMapper;
 import com.avas.library.business.mappers.UserMapping;
 import com.avas.library.business.repository.model.Review;
+import com.avas.library.business.repository.model.ReviewLike;
 import com.avas.library.business.repository.model.User;
-import com.avas.library.business.repository.model.UserLike;
 import com.avas.library.model.ReviewDTO;
+import com.avas.library.model.ReviewLikeDTO;
 import com.avas.library.model.UserDTO;
-import com.avas.library.model.UserLikeDTO;
 import com.avas.user.like.microservice.business.repository.ReviewRepository;
 import com.avas.user.like.microservice.business.repository.UserLikeRepository;
 import com.avas.user.like.microservice.business.repository.UserRepository;
@@ -68,29 +68,29 @@ public class UserLikeServiceImplTest {
     @InjectMocks
     private UserLikeServiceImpl userLikeService;
 
-    private UserLikeDTO userLikeDTO;
-    private UserLike userLike;
+    private ReviewLikeDTO reviewLikeDTO;
+    private ReviewLike reviewLike;
 
     @BeforeEach
     public void createTestData() {
-        this.userLikeDTO = createUserLikeDTO();
-        this.userLike = userLikeMapper.mapUserLikeDtoToUserLike(userLikeDTO);
+        this.reviewLikeDTO = createUserLikeDTO();
+        this.reviewLike = userLikeMapper.mapUserLikeDtoToUserLike(reviewLikeDTO);
     }
 
     @Test
     @DisplayName("Retrieval of all UserLikes for a user")
     public void testSuccessfullyGetAllUserLikesForUser() {
         UserDTO userDto = createUserDto();
-        List<UserLikeDTO> userLikeDtoList = createUserLikeDtoList();
+        List<ReviewLikeDTO> reviewLikeDtoList = createUserLikeDtoList();
         User user = userMapping.mapUserDtoToUser(userDto);
         when(mockUserMapping.mapUserToUserDto(user)).thenReturn(userDto);
         when(mockUserMapping.mapUserDtoToUser(userDto)).thenReturn(user);
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         when(userLikeRepository.findAllByUserId(user)).thenReturn(userLikeMapper
-                .mapUserLikeDtoListToUserLikeList(userLikeDtoList));
-        when(mockUserLikeMapper.mapUserLikeToUserLikeDto(userLike)).thenReturn(userLikeDTO);
-        List<UserLikeDTO> userLikeDTOList = userLikeService.getAllUserLikes(anyLong());
-        Assertions.assertNotEquals(userLikeDTOList.size(), 0);
+                .mapUserLikeDtoListToUserLikeList(reviewLikeDtoList));
+        when(mockUserLikeMapper.mapUserLikeToUserLikeDto(reviewLike)).thenReturn(reviewLikeDTO);
+        List<ReviewLikeDTO> reviewLikeDTOList = userLikeService.getAllUserLikes(anyLong());
+        Assertions.assertNotEquals(reviewLikeDTOList.size(), 0);
         verify(userLikeRepository, times(1)).findAllByUserId(user);
         verify(userRepository, times(1)).findById(anyLong());
     }
@@ -107,11 +107,11 @@ public class UserLikeServiceImplTest {
     public void testFailGetAllUserLikesEmpty() {
         UserDTO userDto = createUserDto();
         User user = userMapping.mapUserDtoToUser(userDto);
-        List<UserLikeDTO> userLikeDtoList = new ArrayList<UserLikeDTO>();
+        List<ReviewLikeDTO> reviewLikeDtoList = new ArrayList<ReviewLikeDTO>();
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         when(userLikeRepository.findAllByUserId(user)).thenReturn(userLikeMapper
-                .mapUserLikeDtoListToUserLikeList(userLikeDtoList));
-        when(mockUserLikeMapper.mapUserLikeToUserLikeDto(userLike)).thenReturn(userLikeDTO);
+                .mapUserLikeDtoListToUserLikeList(reviewLikeDtoList));
+        when(mockUserLikeMapper.mapUserLikeToUserLikeDto(reviewLike)).thenReturn(reviewLikeDTO);
         Assertions.assertThrows(ResourceNotFoundException.class, () -> userLikeService.getAllUserLikes(1L));
     }
 
@@ -120,16 +120,16 @@ public class UserLikeServiceImplTest {
     @DisplayName("Retrieval of all UserLikes for a review")
     public void testSuccessfullyGetAllUserLikesForReview() {
         ReviewDTO reviewDTO = createReviewDto();
-        List<UserLikeDTO> userLikeDtoList = createUserLikeDtoList();
+        List<ReviewLikeDTO> reviewLikeDtoList = createUserLikeDtoList();
         Review review = reviewMapping.mapReviewDtoToReview(reviewDTO);
         when(mockReviewMapping.mapReviewToReviewDto(review)).thenReturn(reviewDTO);
         when(mockReviewMapping.mapReviewDtoToReview(reviewDTO)).thenReturn(review);
         when(reviewRepository.findById(anyLong())).thenReturn(Optional.of(review));
         when(userLikeRepository.findAllByReviewId(review)).thenReturn(userLikeMapper
-                .mapUserLikeDtoListToUserLikeList(userLikeDtoList));
-        when(mockUserLikeMapper.mapUserLikeToUserLikeDto(userLike)).thenReturn(userLikeDTO);
-        List<UserLikeDTO> userLikeDTOList = userLikeService.getAllLikesForAReview(anyLong());
-        Assertions.assertNotEquals(userLikeDTOList.size(), 0);
+                .mapUserLikeDtoListToUserLikeList(reviewLikeDtoList));
+        when(mockUserLikeMapper.mapUserLikeToUserLikeDto(reviewLike)).thenReturn(reviewLikeDTO);
+        List<ReviewLikeDTO> reviewLikeDTOList = userLikeService.getAllLikesForAReview(anyLong());
+        Assertions.assertNotEquals(reviewLikeDTOList.size(), 0);
         verify(userLikeRepository, times(1)).findAllByReviewId(review);
         verify(reviewRepository, times(1)).findById(anyLong());
     }
@@ -146,11 +146,11 @@ public class UserLikeServiceImplTest {
     public void testFailGetAllUserLikesEmptyForReview() {
         ReviewDTO reviewDTO = createReviewDto();
         Review review = reviewMapping.mapReviewDtoToReview(reviewDTO);
-        List<UserLikeDTO> userLikeDtoList = new ArrayList<UserLikeDTO>();
+        List<ReviewLikeDTO> reviewLikeDtoList = new ArrayList<ReviewLikeDTO>();
         when(reviewRepository.findById(anyLong())).thenReturn(Optional.of(review));
         when(userLikeRepository.findAllByReviewId(review)).thenReturn(userLikeMapper
-                .mapUserLikeDtoListToUserLikeList(userLikeDtoList));
-        when(mockUserLikeMapper.mapUserLikeToUserLikeDto(userLike)).thenReturn(userLikeDTO);
+                .mapUserLikeDtoListToUserLikeList(reviewLikeDtoList));
+        when(mockUserLikeMapper.mapUserLikeToUserLikeDto(reviewLike)).thenReturn(reviewLikeDTO);
         Assertions.assertThrows(ResourceNotFoundException.class, () -> userLikeService.getAllLikesForAReview(1L));
     }
 
@@ -169,9 +169,9 @@ public class UserLikeServiceImplTest {
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
 
         when(userLikeRepository.existsByUserIdAndReviewId(user, review)).thenReturn(true);
-        when(userLikeRepository.findByUserIdAndReviewId(user, review)).thenReturn(Optional.of(userLike));
+        when(userLikeRepository.findByUserIdAndReviewId(user, review)).thenReturn(Optional.of(reviewLike));
         userLikeService.toggleReviewLike(1L, 1L);
-        verify(userLikeRepository, times(1)).delete(userLike);
+        verify(userLikeRepository, times(1)).delete(reviewLike);
     }
 
     @Test
@@ -188,10 +188,10 @@ public class UserLikeServiceImplTest {
         when(mockUserMapping.mapUserDtoToUser(userDto)).thenReturn(user);
         when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
         when(userLikeRepository.existsByUserIdAndReviewId(user, review)).thenReturn(false);
-        when(userLikeRepository.save(any(UserLike.class))).thenReturn(userLike);
-        when(mockUserLikeMapper.mapUserLikeToUserLikeDto(any(UserLike.class))).thenReturn(userLikeDTO);
+        when(userLikeRepository.save(any(ReviewLike.class))).thenReturn(reviewLike);
+        when(mockUserLikeMapper.mapUserLikeToUserLikeDto(any(ReviewLike.class))).thenReturn(reviewLikeDTO);
         userLikeService.toggleReviewLike(1L, 1L);
-        verify(userLikeRepository, times(1)).save(any(UserLike.class));
+        verify(userLikeRepository, times(1)).save(any(ReviewLike.class));
 
     }
 

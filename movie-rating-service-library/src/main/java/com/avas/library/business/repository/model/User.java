@@ -38,7 +38,7 @@ public class User {
     private UserType userType;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userId",cascade = CascadeType.REMOVE )
-    List<UserLike> userLikes;
+    List<ReviewLike> reviewLikes;
 
     public User(Long id) {
         this.id = id;

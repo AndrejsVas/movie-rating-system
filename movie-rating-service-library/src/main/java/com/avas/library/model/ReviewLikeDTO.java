@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLikeDTO {
+public class ReviewLikeDTO {
 
     private Long id;
     private Long userId;

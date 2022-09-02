@@ -2,9 +2,9 @@
 package com.avas.user.like.microservice.test.data;
 
 import com.avas.library.business.repository.model.Review;
+import com.avas.library.business.repository.model.ReviewLike;
 import com.avas.library.business.repository.model.User;
-import com.avas.library.business.repository.model.UserLike;
-import com.avas.library.model.UserLikeDTO;
+import com.avas.library.model.ReviewLikeDTO;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,39 +16,39 @@ public class UserLikeTestData {
     private static final Random reviewId = new Random();
     private static final Random userId = new Random();
 
-    public static UserLikeDTO createUserLikeDTO() {
-        UserLikeDTO userLikeDTO = new UserLikeDTO();
-        userLikeDTO.setId(likeId.nextLong());
-        userLikeDTO.setUserId(userId.nextLong());
-        userLikeDTO.setReviewId(reviewId.nextLong());
-        return userLikeDTO;
+    public static ReviewLikeDTO createUserLikeDTO() {
+        ReviewLikeDTO reviewLikeDTO = new ReviewLikeDTO();
+        reviewLikeDTO.setId(likeId.nextLong());
+        reviewLikeDTO.setUserId(userId.nextLong());
+        reviewLikeDTO.setReviewId(reviewId.nextLong());
+        return reviewLikeDTO;
     }
 
-    public static UserLikeDTO createUserLikeDTOPredefined() {
-        UserLikeDTO userLikeDTO = new UserLikeDTO();
-        userLikeDTO.setId(1L);
-        userLikeDTO.setUserId(1L);
-        userLikeDTO.setReviewId(1L);
-        return userLikeDTO;
+    public static ReviewLikeDTO createUserLikeDTOPredefined() {
+        ReviewLikeDTO reviewLikeDTO = new ReviewLikeDTO();
+        reviewLikeDTO.setId(1L);
+        reviewLikeDTO.setUserId(1L);
+        reviewLikeDTO.setReviewId(1L);
+        return reviewLikeDTO;
     }
 
-    public static UserLike createUserLike() {
-        UserLike userLike = new UserLike();
-        userLike.setId(likeId.nextLong());
-        userLike.setUserId(new User(userId.nextLong()));
-        userLike.setReviewId(new Review(reviewId.nextLong()));
-        return userLike;
+    public static ReviewLike createUserLike() {
+        ReviewLike reviewLike = new ReviewLike();
+        reviewLike.setId(likeId.nextLong());
+        reviewLike.setUserId(new User(userId.nextLong()));
+        reviewLike.setReviewId(new Review(reviewId.nextLong()));
+        return reviewLike;
     }
 
-    public static List<UserLikeDTO> createUserLikeDtoList() {
+    public static List<ReviewLikeDTO> createUserLikeDtoList() {
         return Arrays.asList(createUserLikeDTO(), createUserLikeDTO(), createUserLikeDTO(), createUserLikeDTO(), createUserLikeDTO());
     }
 
-    public static List<UserLikeDTO> createUserLikeDtoListPredefined() {
+    public static List<ReviewLikeDTO> createUserLikeDtoListPredefined() {
         return Arrays.asList(createUserLikeDTOPredefined(), createUserLikeDTOPredefined(), createUserLikeDTOPredefined());
     }
 
-    public static List<UserLike> createUserLikeList() {
+    public static List<ReviewLike> createUserLikeList() {
         return Arrays.asList(createUserLike(), createUserLike(), createUserLike());
     }
 }

@@ -45,7 +45,7 @@ public class Review {
     @JoinColumn(name = "movie_id")
     private Movie movieId;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reviewId", cascade = CascadeType.REMOVE)
-    private List<UserLike> userLikes;
+    private List<ReviewLike> reviewLikes;
 
     public Review(Long id) {
         this.id = id;
