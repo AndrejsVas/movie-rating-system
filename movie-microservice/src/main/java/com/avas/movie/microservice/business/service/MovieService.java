@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public interface MovieService {
 
+    Long getTopTenMovies(MovieDTO movie);
     List<MovieDTO> getAllMovies();
     Optional<MovieDTO> findMovieById(Long id);
     void deleteMovieById(Long id);

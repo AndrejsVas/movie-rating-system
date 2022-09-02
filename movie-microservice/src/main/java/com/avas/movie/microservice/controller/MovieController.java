@@ -30,8 +30,10 @@ public class MovieController {
 
     //TODO GET top 10 liked movies
     @GetMapping("/top10")
-    public ResponseEntity<List<MovieDTO>> getTopTenMovies(){
-        return null;
+    public ResponseEntity<Long> getTopTenMovies(){
+
+        log.info("poehali");
+        return new ResponseEntity<>( movieService.getTopTenMovies(movieService.findMovieById(1L).get()), HttpStatus.OK);
     }
     @GetMapping("/random")
     public ResponseEntity<MovieDTO> getRandomMovie(){

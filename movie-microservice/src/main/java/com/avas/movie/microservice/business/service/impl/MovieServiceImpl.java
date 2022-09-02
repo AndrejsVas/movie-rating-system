@@ -22,6 +22,13 @@ public class MovieServiceImpl implements MovieService {
 
     @Autowired
     MovieMapping movieMapper;
+
+    @Override
+    public Long getTopTenMovies(MovieDTO movie) {
+        Long temp = movieRepository.countChildrenByParent(movieMapper.mapMovieDtoToMovie(movie));
+        return temp;
+    }
+
     public List<MovieDTO> getAllMovies() {
         List<Movie> returnedMovieList = movieRepository.findAll();
         if(returnedMovieList.isEmpty())

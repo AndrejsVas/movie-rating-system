@@ -15,9 +15,7 @@ public interface UserLikeService {
     Optional<ReviewLikeDTO> toggleReviewLike(ReviewDTO reviewDTO, UserDTO userDTO);
 
     List<MovieLikeDTO> getAllLikesForMovie(MovieDTO movieId);
-    List<ReviewLikeDTO> getAllUserLikes(Long userId);
 
-
-    List<ReviewLikeDTO> getAllLikesForAReview(Long reviewId);
+    List<ReviewLikeDTO> getAllLikesForAReview(ReviewDTO review);
 
 }
