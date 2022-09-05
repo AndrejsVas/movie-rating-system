@@ -21,8 +21,6 @@ public class ResourceNotFoundException extends RuntimeException {
     @Override
     public String getLocalizedMessage()
     {
-        if(resourceId == null)
-            return message;
-        return MessageFormat.format(message, resourceId);
+        return (resourceId == null)? message : MessageFormat.format(message, resourceId);
     }
 }

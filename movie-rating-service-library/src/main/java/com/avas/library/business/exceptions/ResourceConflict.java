@@ -30,10 +30,8 @@ public class ResourceConflict extends RuntimeException {
     @Override
     public String getLocalizedMessage()
     {
-        if(resourceId == null)
-            return message;
-        if(!(resourceId2 == null))
-            return MessageFormat.format(message, resourceId, resourceId2);
-        return MessageFormat.format(message, resourceId);
+        return (resourceId==null)?
+                message: !(resourceId2 == null)?
+                MessageFormat.format(message, resourceId, resourceId2): MessageFormat.format(message, resourceId);
     }
 }
