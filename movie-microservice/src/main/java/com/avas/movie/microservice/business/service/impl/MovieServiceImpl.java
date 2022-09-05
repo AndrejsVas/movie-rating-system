@@ -1,5 +1,7 @@
 package com.avas.movie.microservice.business.service.impl;
 
+import com.avas.library.business.mappers.MovieTypeMapping;
+import com.avas.library.model.MovieTypeDTO;
 import com.avas.movie.microservice.business.repository.MovieRepository;
 import com.avas.movie.microservice.business.service.MovieService;
 import lombok.extern.log4j.Log4j2;
@@ -31,6 +33,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Autowired
     MovieMapping movieMapper;
+    @Autowired
+    MovieTypeMapping movieTypeMapping;
 
     @Override
     public List<MovieDTO>  getTopTenMovies() {
@@ -48,10 +52,23 @@ public class MovieServiceImpl implements MovieService {
         return topTen.keySet().stream().collect(Collectors.toList());
     }
 
+    @Override
+    public MovieDTO getRandomMovie(){
+        return movieMapper.mapMovieToMovieDto(movieRepository.findRandomMovie());
+    }
+
+    public List<MovieDTO> getMovieOfAGenre(MovieTypeDTO movieGenre){
+        List<Movie> movieList = movieRepository.findMovieByMovieType(movieTypeMapping.mapMovieTypeDtoToMovieType(movieGenre));
+        log.info("Movies list size is : {}", movieList.size());
+        if(movieList.isEmpty())
+            throw new ResourceNotFoundException("No movies found");
+        log.info("movie list size is :{}", movieList.size());
+        return movieMapper.mapMovieListToMovieListDto(movieList);
+    }
     public List<MovieDTO> getAllMovies() {
         List<Movie> returnedMovieList = movieRepository.findAll();
         if(returnedMovieList.isEmpty())
-            throw new ResourceNotFoundException("No reviews found");
+            throw new ResourceNotFoundException("No movies found");
         log.info("movie list size is :{}", returnedMovieList.size());
         return movieMapper.mapMovieListToMovieListDto(returnedMovieList);
 

@@ -23,6 +23,15 @@ public class MovieTypeServiceImpl implements MovieTypeService {
     @Autowired
     MovieTypeMapping movieTypeMapping;
 
+    @Override
+    public Optional<MovieTypeDTO> getMovieTypeByName(String movieTypeName) {
+        Optional<MovieTypeDTO> movieTypeDTO = movieTypeRepository.findMovieTypeByType(movieTypeName)
+                .map(movieType -> movieTypeMapping.mapMovieTypeToMovieTypeDto(movieType));
+        movieTypeDTO.orElseThrow(() -> new ResourceNotFoundException("movieType with name:"+movieTypeName+" does not exist"));
+        log.info("Found movie type :{}", movieTypeDTO);
+        return movieTypeDTO;
+    }
+
     public List<MovieTypeDTO> getAllMovieTypes() {
         List<MovieType> returnedUserList = movieTypeRepository.findAll();
         if (returnedUserList.isEmpty())

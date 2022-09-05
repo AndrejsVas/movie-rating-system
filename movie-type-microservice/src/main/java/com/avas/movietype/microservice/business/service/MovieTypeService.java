@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public interface MovieTypeService {
 
+    Optional<MovieTypeDTO> getMovieTypeByName(String movieTypeName);
     List<MovieTypeDTO> getAllMovieTypes();
 
     Optional<MovieTypeDTO> findMovieTypeById(Long id);

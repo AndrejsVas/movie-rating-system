@@ -29,7 +29,12 @@ public class MovieTypeController {
 
 
 
-
+    @GetMapping("/name/{typeName}")
+    public ResponseEntity<MovieTypeDTO> getMovieTypeByString(@PathVariable String typeName){
+        Optional<MovieTypeDTO> foundMovieType = movieTypeService.getMovieTypeByName(typeName);
+        log.info("Movie type found : {}", foundMovieType.get());
+        return new ResponseEntity<>(foundMovieType.get(), HttpStatus.OK);
+    }
     @GetMapping
     public ResponseEntity<List<MovieTypeDTO>> getAllMovieTypes() {
         List<MovieTypeDTO> movieTypeList = movieTypeService.getAllMovieTypes();

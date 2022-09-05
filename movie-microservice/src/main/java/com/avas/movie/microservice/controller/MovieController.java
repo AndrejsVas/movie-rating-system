@@ -1,7 +1,10 @@
 package com.avas.movie.microservice.controller;
 
+import com.avas.library.business.exceptions.ResourceNotFoundException;
 import com.avas.library.model.MovieDTO;
+import com.avas.library.model.MovieTypeDTO;
 import com.avas.movie.microservice.business.service.MovieService;
+import com.avas.movie.microservice.controller.feign.MovieTypeMicroserviceProxy;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,23 +29,28 @@ public class MovieController {
 
     @Autowired
     MovieService movieService;
+    @Autowired
+    MovieTypeMicroserviceProxy movieTypeMicroserviceProxy;
 
 
     //TODO GET top 10 liked movies
     @GetMapping("/top10")
     public ResponseEntity<List<MovieDTO>> getTopTenMovies(){
-
-        log.info("poehali");
         return new ResponseEntity<>( movieService.getTopTenMovies(), HttpStatus.OK);
     }
+
     @GetMapping("/random")
     public ResponseEntity<MovieDTO> getRandomMovie(){
-        return null;
+        return new ResponseEntity<>(movieService.getRandomMovie(), HttpStatus.OK);
     }
 
     @GetMapping("/movie_type/{genre}")
-    public ResponseEntity<List<MovieDTO>> getMovieOfAGenre(){
-        return null;
+    public ResponseEntity<List<MovieDTO>> getMovieOfAGenre(@PathVariable String genre){
+        Optional<MovieTypeDTO> optionalMovieTypeDTO = movieTypeMicroserviceProxy.getMovieType(genre);
+        log.info("Genre found :{}", optionalMovieTypeDTO.get().getType());
+        optionalMovieTypeDTO
+                .orElseThrow(() -> new ResourceNotFoundException("Genre not found"));
+        return new ResponseEntity<>(movieService.getMovieOfAGenre(optionalMovieTypeDTO.get()), HttpStatus.OK);
     }
     @GetMapping
     public ResponseEntity<List<MovieDTO>> getAllMovies() {
