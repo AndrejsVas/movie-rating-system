@@ -11,8 +11,17 @@ import com.avas.library.model.MovieDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Log4j2
 @Service
@@ -24,9 +33,19 @@ public class MovieServiceImpl implements MovieService {
     MovieMapping movieMapper;
 
     @Override
-    public Long getTopTenMovies(MovieDTO movie) {
-        Long temp = movieRepository.countChildrenByParent(movieMapper.mapMovieDtoToMovie(movie));
-        return temp;
+    public List<MovieDTO>  getTopTenMovies() {
+        Map<MovieDTO, Long> top10 = new HashMap<MovieDTO, Long>();
+        List<MovieDTO> movieDTOList = getAllMovies();
+        for(MovieDTO movieDTO : movieDTOList){
+            top10.put(movieDTO, movieRepository.countChildrenByParent(movieMapper.mapMovieDtoToMovie(movieDTO))
+            );
+        }
+        Map<MovieDTO,Long> topTen = top10.entrySet().stream()
+                        .sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
+                        .limit(10)
+                        .collect(Collectors.toMap(
+                                Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+        return topTen.keySet().stream().collect(Collectors.toList());
     }
 
     public List<MovieDTO> getAllMovies() {

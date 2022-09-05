@@ -1,8 +1,8 @@
 package com.avas.movie.microservice.controller;
 
+import com.avas.library.model.MovieDTO;
 import com.avas.movie.microservice.business.service.MovieService;
 import lombok.extern.log4j.Log4j2;
-import com.avas.library.model.MovieDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,10 +30,10 @@ public class MovieController {
 
     //TODO GET top 10 liked movies
     @GetMapping("/top10")
-    public ResponseEntity<Long> getTopTenMovies(){
+    public ResponseEntity<List<MovieDTO>> getTopTenMovies(){
 
         log.info("poehali");
-        return new ResponseEntity<>( movieService.getTopTenMovies(movieService.findMovieById(1L).get()), HttpStatus.OK);
+        return new ResponseEntity<>( movieService.getTopTenMovies(), HttpStatus.OK);
     }
     @GetMapping("/random")
     public ResponseEntity<MovieDTO> getRandomMovie(){
